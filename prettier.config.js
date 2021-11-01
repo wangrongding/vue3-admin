@@ -11,7 +11,7 @@ module.exports = {
 	jsxSingleQuote: false, // 在JSX中是否使用单引号
 	trailingComma: "es5", // 多行时尽可能打印尾随逗号
 	bracketSpacing: true, // 对象文字中的括号之间打印空格
-	jsxBracketSameLine: false,
+	// jsxBracketSameLine: false,
 	arrowParens: "always",
 	htmlWhitespaceSensitivity: "strict", // html中换行规则,[strict,ignore]
 	vueIndentScriptAndStyle: false, // vue中script与style里的第一条语句是否空格
