@@ -1,7 +1,6 @@
 <script setup lang="ts"></script>
-
 <template>
-  <el-container>
+  <el-container class="app-container">
     <el-header>Header</el-header>
     <el-container>
       <el-aside width="200px">Aside</el-aside>
@@ -14,6 +13,9 @@
 </template>
 
 <style scoped>
+.app-container {
+  height: 100vh;
+}
 .el-header,
 .el-footer {
   background-color: #b3c0d1;

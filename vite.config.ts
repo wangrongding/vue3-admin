@@ -30,4 +30,11 @@ export default defineConfig({
       },
     ],
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: '@import "./src/assets/index.scss";', // 添加公共样式
+      },
+    },
+  },
 });
