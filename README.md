@@ -14,8 +14,14 @@ Since TypeScript cannot handle type information for `.vue` imports, they are shi
 
 ## vue3 项目实践
 
+### 设置别名
+
 vite.config.js 文件中无法使用 require
 如果我们使用的是`typeScript2.x`,则需要通过安装@types/node 来解决
+
+### 集成 vuex
+
+### 集成 vue-router
 
 ## 关于 vue3 的代码校验
 
@@ -35,3 +41,5 @@ Vue3.0 的项目中如何使用 ESLint 和 Prettier 对代码风格进行约束�
 
 https://blog.csdn.net/Ed7zgeE9X/article/details/118097302
 test
+
+https://www.cnblogs.com/ypSharing/p/15304219.html#1%E3%80%81vite%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE
