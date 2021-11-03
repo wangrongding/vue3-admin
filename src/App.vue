@@ -6,6 +6,7 @@ import Layout from "@/layout/index.vue";
 
 <template>
   <Layout />
+  <!-- <router-view /> -->
 </template>
 
 <style>

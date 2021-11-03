@@ -1,15 +1,15 @@
 // import REQUEST_DATA from "@/api/requestHandler";
 const state = {
-  userInfo: { userName: "admin" },
+    userInfo: { userName: "admin" },
 };
 const mutations = {
-  setStateItem(state: any, data: any) {
-    state[data.key] = data.value;
-  },
+    setStateItem(state: any, data: any) {
+        state[data.key] = data.value;
+    },
 };
 
 const actions = {
-  /* async getUserData({ commit }: any, data?: any): Promise<any> {
+    /* async getUserData({ commit }: any, data?: any): Promise<any> {
     try {
       const res = await REQUEST_DATA("userInfoUri", data);
       commit("setStateItem", {
@@ -24,8 +24,8 @@ const actions = {
 };
 
 export default {
-  state,
-  actions,
-  mutations,
-  namespaced: true,
+    state,
+    actions,
+    mutations,
+    namespaced: true,
 };

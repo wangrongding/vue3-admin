@@ -1,39 +1,38 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
-import { resolve } from "path";
+import path from "path";
+console.log(path.resolve(__dirname, "src"));
 
 //===============ElementPlus自动导入的插件
-import Components from "unplugin-vue-components/vite";
-import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
+// import Components from "unplugin-vue-components/vite";
+// import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
-    Components({
-      resolvers: [
-        //自动导入
-        ElementPlusResolver(),
-      ],
-    }),
+    //     //自动导入
+    // Components({
+    //   resolvers: [
+    //     ElementPlusResolver(),
+    //   ],
+    // }),
   ],
   server: {
     host: "0.0.0.0",
     port: 9421,
-    open: true,
+    // open: true,
   },
   resolve: {
     //设置别名
-    alias: [
-      {
-        find: "@",
-        replacement: resolve(__dirname, "src"),
-      },
-    ],
+    alias: [{ find: "@", replacement: path.resolve(__dirname, "src") }],
+    extensions: [".ts", ".js"],
   },
   css: {
+    // css预处理器
     preprocessorOptions: {
       scss: {
-        additionalData: '@import "./src/assets/index.scss";', // 添加公共样式
+        // 在全局中使用 var.scss中预定义的变量
+        additionalData: '@import "./src/styles/var.scss";',
       },
     },
   },
