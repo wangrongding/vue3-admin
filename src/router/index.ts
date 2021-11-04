@@ -1,24 +1,37 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import home from "@/views/home.vue";
-import Layout from "@/views/layout/index.vue";
-import dashboard from "@/views/dashboard/index.vue";
+import Layout from "@/layout/index.vue";
 export const routes: Array<RouteRecordRaw> = [
-    {
-        path: "/",
-        name: "home",
-        component: () => home,
-    // redirect: "/dashboard",
-    // children: {
-    //   path: "dashboard",
-    //   component: () => import("@/views/dashboard/index.vue"),
-    //   meta: { title: "首页" },
-    // },
-    },
-    {
-        path: "/dashboard",
-        name: "dashboard",
-        component: () => dashboard,
-    },
+  {
+    path: "/",
+    name: "home",
+    component: Layout,
+    meta: { title: "首页" },
+    redirect: "/dashboard",
+    children: [
+      {
+        path: "dashboard",
+        component: () => import("@/views/dashboard/index.vue"),
+        meta: { title: "首页" },
+      },
+    ],
+  },
+  {
+    path: "/dashboardAa",
+    component: Layout,
+    meta: { title: "test", hidden: true },
+    children: [
+      {
+        path: "dashboard1",
+        component: () => import("@/views/dashboard/index.vue"),
+        meta: { title: "111" },
+      },
+      {
+        path: "dashboard2",
+        component: () => import("@/views/dashboard/index2.vue"),
+        meta: { title: "222" },
+      },
+    ],
+  },
 ];
 
 const router = createRouter({ history: createWebHistory(), routes });

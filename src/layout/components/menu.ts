@@ -1,32 +1,17 @@
-import { createApp, defineComponent } from "vue";
-const app = createApp({});
-//递归渲染菜单(无限层级)
-function loopDom(createElement: any, routers: any, path?: any) {
-    return routers.map((route: any) => {
-        if (route.custom) {
-            return createElement("el-menu-item", [
-                createElement("a", {
-                    domProps: { href: route.path, target: "_blank", innerHTML: route.name },
-                    style: {
-                        height: "60px",
-                        display: "block",
-                    },
-                }),
-            ]);
-        }
-        const relativePath = path ? `${path}/${route.path}` : route.path;
-        // console.log("relativePath: ", relativePath, "path: ", path, " route.path: ", route.path);
-        if (route.children && route.children.length > 1) {
+import Vue from "vue";
+function loopDom(createElement: any, routers: any, path?: any) {    return routers.map((route: any) => {
+        const relativePath = path ? `${path}/${route.front_name}` : route.front_name;
+        if (route.children.length) {
             return createElement(
                 "el-submenu",
                 {
                     props: {
-                        index: route.name,
+                        index: route.front_name,
                     },
-                    key: route.path,
                     style: {
                         display: route.status == 0 && "none",
                     },
+                    key: route.front_name,
                 },
                 [
                     createElement(
@@ -40,7 +25,7 @@ function loopDom(createElement: any, routers: any, path?: any) {
                             }),
                             createElement("span", {
                                 domProps: {
-                                    innerHTML: route.name,
+                                    innerHTML: route.title,
                                 },
                             }),
                         ]
@@ -53,12 +38,10 @@ function loopDom(createElement: any, routers: any, path?: any) {
                 "el-menu-item",
                 {
                     props: {
-                        index: path
-                            ? path + "/" + route.path
-                            : route.path + (route.path == "/" ? "index" : "/index"),
+                        index: `${path}/${route.front_name}`,
                     },
                     attrs: {
-                        path: path ? path + "/" + route.path : route.path,
+                        path: `${path}/${route.front_name}`,
                     },
                     style: {
                         display: route.status == 0 && "none",
@@ -71,7 +54,7 @@ function loopDom(createElement: any, routers: any, path?: any) {
                     createElement("span", {
                         slot: "title",
                         domProps: {
-                            innerHTML: route.name,
+                            innerHTML: route.title,
                         },
                     }),
                 ]
@@ -79,24 +62,24 @@ function loopDom(createElement: any, routers: any, path?: any) {
         }
     });
 }
+const { createApp, defineComponent } = Vue;
+
+const app = createApp({});
 
 const menuList = app.component("menuList", {
     render(h: any) {
         return h(
             "el-menu",
             {
+                class: "menu-part",
                 props: {
-                    "background-color": "#516FA3",
+                    router: true,
+                    collapse: this.isCollapse,
+                    "default-active": this.activeRoute,
+                    "background-color": "#282E46",
                     "text-color": "#fff",
                     "active-text-color": "#ffd04b",
                     "unique-opened": true,
-                    mode: "horizontal",
-                    "menu-trigger": "click",
-                    router: true,
-                    "default-active": this.activeRoute,
-                },
-                on: {
-                    select: this.menuClick,
                 },
             },
             loopDom(h, this.routers)
@@ -116,14 +99,16 @@ const menuList = app.component("menuList", {
             default: "",
         },
     },
-    created() {
-        console.log("routers11", this.routers);
-    },
+    /* ... */
     methods: {
         menuClick(index: any, indexPath: any, c: any) {
             console.log(index, indexPath, c);
         },
     },
+    menuClick(index: any, indexPath: any, c: any) {
+      console.log(index, indexPath, c);
+    },
+  },
 });
 
 export default menuList;

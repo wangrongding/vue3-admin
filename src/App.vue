@@ -5,8 +5,8 @@ import Layout from "@/layout/index.vue";
 </script>
 
 <template>
-  <Layout />
-  <!-- <router-view /> -->
+  <!-- <Layout /> -->
+  <router-view />
 </template>
 
 <style>
