@@ -16,7 +16,7 @@ export const routes: Array<RouteRecordRaw> = [
     ],
   },
   {
-    path: "/dashboardAa",
+    path: "/dashboardA",
     component: Layout,
     meta: { title: "test", hidden: true, type: "multiple" },
     children: [
@@ -29,6 +29,25 @@ export const routes: Array<RouteRecordRaw> = [
         path: "dashboard2",
         component: () => import("@/views/dashboard/index2.vue"),
         meta: { title: "222" },
+      },
+    ],
+  },
+  {
+    path: "/B",
+    component: Layout,
+    meta: { title: "test", hidden: true, type: "multiple" },
+    children: [
+      {
+        path: "b",
+        component: () => import("@/views/dashboard/index33.vue"),
+        meta: { title: "111", type: "multiple" },
+        children: [
+          {
+            path: "33",
+            component: () => import("@/views/dashboard/index3.vue"),
+            meta: { title: "eee3333" },
+          },
+        ],
       },
     ],
   },

@@ -5,7 +5,7 @@ function handleClose() {}
 import MenuItem from "./menuItem.vue";
 import { useRoute } from "vue-router";
 import { routes } from "@/router/index.ts";
-// console.log(MenuItem);
+console.log(routes, "routes");
 
 let menuList = reactive(routes);
 let activeRouter = useRoute().path;
