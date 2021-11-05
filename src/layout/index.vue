@@ -4,8 +4,6 @@ import { routes } from "@/router/index.ts";
 import Dropdown from "./components/dropdown.vue";
 import Logo from "./components/logo.vue";
 import Menu from "./components/menu.vue";
-// import Menu from "./components/menu.ts";
-console.log(routes, "routes");
 </script>
 <template>
   <el-container class="app-container">

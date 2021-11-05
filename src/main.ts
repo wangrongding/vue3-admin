@@ -14,4 +14,4 @@ Object.keys(Icons).forEach((key) => {
 });
 app.use(store).use(router).use(ElementPlus).mount("#app");
 
-console.log(import.meta.env);
+// console.log(import.meta.env);

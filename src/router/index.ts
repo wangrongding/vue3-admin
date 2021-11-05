@@ -5,7 +5,7 @@ export const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "home",
     component: Layout,
-    meta: { title: "首页" },
+    meta: { title: "首页", type: "single", icon: "HomeFilled" },
     redirect: "/dashboard",
     children: [
       {
@@ -18,7 +18,7 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: "/dashboardAa",
     component: Layout,
-    meta: { title: "test", hidden: true },
+    meta: { title: "test", hidden: true, type: "multiple" },
     children: [
       {
         path: "dashboard1",

@@ -1,37 +1,34 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { resolve } from "path";
-const props = defineProps(["menuList", "baseUrl"]);
+import { ref, reactive } from "vue";
+import path from "path";
+const props = defineProps(["item", "basePath"]);
 const resolvePath = (routePath: string) => {
-  return resolve(props.baseUrl, routePath);
+  return props.basePath + (props.basePath == "/" ? "" : "/") + routePath;
 };
 </script>
 <template>
-  <template v-for="item in menuList">
-    <el-sub-menu :index="item.path" v-if="item.children && item.children.length > 1">
-      <template #title>
-        <el-icon v-if="item.meta.icon">
-          <!-- 动态组件 -->
-          <component :is="item.meta.icon"></component>
-        </el-icon>
-        <span>{{ item.meta.title }}</span>
-      </template>
-      <MenuItem
-        v-for="child in item.children"
-        :key="child.path"
-        :item="child"
-        :is-first-level="false"
-        :base-path="resolvePath(child.path)"
-      />
-    </el-sub-menu>
-
-    <el-menu-item :index="item.path" v-else>
+  <el-sub-menu :index="item.path" v-if="item.meta.type == 'multiple'">
+    <template #title>
       <el-icon v-if="item.meta.icon">
+        <!-- 动态组件 -->
         <component :is="item.meta.icon"></component>
       </el-icon>
       <span>{{ item.meta.title }}</span>
-    </el-menu-item>
-  </template>
+    </template>
+    <MenuItem
+      v-for="child in item.children"
+      :key="child.path"
+      :item="child"
+      :basePath="item.path"
+    />
+  </el-sub-menu>
+
+  <el-menu-item :index="resolvePath(item.path)" v-else>
+    <el-icon v-if="item.meta.icon">
+      <component :is="item.meta.icon"></component>
+    </el-icon>
+    <span>{{ item.meta.title }}</span>
+  </el-menu-item>
 </template>
 <style lang="scss" scoped>
 .page-container {
