@@ -1,5 +1,6 @@
 import Vue from "vue";
-function loopDom(createElement: any, routers: any, path?: any) {    return routers.map((route: any) => {
+function loopDom(createElement: any, routers: any, path?: any) {
+    return routers.map((route: any) => {
         const relativePath = path ? `${path}/${route.front_name}` : route.front_name;
         if (route.children.length) {
             return createElement(
@@ -106,9 +107,8 @@ const menuList = app.component("menuList", {
         },
     },
     menuClick(index: any, indexPath: any, c: any) {
-      console.log(index, indexPath, c);
+        console.log(index, indexPath, c);
     },
-  },
 });
 
 export default menuList;

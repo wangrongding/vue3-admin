@@ -12,6 +12,7 @@
   "dependencies": {
     "@element-plus/icons": "^0.0.11",
     "@types/node": "^16.11.6",
+    "echarts": "^5.2.2",
     "element-plus": "^1.2.0-beta.1",
     "unplugin-vue-components": "^0.17.0",
     "vue": "^3.2.16",

@@ -36,15 +36,12 @@ import Menu from "./components/menu.vue";
   background-color: #d3dce6;
   color: var(--el-text-color-primary);
   text-align: center;
-  line-height: 200px;
   user-select: none;
 }
 
 .el-main {
   background-color: #e9eef3;
   color: var(--el-text-color-primary);
-  text-align: center;
-  line-height: 160px;
-  padding: 0 20px 20px 20px;
+  padding: 20px;
 }
 </style>
