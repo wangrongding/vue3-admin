@@ -3,8 +3,8 @@ import { ref, reactive } from "vue";
 import path from "path";
 const props = defineProps(["item", "basePath"]);
 const resolvePath = (routePath: string) => {
-    console.log(props.basePath + (props.basePath == "/" ? "" : "/") + routePath);
-    return props.basePath + (props.basePath == "/" ? "" : "/") + routePath;
+  console.log(props.basePath + (props.basePath == "/" ? "" : "/") + routePath);
+  return props.basePath + (props.basePath == "/" ? "" : "/") + routePath;
 };
 </script>
 <template>
@@ -16,12 +16,7 @@ const resolvePath = (routePath: string) => {
       </el-icon>
       <span>{{ item.meta.title }}</span>
     </template>
-    <MenuItem
-      v-for="child in item.children"
-      :key="child.path"
-      :item="child"
-      :basePath="item.path"
-    />
+    <MenuItem v-for="child in item.children" :key="child.path" :item="child" :basePath="item.path" />
   </el-sub-menu>
 
   <el-menu-item :index="resolvePath(item.path)" v-else>

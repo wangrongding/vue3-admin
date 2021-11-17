@@ -1140,6 +1140,11 @@ dot-prop@^5.1.0:
   dependencies:
     is-obj "^2.0.0"
 
+echarts-liquidfill@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.nlark.com/echarts-liquidfill/download/echarts-liquidfill-3.1.0.tgz#4ec70f3697382d0404c95fff9f3e8dd85c8377da"
+  integrity sha1-TscPNpc4LQQEyV//nz6N2FyDd9o=
+
 echarts@^5.2.2:
   version "5.2.2"
   resolved "https://registry.npmmirror.com/echarts/download/echarts-5.2.2.tgz#ec3c8b2a151cbba71ba3c2c7cf9b2f2047ce4370"
