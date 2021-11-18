@@ -535,17 +535,17 @@
   integrity sha1-U3RpYfcxqOpmbjMWJx6UQjjcMds=
 
 "@vueuse/core@^6.7.3":
-  version "6.7.4"
-  resolved "https://registry.npmmirror.com/@vueuse/core/download/@vueuse/core-6.7.4.tgz?cache=0&sync_timestamp=1635386334875&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40vueuse%2Fcore%2Fdownload%2F%40vueuse%2Fcore-6.7.4.tgz#8e15524454388b11c9eb6ff59a6742602b976e2f"
-  integrity sha1-jhVSRFQ4ixHJ62/1mmdCYCuXbi8=
+  version "6.9.1"
+  resolved "https://registry.npmmirror.com/@vueuse/core/download/@vueuse/core-6.9.1.tgz#b28ae875b618d3865c5a5ceefd9184b3155e8777"
+  integrity sha512-msa36DxnnbIu41bUTvfSudF6TL4wo0+Yrpw6yr1bFtwtYTOo8GZXYWPKyvXUVGhBBqrTVNTqsTtD0eXXHJ3roA==
   dependencies:
-    "@vueuse/shared" "6.7.4"
+    "@vueuse/shared" "6.9.1"
     vue-demi "*"
 
-"@vueuse/shared@6.7.4":
-  version "6.7.4"
-  resolved "https://registry.npmmirror.com/@vueuse/shared/download/@vueuse/shared-6.7.4.tgz?cache=0&sync_timestamp=1635386663669&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40vueuse%2Fshared%2Fdownload%2F%40vueuse%2Fshared-6.7.4.tgz#9aa2967d20863cf3253afd08a2e6e84a61d2c89b"
-  integrity sha1-mqKWfSCGPPMlOv0IouboSmHSyJs=
+"@vueuse/shared@6.9.1":
+  version "6.9.1"
+  resolved "https://registry.npmmirror.com/@vueuse/shared/download/@vueuse/shared-6.9.1.tgz?cache=0&sync_timestamp=1636991710520&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40vueuse%2Fshared%2Fdownload%2F%40vueuse%2Fshared-6.9.1.tgz#b5ac81da7cc5846a35dbc71ce7dfd4a78506a0d7"
+  integrity sha512-nQh+ayxkeCKUU9MZjyQpE7KfOb18e/QOHolOE2ZK5dpoHzCZK7MSXzgDtvb9omGkgK0mjXlLSJsVdGhG+QW7Aw==
   dependencies:
     vue-demi "*"
 
@@ -693,7 +693,7 @@ astral-regex@^2.0.0:
 
 async-validator@^4.0.7:
   version "4.0.7"
-  resolved "https://registry.npmmirror.com/async-validator/download/async-validator-4.0.7.tgz?cache=0&sync_timestamp=1634529532378&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fasync-validator%2Fdownload%2Fasync-validator-4.0.7.tgz#034a0fd2103a6b2ebf010da75183bec299247afe"
+  resolved "https://registry.npmmirror.com/async-validator/download/async-validator-4.0.7.tgz?cache=0&sync_timestamp=1634529574100&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fasync-validator%2Fdownload%2Fasync-validator-4.0.7.tgz#034a0fd2103a6b2ebf010da75183bec299247afe"
   integrity sha1-A0oP0hA6ay6/AQ2nUYO+wpkkev4=
 
 babel-walk@3.0.0-canary-5:
@@ -1154,9 +1154,9 @@ echarts@^5.2.2:
     zrender "5.2.1"
 
 element-plus@^1.2.0-beta.1:
-  version "1.2.0-beta.1"
-  resolved "https://registry.npmmirror.com/element-plus/download/element-plus-1.2.0-beta.1.tgz?cache=0&sync_timestamp=1635657932904&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Felement-plus%2Fdownload%2Felement-plus-1.2.0-beta.1.tgz#77bfd993741be1731540dd997dbde0d03d065b5e"
-  integrity sha1-d7/Zk3Qb4XMVQN2Zfb3g0D0GW14=
+  version "1.2.0-beta.3"
+  resolved "https://registry.npmmirror.com/element-plus/download/element-plus-1.2.0-beta.3.tgz#0ded059e6c8ddc6f5d9dcdf32e1b7ed44ac38099"
+  integrity sha1-De0FnmyN3G9dnc3zLht+1ErDgJk=
   dependencies:
     "@element-plus/icons" "^0.0.11"
     "@popperjs/core" "^2.10.2"
@@ -2256,7 +2256,7 @@ map-obj@^4.0.0:
 
 memoize-one@^6.0.0:
   version "6.0.0"
-  resolved "https://registry.npmmirror.com/memoize-one/download/memoize-one-6.0.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fmemoize-one%2Fdownload%2Fmemoize-one-6.0.0.tgz#b2591b871ed82948aee4727dc6abceeeac8c1045"
+  resolved "https://registry.npmmirror.com/memoize-one/download/memoize-one-6.0.0.tgz?cache=0&sync_timestamp=1634697208428&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fmemoize-one%2Fdownload%2Fmemoize-one-6.0.0.tgz#b2591b871ed82948aee4727dc6abceeeac8c1045"
   integrity sha1-slkbhx7YKUiu5HJ9xqvO7qyMEEU=
 
 meow@^8.0.0:
@@ -3426,9 +3426,9 @@ vscode-vue-languageservice@^0.27.0:
     vscode-typescript-languageservice "^0.27.25"
 
 vue-demi@*:
-  version "0.12.0"
-  resolved "https://registry.npmmirror.com/vue-demi/download/vue-demi-0.12.0.tgz#b202a01cdfc635443e41faea697d624caac0fa73"
-  integrity sha1-sgKgHN/GNUQ+QfrqaX1iTKrA+nM=
+  version "0.12.1"
+  resolved "https://registry.npmmirror.com/vue-demi/download/vue-demi-0.12.1.tgz#f7e18efbecffd11ab069d1472d7a06e319b4174c"
+  integrity sha1-9+GO++z/0RqwadFHLXoG4xm0F0w=
 
 vue-eslint-parser@^8.0.1:
   version "8.0.1"

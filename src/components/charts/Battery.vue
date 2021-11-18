@@ -2,12 +2,12 @@
 import { ref, onMounted } from "vue";
 import "echarts-liquidfill";
 import * as echarts from "echarts";
-const myChart = ref<HTMLElement>(); //也可以用const myChart = ref<any>();
-const myCharts = ref<any>();
+const chartDom = ref<HTMLElement>(); //也可以用const chartDom = ref<any>();
+const chart = ref<any>();
 onMounted(() => {
   // 绘制图表
-  myCharts.value = echarts.init(myChart.value!);
-  myCharts.value.setOption({
+  chart.value = echarts.init(chartDom.value!);
+  chart.value.setOption({
     title: {
       text: "35%",
       textStyle: {
@@ -22,7 +22,7 @@ onMounted(() => {
       {
         type: "group",
         left: "center",
-        top: "80%",
+        top: "85%",
         children: [
           {
             type: "text",
@@ -42,7 +42,7 @@ onMounted(() => {
         data: [0.35, 0.3],
         color: ["#42b883", "#35495e"],
         amplitude: 9,
-        radius: "50%",
+        radius: "60%",
         backgroundStyle: {
           color: "#fff",
         },
@@ -83,7 +83,7 @@ onMounted(() => {
 
 <template>
   <div class="page-container">
-    <div ref="myChart" :style="{ width: '100%', height: '100%', minHeight: '30px' }"></div>
+    <div ref="chartDom" :style="{ width: '100%', height: '100%', minHeight: '30px' }"></div>
   </div>
 </template>
 
