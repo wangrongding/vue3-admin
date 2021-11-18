@@ -5,7 +5,7 @@ export const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "home",
     component: Layout,
-    meta: { title: "首页", type: "single", icon: "HomeFilled" },
+    meta: { title: "首页", type: "single", icon: "House" },
     redirect: "/dashboard",
     children: [
       {
@@ -18,31 +18,12 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: "/system",
     component: Layout,
-    meta: { title: "系统管理", type: "multiple", icon: "HomeFilled" },
+    meta: { title: "系统管理", type: "multiple", icon: "Setting" },
     children: [
       {
         path: "userManagement",
         component: () => import("@/views/system/userManagement.vue"),
         meta: { title: "用户管理" },
-      },
-    ],
-  },
-  {
-    path: "/B",
-    component: Layout,
-    meta: { title: "test", hidden: true, type: "multiple" },
-    children: [
-      {
-        path: "b",
-        component: () => import("@/views/dashboard/index33.vue"),
-        meta: { title: "111", type: "multiple" },
-        children: [
-          {
-            path: "33",
-            component: () => import("@/views/dashboard/index3.vue"),
-            meta: { title: "eee3333" },
-          },
-        ],
       },
     ],
   },
