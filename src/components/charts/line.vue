@@ -9,7 +9,7 @@ setTimeout(() => {
   // 绘制图表
   myCharts.value = echarts.init(myChart.value!);
   myCharts.value.setOption({
-    title: { text: "总用户量" },
+    title: { text: "" },
     tooltip: {
       trigger: "axis",
       axisPointer: {
@@ -23,6 +23,7 @@ setTimeout(() => {
       left: "3%",
       right: "4%",
       bottom: "3%",
+      top: "100px",
       containLabel: true,
     },
     xAxis: {

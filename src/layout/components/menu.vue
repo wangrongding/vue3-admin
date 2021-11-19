@@ -19,11 +19,14 @@ let activeRouter = useRoute().path;
 </template>
 <style lang="scss" scoped>
 .page-container {
-  background-color: white;
+  background-color: $menu-bg-color;
   height: calc(100vh - 60px);
   .el-menu-vertical:not(.el-menu--collapse) {
     width: 200px;
     min-height: 400px;
+  }
+  .el-menu {
+    background-color: $menu-bg-color;
   }
 }
 </style>

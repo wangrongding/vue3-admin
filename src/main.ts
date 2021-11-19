@@ -14,6 +14,9 @@ import DingForm from "@/components/element/DingForm.vue";
 app.component("DingTable", DingTable);
 app.component("DingForm", DingForm);
 
+//=====================iconFont
+import "@/assets/icon/iconfont.css";
+
 //全局挂载所有图标
 Object.keys(Icons).forEach((key) => {
   app.component(key, Icons[key as keyof typeof Icons]);

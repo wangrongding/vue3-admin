@@ -4,6 +4,7 @@ import Line from "@/components/charts/Line.vue";
 import Pie from "@/components/charts/Pie.vue";
 import Battery from "@/components/charts/Battery.vue";
 import Progress from "@/components/charts/Progress.vue";
+//生成选择年份列表
 function newYears() {
   const tempArr: any = [];
   for (let i = new Date().getFullYear(); i > new Date().getFullYear() - 50; i--) {
@@ -24,7 +25,7 @@ const formParams = ref({
   formList: {
     nickName: {
       type: "cascader",
-      cascaderOptions: cascaderOptions,
+      cascaderOptions,
       placeholder: "请选择年级",
     },
     sex: {
@@ -69,44 +70,61 @@ const formParams = ref({
     reset: true,
   },
 });
+const panelItemBgList = [
+  new URL("../../assets/image/itemBg1.png", import.meta.url).href,
+  new URL("../../assets/image/itemBg2.png", import.meta.url).href,
+  new URL("../../assets/image/itemBg3.png", import.meta.url).href,
+  new URL("../../assets/image/itemBg4.png", import.meta.url).href,
+];
+const ProgressConfig = ref({
+  finishedColor: "#00e0b4",
+  data: 0,
+});
+console.log(import.meta.url, "================");
 </script>
 
 <template>
   <div class="page-container">
     <DingForm :formParams="formParams" />
     <div class="panel-list">
-      <div class="item">
-        <span>50</span>
-        <span>XXXXXXX</span>
-      </div>
-      <div class="item">
-        <span>50</span>
-        <span>XXXXXXX</span>
-      </div>
-      <div class="item">
-        <span>50</span>
-        <span>XXXXXXX</span>
-      </div>
-      <div class="item">
+      <div class="item" v-for="(item, index) in 4" :key="index" :style="`background:url(${panelItemBgList[index]});background-size:cover;`">
         <span>50</span>
         <span>XXXXXXX</span>
       </div>
     </div>
     <div class="chart-box">
       <div class="chart-item">
-        <Progress />
+        <p class="chart-item-title">
+          <i class="iconfont icon-ziliao-xuanze"></i>
+          <span>xxxxxx</span>
+        </p>
+        <Progress :configuration="ProgressConfig" />
       </div>
       <div class="chart-item">
+        <p class="chart-item-title">
+          <i class="iconfont icon-ziliao-xuanze"></i>
+          <span>xxxxxx</span>
+        </p>
         <Pie />
       </div>
       <div class="chart-item Battery">
+        <p class="chart-item-title">
+          <i class="iconfont icon-ziliao-xuanze"></i>
+          <span>xxxxxx</span>
+        </p>
         <Battery />
         <Battery />
         <Battery />
         <Battery />
       </div>
     </div>
-    <Line class="line" />
+    <div class="line">
+      <p class="chart-item-title">
+        <i class="iconfont icon-ziliao-xuanze"></i>
+        <span>xxxxxx</span>
+      </p>
+      <Line />
+    </div>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -116,12 +134,13 @@ const formParams = ref({
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-column-gap: 20px;
+
     .item {
       height: 150px;
       text-align: center;
       padding-top: 50px;
       background-color: #35495e;
-      border-radius: 10px;
+      border-radius: 20px;
       color: white;
       font-size: 20px;
       & > span:first-child {
@@ -140,14 +159,30 @@ const formParams = ref({
       background-color: white;
       border-radius: 10px;
       height: 450px;
+      position: relative;
     }
     .Battery {
+      padding: 50px;
+      box-sizing: border-box;
       display: grid;
       grid-template-columns: 50% 50%;
       grid-template-rows: 50% 50%;
     }
   }
+  .chart-item-title {
+    position: absolute;
+    font-size: 24px;
+    height: 24px;
+    line-height: 24px;
+    top: 20px;
+    left: 20px;
+    i {
+      color: $icon-color;
+      margin-right: 10px;
+    }
+  }
   .line {
+    position: relative;
     height: 500px;
     margin-top: 20px;
     background-color: white;

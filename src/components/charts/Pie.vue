@@ -8,8 +8,8 @@ onMounted(() => {
   myCharts.value = echarts.init(myChart.value!);
   myCharts.value.setOption({
     title: {
-      text: "Referer of a Website",
-      subtext: "Fake Data",
+      text: "",
+      subtext: "",
       left: "left",
     },
     tooltip: {

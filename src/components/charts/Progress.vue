@@ -1,20 +1,45 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, defineProps } from "vue";
 import * as echarts from "echarts";
 const myChart = ref<HTMLElement>(); //也可以用const myChart = ref<any>();
 const myCharts = ref<any>();
-const getvalue = [88];
+const props = defineProps({
+  configuration: {
+    type: Object,
+    default: {},
+    required: true,
+  },
+});
+props.configuration.data = [props.configuration.data];
+console.log("🚀 / file: Progress.vue / line 14 / props.configuration.data", !!props.configuration.data[0]);
+
+const configuration = ref({
+  radius: "130%", //图形大小
+  center: ["50%", "50%"],
+  unfinishedColor: "#eaeaea",
+  finishedColor: "#28BCFE",
+  barWidth: 20,
+  opacity: 1,
+  text: 0,
+  subtext: "描述文本",
+  data: [0],
+});
+props.configuration.data[0] ? "" : (configuration.value.data = [0.01]);
+props.configuration.data ? (configuration.value.text = props.configuration.data) : (configuration.value.text = 0);
+configuration.value = Object.assign(configuration.value, props.configuration);
+console.log(configuration.value, "===============");
+console.log(props.configuration, "========props.configuration=======");
+
 onMounted(() => {
   // 绘制图表
   myCharts.value = echarts.init(myChart.value!);
   myCharts.value.setOption({
     title: {
-      text: getvalue + "分",
+      text: configuration.value.text,
       textStyle: {
-        // color: "#28BCFE",
         fontSize: 30,
       },
-      subtext: "综合得分",
+      subtext: configuration.value.subtext,
       subtextStyle: {
         color: "#666666",
         fontSize: 20,
@@ -43,35 +68,23 @@ onMounted(() => {
       },
     },
     polar: {
-      center: ["50%", "50%"],
-      radius: "130%", //图形大小
+      center: configuration.value.center,
+      radius: configuration.value.radius, //图形大小
     },
     series: [
       {
         type: "bar",
-        data: getvalue,
+        data: configuration.value.data,
         showBackground: true,
         backgroundStyle: {
-          color: "#35495e",
+          color: configuration.value.unfinishedColor,
         },
         coordinateSystem: "polar",
         roundCap: true,
-        barWidth: 20,
+        barWidth: configuration.value.barWidth,
         itemStyle: {
-          opacity: 1,
-          color: "#42b883",
-          /* color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            {
-              offset: 0,
-              color: "#25BFFF",
-            },
-            {
-              offset: 1,
-              color: "#5284DE",
-            },
-          ]),
-          shadowBlur: 5,
-          shadowColor: "#2A95F9", */
+          opacity: configuration.value.opacity,
+          color: configuration.value.finishedColor,
         },
       },
     ],

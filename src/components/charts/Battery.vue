@@ -8,16 +8,15 @@ onMounted(() => {
   // 绘制图表
   chart.value = echarts.init(chartDom.value!);
   chart.value.setOption({
-    title: {
+    /*  title: {
       text: "35%",
       textStyle: {
         fontSize: 20,
         fontWeight: "normal",
-        // color: "rgb(124,190,255)",
       },
       x: "center",
       y: "center",
-    },
+    }, */
     graphic: [
       {
         type: "group",
@@ -37,6 +36,7 @@ onMounted(() => {
     ],
     series: [
       {
+        center: ["50%", "40%"],
         type: "liquidFill",
         waveAnimation: 10,
         data: [0.35, 0.3],
@@ -73,7 +73,8 @@ onMounted(() => {
           show: false,
         },
         label: {
-          formatter: "",
+          formatter: "{c}",
+          fontSize: 28,
         },
       },
     ],
