@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, defineProps } from "vue";
+import { cloneDeep } from /* * as __ */ "lodash";
 import * as echarts from "echarts";
 const myChart = ref<HTMLElement>(); //也可以用const myChart = ref<any>();
 const myCharts = ref<any>();
@@ -10,9 +11,7 @@ const props = defineProps({
     required: true,
   },
 });
-props.configuration.data = [props.configuration.data];
-console.log("🚀 / file: Progress.vue / line 14 / props.configuration.data", !!props.configuration.data[0]);
-
+let tempData = cloneDeep(props.configuration);
 const configuration = ref({
   radius: "130%", //图形大小
   center: ["50%", "50%"],
@@ -24,11 +23,15 @@ const configuration = ref({
   subtext: "描述文本",
   data: [0],
 });
-props.configuration.data[0] ? "" : (configuration.value.data = [0.01]);
-props.configuration.data ? (configuration.value.text = props.configuration.data) : (configuration.value.text = 0);
-configuration.value = Object.assign(configuration.value, props.configuration);
-console.log(configuration.value, "===============");
-console.log(props.configuration, "========props.configuration=======");
+if (tempData.data) {
+  tempData.text = tempData.data;
+  tempData.data = [tempData.data];
+} else {
+  tempData.text = 0;
+  tempData.data = [0.1];
+}
+//合并默认配置与自定义配置
+configuration.value = Object.assign(configuration.value, tempData);
 
 onMounted(() => {
   // 绘制图表

@@ -78,9 +78,42 @@ const panelItemBgList = [
 ];
 const ProgressConfig = ref({
   finishedColor: "#00e0b4",
-  data: 0,
+  data: 77,
 });
-console.log(import.meta.url, "================");
+const pieColor = ["rgba(153, 153, 153, 1)", "rgba(255, 143, 114, 1)", "rgba(0, 224, 180, 1)"];
+const PieConfig = ref({
+  data: [
+    { value: 50, name: "xaxx", itemStyle: { color: pieColor[0] } },
+    { value: 25, name: "xxsx", itemStyle: { color: pieColor[1] } },
+    { value: 40, name: "xxzx1", itemStyle: { color: pieColor[2] } },
+  ],
+});
+const BatteryConfig = ref([
+  {
+    data: 0.3,
+    color: ["#76b7ff", "#0179ff"],
+    background: "#ebf5ff",
+    labelText: "已转介",
+  },
+  {
+    data: 0.3,
+    color: ["#74edd5", "#00dfb3"],
+    background: "rgba(0, 224, 180, 0.08)",
+    labelText: "已干预",
+  },
+  {
+    data: 0.3,
+    color: ["#ffc894", "#ff9939"],
+    background: "rgba(255, 154, 57, 0.08)",
+    labelText: "待干预",
+  },
+  {
+    data: 0.3,
+    color: ["#c8c8c8", "#999999"],
+    background: "rgba(153, 153, 153, 0.08)",
+    labelText: "无需干预",
+  },
+]);
 </script>
 
 <template>
@@ -105,17 +138,14 @@ console.log(import.meta.url, "================");
           <i class="iconfont icon-ziliao-xuanze"></i>
           <span>xxxxxx</span>
         </p>
-        <Pie />
+        <Pie :configuration="PieConfig" />
       </div>
       <div class="chart-item Battery">
         <p class="chart-item-title">
           <i class="iconfont icon-ziliao-xuanze"></i>
           <span>xxxxxx</span>
         </p>
-        <Battery />
-        <Battery />
-        <Battery />
-        <Battery />
+        <Battery v-for="item in BatteryConfig" :configuration="item" />
       </div>
     </div>
     <div class="line">

@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@element-plus/icons": "^0.0.11",
+    "@types/lodash": "^4.14.177",
     "@types/node": "^16.11.6",
     "echarts": "^5.2.2",
     "echarts-liquidfill": "^3.1.0",
