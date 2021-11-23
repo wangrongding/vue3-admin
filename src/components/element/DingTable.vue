@@ -5,7 +5,15 @@ const props = defineProps({
     type: Object,
     default: {
       data: [],
-      columnProps: [],
+      columnProps: [
+        /* {
+          label: "名称",
+          prop: "name",
+          formatter: (a: any, b: any, c: any) => {
+            return c == "0" ? "其它" : c == "1" ? "后台用户" : "手机端用户";
+          },
+        }, */
+      ],
       tempSelectList: [],
     },
   },

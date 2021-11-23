@@ -6,6 +6,7 @@ import store from "./store";
 //=======================element-plus
 import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
+import "@/styles/index.scss";
 import * as Icons from "@element-plus/icons";
 
 //=====================全局挂载element-plus二次封装的组件

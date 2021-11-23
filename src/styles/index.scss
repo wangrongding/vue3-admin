@@ -2,13 +2,17 @@
 //   --el-color-primary: red;
 // }
 
-body {
+html,
+body,
+p {
   margin: 0;
   padding: 0;
 }
 
 a {
-  color: var(--el-color-primary);
+  text-decoration: none;
+  color: inherit;
+  // color: var(--el-color-primary);
 }
 
 code {

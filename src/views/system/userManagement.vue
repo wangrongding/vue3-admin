@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import { ref, reactive } from "vue";
-const tableParams = {
-  data: [],
+import { ref, reactive, onMounted } from "vue";
+const tableParams = ref({
+  data: <any>[],
   loading: false,
   columnProps: [
-    { label: "名称", prop: "title" },
-    { label: "账号", prop: "businessName" },
-    { label: "角色", prop: "cbusinessType" },
+    { label: "名称", prop: "name" },
+    { label: "账号", prop: "name1" },
+    { label: "角色", prop: "name2" },
     {
       label: "状态",
-      prop: "operatorType",
+      prop: "name3",
       formatter: (a: any, b: any, c: any) => {
         return c == "0" ? "其它" : c == "1" ? "后台用户" : "手机端用户";
       },
     },
   ],
-};
+});
 const formParams = ref({
   data: { birthday: "" }, // 表单数据对象
   formList: {
@@ -59,6 +59,8 @@ const formParams = ref({
     reset: true,
   },
 });
+tableParams.value.data = [1, 2, 3, 4, 5, 6];
+// onMounted(() => {});
 </script>
 <template>
   <div class="page-container">
