@@ -3,12 +3,12 @@ import { ref, reactive } from "vue";
 import path from "path";
 const props = defineProps(["item", "basePath"]);
 const resolvePath = (routePath: string) => {
-  console.log(props.basePath + (props.basePath == "/" ? "" : "/") + routePath);
+  // console.log(props.basePath + (props.basePath == "/" ? "" : "/") + routePath);
   return props.basePath + (props.basePath == "/" ? "" : "/") + routePath;
 };
 </script>
 <template>
-  <el-sub-menu :index="item.path" v-if="item.meta.type == 'multiple'">
+  <el-sub-menu :index="item.path" v-if="item.meta.type == 'multiple' && !item.meta.hidden">
     <template #title>
       <el-icon v-if="item.meta.icon">
         <!-- 动态组件 -->
@@ -19,7 +19,7 @@ const resolvePath = (routePath: string) => {
     <MenuItem v-for="child in item.children" :key="child.path" :item="child" :basePath="item.path" />
   </el-sub-menu>
 
-  <el-menu-item :index="resolvePath(item.path)" v-else>
+  <el-menu-item :index="resolvePath(item.path)" v-if="item.meta.type != 'multiple' && !item.meta.hidden">
     <el-icon v-if="item.meta.icon">
       <component :is="item.meta.icon"></component>
     </el-icon>

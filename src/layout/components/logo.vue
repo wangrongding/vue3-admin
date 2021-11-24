@@ -4,7 +4,7 @@ import { ref } from "vue";
 <template>
   <div class="page-container">
     <img src="@/assets/image/logo.png" alt="" />
-    <span class="title">vue3-admin</span>
+    <span class="title">Mint-Admin</span>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -14,6 +14,8 @@ import { ref } from "vue";
   display: flex;
   align-items: center;
   .title {
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+    color: $base-color-default;
     line-height: 60px;
     height: 60px;
     display: inline-block;
@@ -21,7 +23,8 @@ import { ref } from "vue";
     font-weight: bolder;
   }
   img {
-    height: 50px;
+    margin-right: 10px;
+    height: 44px;
   }
 }
 </style>

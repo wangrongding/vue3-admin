@@ -16,6 +16,57 @@ export const routes: Array<RouteRecordRaw> = [
     ],
   },
   {
+    path: "/111221",
+    component: Layout,
+    meta: { title: "xx1管理", type: "multiple", icon: "Setting" },
+    children: [
+      {
+        path: "userManagement",
+        component: () => import("@/views/system/userManagement.vue"),
+        meta: { title: "用户管理" },
+      },
+      {
+        path: "logs",
+        component: () => import("@/views/system/logs.vue"),
+        meta: { title: "日志管理" },
+      },
+    ],
+  },
+  {
+    path: "/1111",
+    component: Layout,
+    meta: { title: "xx1管理", type: "multiple", icon: "Setting" },
+    children: [
+      {
+        path: "userManagement",
+        component: () => import("@/views/system/userManagement.vue"),
+        meta: { title: "用户管理" },
+      },
+      {
+        path: "logs",
+        component: () => import("@/views/system/logs.vue"),
+        meta: { title: "日志管理" },
+      },
+    ],
+  },
+  {
+    path: "/2222",
+    component: Layout,
+    meta: { title: "XX管理", type: "multiple", icon: "Setting" },
+    children: [
+      {
+        path: "userManagement",
+        component: () => import("@/views/system/userManagement.vue"),
+        meta: { title: "用户管理" },
+      },
+      {
+        path: "logs",
+        component: () => import("@/views/system/logs.vue"),
+        meta: { title: "日志管理" },
+      },
+    ],
+  },
+  {
     path: "/system",
     component: Layout,
     meta: { title: "系统管理", type: "multiple", icon: "Setting" },
