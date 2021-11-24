@@ -207,7 +207,7 @@ const BatteryConfig = ref([
     top: 20px;
     left: 20px;
     i {
-      color: $icon-color;
+      color: $base-color-default;
       margin-right: 10px;
     }
   }

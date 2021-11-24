@@ -18,9 +18,9 @@ import Menu from "./components/menu.vue";
 <style lang="scss" scoped>
 .app-container {
   height: 100vh;
-  background-color: $nav-bg-color;
+  background-color: $base-nav-bg-color;
   .el-header {
-    background-color: $nav-bg-color;
+    background-color: $base-nav-bg-color;
     border-bottom: 1px solid #0000001a;
     color: var(--el-text-color-primary);
     text-align: right;
@@ -31,7 +31,7 @@ import Menu from "./components/menu.vue";
   }
 
   .el-aside {
-    background-color: $menu-bg-color;
+    background-color: $base-menu-bg-color;
     color: var(--el-text-color-primary);
     user-select: none;
   }
@@ -54,10 +54,10 @@ import Menu from "./components/menu.vue";
     }
     // 滚动条上的滚动滑块
     &::-webkit-scrollbar-thumb {
-      background-color: $scroll-color;
+      background-color: $base-scroll-color;
       border-radius: 6px;
       &:hover {
-        background-color: $scroll-active-color;
+        background-color: $base-scroll-active-color;
       }
     }
     // 滚动条上的按钮

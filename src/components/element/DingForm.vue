@@ -280,9 +280,9 @@ function cancelSubmit(cancel: any) {
 //行内表单
 .el-form--inline {
   display: inline-block;
-  ::v-deep .el-form-item__label-wrap {
-    margin-left: 0 !important;
-  }
+  // :deep .el-form-item__label-wrap {
+  //   margin-left: 0 !important;
+  // }
 }
 #richText {
   z-index: 2000;

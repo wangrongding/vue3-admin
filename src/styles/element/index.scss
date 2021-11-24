@@ -1,3 +1,4 @@
+@import "../var";
 $--colors: (
   "primary": (
     "base": green,
@@ -33,3 +34,18 @@ $--colors: (
 
 // You can comment it to hide debug info.
 // @debug $--colors;
+
+//element-plus颜色定制化
+:root {
+  --el-color-primary: #00e0b4;
+}
+.el-button--primary {
+  $base-color-default: #00e0b4;
+  --el-button-background-color: #00e0b4;
+  --el-button-font-color: #ffffff;
+  --el-button-border-color: #00e0b4;
+  --el-button-hover-color: rgb(0, 255, 208);
+  --el-button-active-font-color: #e6e6e6;
+  --el-button-active-background-color: #00e0b4;
+  --el-button-active-border-color: #00e0b4;
+}

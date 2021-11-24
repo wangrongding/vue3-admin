@@ -38,7 +38,7 @@ const selectionChange = (val: any) => {
       :height="tableParams.height"
       :max-height="tableParams.maxHeight"
       :stripe="tableParams.stripe"
-      :border="getOption(tableParams.border, false)"
+      :border="getOption(tableParams.border, true)"
       :size="tableParams.size"
       :fit="tableParams.fit || true"
       :show-header="getOption(tableParams.showHeader, true)"
@@ -57,7 +57,7 @@ const selectionChange = (val: any) => {
       :lazy="tableParams.lazy"
       :load="tableParams.load"
       :tree-props="tableParams.treeProps"
-      :header-cell-style="{ /* background: '#198fff', */ fontWeight: 'bold' }"
+      :header-cell-style="{ background: 'rgba(197, 255, 246, 1)', fontWeight: 'bold', color: '#000' }"
       :row-key="tableParams.rowKey"
       :row-style="tableParams.rowStyle"
       @row-click="handleRowClick"
@@ -90,5 +90,8 @@ const selectionChange = (val: any) => {
 <style lang="scss" scoped>
 .page-container {
   // margin-top: 20px;
+  .el-table {
+    border-radius: 10px;
+  }
 }
 </style>

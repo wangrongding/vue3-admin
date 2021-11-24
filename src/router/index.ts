@@ -25,13 +25,18 @@ export const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/system/userManagement.vue"),
         meta: { title: "用户管理" },
       },
+      {
+        path: "logs",
+        component: () => import("@/views/system/logs.vue"),
+        meta: { title: "日志管理" },
+      },
     ],
   },
   {
     path: "/userInfo",
     component: Layout,
     meta: { title: "用户信息", type: "single", icon: "Setting", hidden: true },
-    redirect: "/userInfo/index",
+    redirect: "/index",
     children: [
       {
         path: "index",

@@ -5,7 +5,7 @@ function handleClose() {}
 import MenuItem from "./menuItem.vue";
 import { useRoute } from "vue-router";
 import { routes } from "@/router/index.ts";
-console.log(routes, "routes");
+// console.log(routes, "routes");
 
 let menuList = reactive(routes);
 let activeRouter = useRoute().path;
@@ -19,14 +19,28 @@ let activeRouter = useRoute().path;
 </template>
 <style lang="scss" scoped>
 .page-container {
-  background-color: $menu-bg-color;
+  background-color: $base-menu-bg-color;
   height: calc(100vh - 60px);
   .el-menu-vertical:not(.el-menu--collapse) {
     width: 200px;
     min-height: 400px;
   }
   .el-menu {
-    background-color: $menu-bg-color;
+    background-color: $base-menu-bg-color;
+    //菜单激活后的样式
+    ::v-deep(.el-menu-item.is-active) {
+      font-weight: bold;
+      background-color: rgba(227, 255, 251, 1);
+      position: relative;
+      &::after {
+        position: absolute;
+        right: 0;
+        content: "";
+        width: 2px;
+        height: 100%;
+        background-color: $base-color-default;
+      }
+    }
   }
 }
 </style>

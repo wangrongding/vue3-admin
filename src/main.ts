@@ -6,7 +6,6 @@ import store from "./store";
 //=======================element-plus
 import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
-import "@/styles/index.scss";
 import * as Icons from "@element-plus/icons";
 
 //=====================全局挂载element-plus二次封装的组件
@@ -17,6 +16,10 @@ app.component("DingForm", DingForm);
 
 //=====================iconFont
 import "@/assets/icon/iconfont.css";
+//=====================resetCss
+import "@/styles/index.scss";
+//=====================elementReset
+import "@/styles/element/index.scss";
 
 //全局挂载所有图标
 Object.keys(Icons).forEach((key) => {
