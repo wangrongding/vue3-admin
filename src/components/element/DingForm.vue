@@ -90,6 +90,7 @@ function cancelSubmit(cancel: any) {
     :size="formParams.size"
     :disabled="formParams.disabled"
   >
+    <!-- <el-col :span="24"> -->
     <el-form-item
       v-for="(itemForm, key) in formParams.formList"
       :key="key"
@@ -263,6 +264,7 @@ function cancelSubmit(cancel: any) {
       <el-button type="info" v-if="formParams.submit.cancel" @click="cancelSubmit(formParams.submit.cancelFunction)">{{ formParams.submit.cancelText || "取消" }}</el-button>
     </el-form-item>
     <slot name="buttonGroup"></slot>
+    <!-- </el-col> -->
   </el-form>
 </template>
 
@@ -275,15 +277,16 @@ function cancelSubmit(cancel: any) {
   width: 100%;
 }
 .el-form {
+  width: 100%;
   // margin-top: 20px;
 }
 //行内表单
-.el-form--inline {
-  display: inline-block;
-  // :deep .el-form-item__label-wrap {
-  //   margin-left: 0 !important;
-  // }
-}
+// .el-form--inline {
+//   display: inline-block;
+//   // :deep .el-form-item__label-wrap {
+//   //   margin-left: 0 !important;
+//   // }
+// }
 #richText {
   z-index: 2000;
 }

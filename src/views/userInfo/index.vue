@@ -7,16 +7,18 @@ const formParams = ref({
       type: "select",
       label: "aaaa",
       placeholder: "请选择班级",
-      selectOptions: [
-        { label: "男", value: 0 },
-        { label: "男", value: 0 },
-        { label: "男", value: 0 },
-        { label: "男", value: 0 },
-        { label: "男", value: 0 },
-        { label: "男", value: 0 },
-        { label: "男", value: 0 },
-        { label: "女", value: 1 },
-      ],
+      selectOptions: [{ label: "男", value: 0 }],
+    },
+    sex111: {
+      type: "text",
+      label: "aaaa",
+      placeholder: "请选择班级",
+      selectOptions: [{ label: "男", value: 0 }],
+    },
+    sexaa111: {
+      type: "date-picker",
+      label: "aaaa",
+      placeholder: "请选择班级",
     },
   },
   rules: {
