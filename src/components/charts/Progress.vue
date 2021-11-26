@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, defineProps } from "vue";
+import { ref, onMounted } from "vue";
 import { cloneDeep } from /* * as __ */ "lodash";
 import * as echarts from "echarts";
 const myChart = ref<HTMLElement>(); //也可以用const myChart = ref<any>();

@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import * as echarts from "echarts";
 const myChart = ref<HTMLElement>(); //也可以用const myChart = ref<any>();
 console.log(myChart);
 const myCharts = ref<any>();
-
-setTimeout(() => {
+onMounted(() => {
   // 绘制图表
   myCharts.value = echarts.init(myChart.value!);
   myCharts.value.setOption({
@@ -49,7 +48,7 @@ setTimeout(() => {
             },
             {
               offset: 1,
-              color: "rgba(255, 255, 255,0)",
+              color: "rgba(255, 255, 255,0.2)",
             },
           ]),
         },
@@ -68,14 +67,14 @@ setTimeout(() => {
             },
             {
               offset: 1,
-              color: "rgba(255, 255, 255,0)",
+              color: "rgba(255, 255, 255,0.2)",
             },
           ]),
         },
       },
     ],
   });
-}, 10);
+});
 </script>
 
 <template>

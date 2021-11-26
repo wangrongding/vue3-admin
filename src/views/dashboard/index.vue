@@ -114,6 +114,7 @@ const BatteryConfig = ref([
     labelText: "无需干预",
   },
 ]);
+const lineConfig = ref({});
 </script>
 
 <template>
@@ -159,7 +160,6 @@ const BatteryConfig = ref([
 </template>
 <style lang="scss" scoped>
 .page-container {
-  height: 100%;
   .panel-list {
     display: grid;
     grid-template-columns: repeat(4, 1fr);

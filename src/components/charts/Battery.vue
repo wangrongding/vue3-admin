@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, defineProps } from "vue";
+import { ref, onMounted } from "vue";
 import "echarts-liquidfill";
 import * as echarts from "echarts";
 const chartDom = ref<HTMLElement>(); //也可以用const chartDom = ref<any>();

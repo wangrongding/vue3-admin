@@ -12,7 +12,7 @@ let activeRouter = useRoute().path;
 </script>
 <template>
   <div class="page-container">
-    <el-menu :default-active="activeRouter" class="el-menu-vertical" @open="handleOpen" @close="handleClose" router>
+    <el-menu :default-active="activeRouter" class="el-menu-vertical" unique-opened @open="handleOpen" @close="handleClose" router>
       <MenuItem v-for="route in menuList" :key="route.path" :item="route" :basePath="route.path" />
     </el-menu>
   </div>

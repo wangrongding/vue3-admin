@@ -9,7 +9,10 @@ import Menu from "./components/menu.vue";
     <el-container>
       <el-aside width="auto"><Menu /></el-aside>
       <el-main>
-        <router-view />
+        <div class="bread-crumbs">
+          <!-- 面包屑 -->
+        </div>
+        <router-view class="content" />
       </el-main>
     </el-container>
   </el-container>
@@ -40,11 +43,10 @@ import Menu from "./components/menu.vue";
     width: 100%;
     background-color: #f4f5fa;
     color: var(--el-text-color-primary);
-    padding: 20px;
+    padding: 0px 20px 20px;
     height: calc(100vh - 60px);
-    // overflow-y: auto;
-    overflow-y: scroll;
-
+    overflow-y: auto;
+    // overflow-y: scroll;
     // 整个滚动条
     &::-webkit-scrollbar {
       width: 8px;
@@ -78,6 +80,12 @@ import Menu from "./components/menu.vue";
     }
     //  某些元素的corner部分的部分样式(例:textarea的可拖动按钮)
     &::-webkit-resizer {
+    }
+    .bread-crumbs {
+      height: 30px;
+    }
+    .content {
+      height: auto;
     }
   }
 }
