@@ -26,7 +26,7 @@ export const routes: Array<RouteRecordRaw> = [
         meta: { title: "课程资料" },
         children: [
           {
-            path: "course",
+            path: "detail",
             component: () => import("@/views/material/detail.vue"),
             meta: { title: "课程资料" },
           },
