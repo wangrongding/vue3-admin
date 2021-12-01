@@ -6,7 +6,7 @@ const resolvePath = (routePath: string) => {
   if (props.basePath == "/") {
     return "/dashboard";
   }
-  console.log(props.basePath + (props.basePath == "/" ? "" : "/") + routePath);
+  // console.log(props.basePath + (props.basePath == "/" ? "" : "/") + routePath);
   return props.basePath + (props.basePath == "/" ? "" : "/") + routePath;
 };
 </script>
@@ -21,7 +21,7 @@ const resolvePath = (routePath: string) => {
     </template>
     <MenuItem v-for="child in item.children" :key="child.path" :item="child" :basePath="item.path" />
   </el-sub-menu>
-
+  
   <el-menu-item :index="resolvePath(item.path)" v-if="item.meta.type != 'multiple' && !item.meta.hidden">
     <el-icon v-if="item.meta.icon">
       <component :is="item.meta.icon"></component>

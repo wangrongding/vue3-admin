@@ -3,7 +3,8 @@ import { defineComponent } from "vue";
 import { useRouter } from "vue-router";
 import { reactive, toRefs } from "vue";
 export default defineComponent({
-  setup() {
+  props: ["type"],
+  setup(props) {
     const router = useRouter();
     const state = reactive({
       handleSelect: (val: string) => {

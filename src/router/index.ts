@@ -64,7 +64,7 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: "/1111",
     component: Layout,
-    meta: { title: "班级管理", type: "multiple", icon: "Setting" },
+    meta: { title: "班级管理", type: "single", icon: "Setting" },
     children: [
       {
         path: "userManagement",
@@ -81,17 +81,13 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: "/2222",
     component: Layout,
-    meta: { title: "学生管理", type: "multiple", icon: "Setting" },
+    meta: { title: "学生管理", type: "single", icon: "Setting" },
+    redirect: "/2222/userManagement",
     children: [
       {
         path: "userManagement",
         component: () => import("@/views/system/userManagement.vue"),
         meta: { title: "用户管理" },
-      },
-      {
-        path: "logs",
-        component: () => import("@/views/system/logs.vue"),
-        meta: { title: "日志管理" },
       },
     ],
   },

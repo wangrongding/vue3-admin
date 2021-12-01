@@ -5,7 +5,8 @@ import { onMounted, reactive, toRefs } from "vue";
 import List from "./list.vue";
 export default defineComponent({
   components: { List },
-  setup() {
+  setup(props, context) {
+    console.log(context, "context");
     const { currentRoute } = useRouter();
     const state = reactive({
       currentPage: 1,
@@ -14,7 +15,7 @@ export default defineComponent({
       () => currentRoute.value,
       () => {
         currentRoute.value.path.includes("detail") ? (state.currentPage = 2) : (state.currentPage = 1);
-        console.log(state.currentPage, "============");
+        // console.log(state.currentPage, "============");
       }
     );
     onMounted(() => {});
@@ -28,7 +29,7 @@ export default defineComponent({
 <template>
   <!-- 动态组件 -->
   <!-- <component :is="componentPage"></component> -->
-  <List v-if="currentPage == 1" />
+  <List v-if="currentPage == 1" :type="1" />
   <router-view v-else></router-view>
 </template>
 <style lang="scss" scoped>
