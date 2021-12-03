@@ -62,7 +62,7 @@ onMounted(() => {
           },
         },
         label: {
-          formatter: "{c}%",
+          formatter: "{d}%",
           position: "inside",
           fontSize: 24,
           color: "#fff",

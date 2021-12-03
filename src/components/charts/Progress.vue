@@ -74,6 +74,46 @@ onMounted(() => {
       center: configuration.value.center,
       radius: configuration.value.radius, //图形大小
     },
+    //================
+    xAxis: [
+      //这里有很多的show，必须都设置成不显示
+      {
+        type: "category",
+        data: [],
+        axisLine: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        splitArea: {
+          interval: "auto",
+          show: false,
+        },
+      },
+    ],
+    yAxis: [
+      //这里有很多的show，必须都设置成不显示
+      {
+        type: "value",
+        axisLine: {
+          show: false,
+        },
+        axisTick: {
+          show: false,
+        },
+        minorTick: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        axisLabel: {
+          show: false,
+        },
+      },
+    ],
+    //================
     series: [
       {
         type: "bar",
@@ -90,7 +130,34 @@ onMounted(() => {
           color: configuration.value.finishedColor,
         },
       },
+      {
+        name: "aaa",
+        type: "bar",
+        barWidth: "60%", //不显示，可以随便设置
+        data: [0],
+        itemStyle: {
+          color: "#00A1E9", //这里的图例要注意，颜色设置和仪表盘的颜色对应起来
+        },
+      },
+      {
+        name: "bbb",
+        type: "bar",
+        barWidth: "60%",
+        data: [0],
+        itemStyle: {
+          color: "#70C1B3",
+        },
+      },
     ],
+    legend: {
+      //配置legend，这里的data，要对应type为‘bar’的series数据项的‘name’名称，作为图例的说明
+      data: ["aaa", "bbb"],
+      selectedMode: false, //图例禁止点击
+      left: 20,
+      top: 80,
+      orient: "vertical",
+      icon: "circle",
+    },
   });
 });
 </script>

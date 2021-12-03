@@ -1,12 +1,12 @@
 <script lang="ts">
-import { defineComponent, watch } from "vue";
+import { defineComponent, watch, getCurrentInstance } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { onMounted, reactive, toRefs } from "vue";
 import List from "./list.vue";
 export default defineComponent({
   components: { List },
   setup(props, context) {
-    console.log(context, "context");
+    console.log(getCurrentInstance(), "context");
     const { currentRoute } = useRouter();
     const state = reactive({
       currentPage: 1,

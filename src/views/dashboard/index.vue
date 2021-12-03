@@ -83,17 +83,17 @@ const ProgressConfig = ref({
 const pieColor = ["rgba(153, 153, 153, 1)", "rgba(255, 143, 114, 1)", "rgba(0, 224, 180, 1)"];
 const PieConfig = ref({
   data: [
-    { value: 50, name: "xaxx", itemStyle: { color: pieColor[0] } },
-    { value: 25, name: "xxsx", itemStyle: { color: pieColor[1] } },
-    { value: 40, name: "xxzx1", itemStyle: { color: pieColor[2] } },
+    { value: 277, name: "扇形区间名称", itemStyle: { color: pieColor[0] } },
+    { value: 87, name: "xxsx", itemStyle: { color: pieColor[1] } },
+    { value: 55, name: "xxzx1", itemStyle: { color: pieColor[2] } },
   ],
 });
 const BatteryConfig = ref([
   {
     data: 0.3,
+    labelText: "已转介",
     color: ["#76b7ff", "#0179ff"],
     background: "#ebf5ff",
-    labelText: "已转介",
   },
   {
     data: 0.3,

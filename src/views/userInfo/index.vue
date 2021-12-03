@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// import Pro from "@/components/charts/progress1.vue";
 import { ref } from "vue";
 const formParams = ref({
   data: { birthday: "" }, // 表单数据对象
@@ -32,7 +33,8 @@ const formParams = ref({
 </script>
 <template>
   <div class="page-container">
-    <DingForm :formParams="formParams" />
+    <!-- <Pro /> -->
+    <!-- <DingForm :formParams="formParams" /> -->
   </div>
 </template>
 <style lang="scss" scoped>
