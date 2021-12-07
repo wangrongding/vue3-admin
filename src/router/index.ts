@@ -116,6 +116,7 @@ export const routes: Array<RouteRecordRaw> = [
       {
         path: "index",
         component: () => import("@/views/userInfo/index.vue"),
+        // component: () => import("@/views/userInfo/index.vue"),
         meta: { title: "编辑用户信息" },
       },
     ],

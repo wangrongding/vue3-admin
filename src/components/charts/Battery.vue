@@ -102,6 +102,10 @@ onMounted(() => {
         outline: {
           show: false,
         },
+        itemStyle: {
+          //opacity: 0.7, // 波浪的透明度
+          shadowBlur: 0, // 波浪的阴影范围
+        },
         label: {
           formatter: "{c}",
           fontSize: 28,

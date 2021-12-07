@@ -41,6 +41,7 @@ onMounted(() => {
     },
     legend: {
       orient: "vertical",
+      selectedMode: false,
       left: 20,
       top: 80,
       icon: configuration.value.icon, // 这个字段控制形状  类型包括 circle，rect ，roundRect，triangle，diamond，pin，arrow，none

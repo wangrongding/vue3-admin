@@ -48,6 +48,11 @@ function cancelSubmit(cancel: any) {
   cancel && cancel();
 }
 
+const formStyle = ref({
+  textAlign: props.formParams.align || "left",
+  submitButton: props.formParams.align ? "block" : "inline-block",
+  formWidth: props.formParams.align ? "100%" : "",
+});
 //文件改变钩子函数
 /* function onFileChange() {
       console.log(this.$refs);
@@ -73,136 +78,128 @@ function cancelSubmit(cancel: any) {
     }, */
 </script>
 <template>
-  <el-form
-    v-loading="formParams.loading"
-    ref="dingFormDom"
-    :model="formParams.data"
-    :rules="formParams.rules"
-    :inline="formParams.inline"
-    :label-position="formParams.labelPosition"
-    :label-width="formParams.labelWidth"
-    :label-suffix="formParams.labelSuffix"
-    :hide-required-asterisk="formParams.hideRequiredAsterisk"
-    :show-message="formParams.showMessage"
-    :inline-message="formParams.inlineMessage"
-    :status-icon="formParams.statusIcon"
-    :validate-on-rule-change="formParams.validateOnRuleChange"
-    :size="formParams.size"
-    :disabled="formParams.disabled"
-  >
-    <el-form-item
-      v-for="(itemForm, key) in formParams.formList"
-      :key="key"
-      :prop="key.toString()"
-      :label="itemForm.label"
-      :label-width="itemForm.labelWidth"
-      :style="itemForm.style"
-      v-show="getOption(itemForm.isShow, true)"
+  <div class="page-container">
+    <el-form
+      v-loading="formParams.loading"
+      ref="dingFormDom"
+      :model="formParams.data"
+      :rules="formParams.rules"
+      :inline="formParams.inline"
+      :label-position="formParams.labelPosition"
+      :label-width="formParams.labelWidth"
+      :label-suffix="formParams.labelSuffix"
+      :hide-required-asterisk="formParams.hideRequiredAsterisk"
+      :show-message="formParams.showMessage"
+      :inline-message="formParams.inlineMessage"
+      :status-icon="formParams.statusIcon"
+      :validate-on-rule-change="formParams.validateOnRuleChange"
+      :size="formParams.size"
+      :disabled="formParams.disabled"
     >
-      <el-radio-group v-if="itemForm.type === 'radio'" v-model="formParams.data[key]">
-        <el-radio v-for="(radioOption, index) in itemForm.radioOptions" :key="index" :label="radioOption.value">{{ radioOption.text }}</el-radio>
-      </el-radio-group>
-      <el-checkbox
-        v-if="itemForm.type === 'checkbox'"
-        v-model="formParams.data[key]"
-        :true-label="itemForm.checkboxOption.trueLabel != undefined ? itemForm.checkboxOption.trueLabel : true"
-        :false-label="itemForm.checkboxOption.falseLabel != undefined ? itemForm.checkboxOption.falseLabel : false"
-        >{{ itemForm.checkboxOption.label ? itemForm.checkboxOption.label : itemForm.checkboxOption }}</el-checkbox
-      >
-      <el-checkbox-group v-if="itemForm.type === 'checkboxGroup'" v-model="formParams.data[key]">
+      <el-form-item v-for="(itemForm, key) in formParams.formList" :key="key" :prop="key.toString()" :label="itemForm.label" :style="itemForm.style" v-show="getOption(itemForm.isShow, true)">
+        <el-radio-group v-if="itemForm.type === 'radio'" v-model="formParams.data[key]">
+          <el-radio v-for="(radioOption, index) in itemForm.radioOptions" :key="index" :label="radioOption.value">{{ radioOption.text }}</el-radio>
+        </el-radio-group>
         <el-checkbox
-          v-for="(checkboxOption, index) in itemForm.checkboxOptions"
-          :key="index"
-          :true-label="checkboxOption.trueLabel || true"
-          :false-label="checkboxOption.falseLabel || false"
-          :label="checkboxOption.label ? checkboxOption.label : checkboxOption"
-        ></el-checkbox>
-      </el-checkbox-group>
-      <el-input
-        v-if="['text', 'textarea'].includes(itemForm.type)"
-        :type="itemForm.type"
-        v-model="formParams.data[key]"
-        :maxlength="itemForm.maxlength"
-        :show-word-limit="!!itemForm.maxlength"
-        :placeholder="itemForm.placeholder"
-        :disabled="itemForm.disabled"
-        :style="`${itemForm.width ? 'width:' + itemForm.width : ''}`"
-        :rows="itemForm.rows"
-        clearable
-        :show-password="itemForm.isPassword"
-      ></el-input>
-      <el-input
-        v-if="itemForm.type === 'number'"
-        :type="'text'"
-        v-model.number="formParams.data[key]"
-        :maxlength="itemForm.maxlength"
-        :show-word-limit="!!itemForm.maxlength"
-        :placeholder="itemForm.placeholder"
-        :disabled="itemForm.disabled"
-        clearable
-        :show-password="itemForm.isPassword"
-      ></el-input>
-      <el-input-number v-if="itemForm.type === 'input-number'" v-model="formParams.data[key]"></el-input-number>
-      <el-select
-        v-if="itemForm.type === 'select'"
-        v-model="formParams.data[key]"
-        :multiple="itemForm.multiple"
-        :multiple-limit="itemForm.multipleLimit"
-        :style="`${itemForm.width ? 'width:' + itemForm.width : ''}`"
-        clearable
-        :placeholder="itemForm.placeholder"
-        filterable
-        @change="
-          () => {
-            itemForm.change && itemForm.change();
-          }
-        "
-      >
-        <template v-if="itemForm.selectOptions[0] && itemForm.selectOptions[0].options">
-          <el-option-group v-for="selectOption in itemForm.selectOptions" :key="selectOption.label" :label="selectOption.label">
-            <el-option v-for="item in selectOption.options" :key="item.value" :label="item.label" :value="item.value"></el-option>
-          </el-option-group>
-        </template>
-        <template v-else>
-          <el-option
-            v-for="(selectOption, index) in itemForm.selectOptions"
+          v-if="itemForm.type === 'checkbox'"
+          v-model="formParams.data[key]"
+          :true-label="itemForm.checkboxOption.trueLabel != undefined ? itemForm.checkboxOption.trueLabel : true"
+          :false-label="itemForm.checkboxOption.falseLabel != undefined ? itemForm.checkboxOption.falseLabel : false"
+        >{{ itemForm.checkboxOption.label ? itemForm.checkboxOption.label : itemForm.checkboxOption }}</el-checkbox>
+        <el-checkbox-group v-if="itemForm.type === 'checkboxGroup'" v-model="formParams.data[key]">
+          <el-checkbox
+            v-for="(checkboxOption, index) in itemForm.checkboxOptions"
             :key="index"
-            :label="itemForm.customLabelValue ? selectOption[itemForm.customLabelValue.label] : selectOption.label"
-            :value="itemForm.customLabelValue ? selectOption[itemForm.customLabelValue.value] : selectOption.value"
-          ></el-option>
-        </template>
-      </el-select>
-      <el-cascader v-if="itemForm.type === 'cascader'" v-model="formParams.data[key]" :options="itemForm.cascaderOptions" :placeholder="itemForm.placeholder" clearable filterable></el-cascader>
-      <el-switch v-if="itemForm.type === 'switch'" v-model="formParams.data[key]" :active-text="itemForm.activeText" :inactive-text="itemForm.inactiveText"></el-switch>
-      <el-slider v-if="itemForm.type === 'slider'" v-model="formParams.data[key]"></el-slider>
-      <el-time-select v-if="itemForm.type === 'time-select'" v-model="formParams.data[key]" :placeholder="itemForm.placeholder"></el-time-select>
-      <el-time-picker
-        v-if="itemForm.type === 'time-picker'"
-        v-model="formParams.data[key]"
-        :placeholder="itemForm.placeholder"
-        start-placeholder="开始时间"
-        end-placeholder="结束时间"
-        :is-range="itemForm.isRange"
-        :value-format="formParams.valueFormat || 'HH:mm:ss'"
-      ></el-time-picker>
-      <el-date-picker
-        v-if="itemForm.type === 'date-picker'"
-        v-model="formParams.data[key]"
-        :placeholder="itemForm.placeholder"
-        :disabled-date="itemForm.disabledDate"
-        start-placeholder="开始日期"
-        end-placeholder="结束日期"
-        :style="itemForm.style"
-        :type="itemForm.mode"
-        :value-format="itemForm.valueFormat || 'YYYY-MM-DD'"
-        :default-time="itemForm.defaultTime"
-        @change="
-          () => {
-            itemForm.onChange && itemForm.onChange();
-          }
-        "
-      ></el-date-picker>
-      <!-- <el-upload
+            :true-label="checkboxOption.trueLabel || true"
+            :false-label="checkboxOption.falseLabel || false"
+            :label="checkboxOption.label ? checkboxOption.label : checkboxOption"
+          ></el-checkbox>
+        </el-checkbox-group>
+        <el-input
+          v-if="['text', 'textarea'].includes(itemForm.type)"
+          :type="itemForm.type"
+          v-model="formParams.data[key]"
+          :maxlength="itemForm.maxlength"
+          :show-word-limit="!!itemForm.maxlength"
+          :placeholder="itemForm.placeholder"
+          :disabled="itemForm.disabled"
+          :style="`${itemForm.width ? 'width:' + itemForm.width : ''}`"
+          :rows="itemForm.rows"
+          clearable
+          :show-password="itemForm.isPassword"
+        ></el-input>
+        <el-input
+          v-if="itemForm.type === 'number'"
+          :type="'text'"
+          v-model.number="formParams.data[key]"
+          :maxlength="itemForm.maxlength"
+          :show-word-limit="!!itemForm.maxlength"
+          :placeholder="itemForm.placeholder"
+          :disabled="itemForm.disabled"
+          clearable
+          :show-password="itemForm.isPassword"
+        ></el-input>
+        <el-input-number v-if="itemForm.type === 'input-number'" v-model="formParams.data[key]"></el-input-number>
+        <el-select
+          v-if="itemForm.type === 'select'"
+          v-model="formParams.data[key]"
+          :multiple="itemForm.multiple"
+          :multiple-limit="itemForm.multipleLimit"
+          :style="`${itemForm.width ? 'width:' + itemForm.width : ''}`"
+          clearable
+          :placeholder="itemForm.placeholder"
+          filterable
+          @change="
+            () => {
+              itemForm.change && itemForm.change();
+            }
+          "
+        >
+          <template v-if="itemForm.selectOptions[0] && itemForm.selectOptions[0].options">
+            <el-option-group v-for="selectOption in itemForm.selectOptions" :key="selectOption.label" :label="selectOption.label">
+              <el-option v-for="item in selectOption.options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+            </el-option-group>
+          </template>
+          <template v-else>
+            <el-option
+              v-for="(selectOption, index) in itemForm.selectOptions"
+              :key="index"
+              :label="itemForm.customLabelValue ? selectOption[itemForm.customLabelValue.label] : selectOption.label"
+              :value="itemForm.customLabelValue ? selectOption[itemForm.customLabelValue.value] : selectOption.value"
+            ></el-option>
+          </template>
+        </el-select>
+        <el-cascader v-if="itemForm.type === 'cascader'" v-model="formParams.data[key]" :options="itemForm.cascaderOptions" :placeholder="itemForm.placeholder" clearable filterable></el-cascader>
+        <el-switch v-if="itemForm.type === 'switch'" v-model="formParams.data[key]" :active-text="itemForm.activeText" :inactive-text="itemForm.inactiveText"></el-switch>
+        <el-slider v-if="itemForm.type === 'slider'" v-model="formParams.data[key]"></el-slider>
+        <el-time-select v-if="itemForm.type === 'time-select'" v-model="formParams.data[key]" :placeholder="itemForm.placeholder"></el-time-select>
+        <el-time-picker
+          v-if="itemForm.type === 'time-picker'"
+          v-model="formParams.data[key]"
+          :placeholder="itemForm.placeholder"
+          start-placeholder="开始时间"
+          end-placeholder="结束时间"
+          :is-range="itemForm.isRange"
+          :value-format="formParams.valueFormat || 'HH:mm:ss'"
+        ></el-time-picker>
+        <el-date-picker
+          v-if="itemForm.type === 'date-picker'"
+          v-model="formParams.data[key]"
+          :placeholder="itemForm.placeholder"
+          :disabled-date="itemForm.disabledDate"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          :style="'width:100%'"
+          :type="itemForm.mode"
+          :value-format="itemForm.valueFormat || 'YYYY-MM-DD'"
+          :default-time="itemForm.defaultTime"
+          @change="
+            () => {
+              itemForm.onChange && itemForm.onChange();
+            }
+          "
+        ></el-date-picker>
+        <!-- <el-upload
                 v-if="itemForm.type === 'upload'"
                 ref="upload"
                 :accept="itemForm.accept"
@@ -249,24 +246,41 @@ function cancelSubmit(cancel: any) {
                             : "只能上传jpg/png文件，且不超过500kb"
                     }}
                 </div>
-      </el-upload>-->
-      <el-rate v-if="itemForm.type === 'rate'" v-model="formParams.data[key]"></el-rate>
-      <el-color-picker v-if="itemForm.type === 'color-picker'" v-model="formParams.data[key]"></el-color-picker>
-      <el-transfer v-if="itemForm.type === 'transfer'" v-model="formParams.data[key]" :data="itemForm.transferData"></el-transfer>
-      <!-- id="richText" -->
-      <div v-if="itemForm.type === 'richText'" :id="key.toString()" ref="richText"></div>
-      <slot v-if="itemForm.type === 'customItem'" :name="itemForm.name ? itemForm.name : 'customItem'" :itemForm="itemForm" :formDate="formParams.data" :itemKey="key"></slot>
-    </el-form-item>
-    <el-form-item v-if="formParams.submit">
-      <el-button type="primary" @click="submitForm(formParams.submit.submitFunction)">{{ formParams.submit.submitText || "提交" }}</el-button>
-      <el-button type="info" v-if="formParams.submit.reset" @click="resetForm()">重置</el-button>
-      <el-button type="info" v-if="formParams.submit.cancel" @click="cancelSubmit(formParams.submit.cancelFunction)">{{ formParams.submit.cancelText || "取消" }}</el-button>
-    </el-form-item>
-    <slot name="buttonGroup"></slot>
-  </el-form>
+        </el-upload>-->
+        <el-rate v-if="itemForm.type === 'rate'" v-model="formParams.data[key]"></el-rate>
+        <el-color-picker v-if="itemForm.type === 'color-picker'" v-model="formParams.data[key]"></el-color-picker>
+        <el-transfer v-if="itemForm.type === 'transfer'" v-model="formParams.data[key]" :data="itemForm.transferData"></el-transfer>
+        <!-- id="richText" -->
+        <div v-if="itemForm.type === 'richText'" :id="key.toString()" ref="richText"></div>
+        <slot v-if="itemForm.type === 'customItem'" :name="itemForm.name ? itemForm.name : 'customItem'" :itemForm="itemForm" :formDate="formParams.data" :itemKey="key"></slot>
+      </el-form-item>
+
+      <el-form-item v-if="formParams.submit">
+        <el-button type="primary" @click="submitForm(formParams.submit.submitFunction)">{{ formParams.submit.submitText || "提交" }}</el-button>
+        <el-button type="info" v-if="formParams.submit.reset" @click="resetForm()">重置</el-button>
+        <el-button type="info" v-if="formParams.submit.cancel" @click="cancelSubmit(formParams.submit.cancelFunction)">{{ formParams.submit.cancelText || "取消" }}</el-button>
+      </el-form-item>
+
+      <slot name="buttonGroup"></slot>
+    </el-form>
+  </div>
 </template>
 
 <style scoped lang="scss">
+.page-container {
+  // text-align: v-bind("formStyle.textAlign");
+  .el-form {
+    width: v-bind("formStyle.formWidth");
+  }
+  .el-form-item:last-child {
+    display: v-bind("formStyle.submitButton");
+    // margin: 0 auto;
+    text-align: center;
+  }
+}
+.form-item-box {
+  width: 50%;
+}
 .el-select,
 .el-cascader,
 .el-time-select,

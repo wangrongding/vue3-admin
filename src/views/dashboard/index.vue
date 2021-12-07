@@ -80,12 +80,12 @@ const ProgressConfig = ref({
   finishedColor: "#00e0b4",
   data: 77,
 });
-const pieColor = ["rgba(153, 153, 153, 1)", "rgba(255, 143, 114, 1)", "rgba(0, 224, 180, 1)"];
+const pieColor = ["#5a91e7", "rgba(255, 143, 114, 1)", "rgba(0, 224, 180, 1)"];
 const PieConfig = ref({
   data: [
-    { value: 277, name: "扇形区间名称", itemStyle: { color: pieColor[0] } },
-    { value: 87, name: "xxsx", itemStyle: { color: pieColor[1] } },
-    { value: 55, name: "xxzx1", itemStyle: { color: pieColor[2] } },
+    { value: 277, name: "扇形区间名称a", itemStyle: { color: pieColor[0] } },
+    { value: 87, name: "扇形区间名称b", itemStyle: { color: pieColor[1] } },
+    { value: 55, name: "扇形区间名称cc", itemStyle: { color: pieColor[2] } },
   ],
 });
 const BatteryConfig = ref([
@@ -114,7 +114,11 @@ const BatteryConfig = ref([
     labelText: "无需干预",
   },
 ]);
-const lineConfig = ref({});
+const lineConfig = ref({
+  data1: [5, 250, 356, 150, 10, 20],
+  data2: [50, 200, 396, 190, 100, 200],
+  xAxisData: ["12-3", "12-4", "12-5", "12-6", "12-7", "12-8"],
+});
 </script>
 
 <template>
