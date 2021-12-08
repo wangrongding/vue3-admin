@@ -20,6 +20,8 @@ import "@/assets/icon/iconfont.css";
 import "@/styles/index.scss";
 //=====================elementReset
 import "@/styles/element/index.scss";
+//=====================mock
+// import "@/mock/index.ts";
 
 //全局挂载所有图标
 Object.keys(Icons).forEach((key) => {

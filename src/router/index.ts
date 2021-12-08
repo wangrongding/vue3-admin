@@ -65,6 +65,7 @@ export const routes: Array<RouteRecordRaw> = [
     path: "/1111",
     component: Layout,
     meta: { title: "班级管理", type: "single", icon: "Setting" },
+    redirect: "/1111/userManagement",
     children: [
       {
         path: "userManagement",

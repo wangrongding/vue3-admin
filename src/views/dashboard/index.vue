@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { dashboardInfo } from "@/api/dashboard/index.ts";
+import { ref, onMounted } from "vue";
 import Line from "@/components/charts/Line.vue";
 import Pie from "@/components/charts/Pie.vue";
 import Battery from "@/components/charts/Battery.vue";
@@ -118,6 +119,10 @@ const lineConfig = ref({
   data1: [5, 250, 356, 150, 10, 20],
   data2: [50, 200, 396, 190, 100, 200],
   xAxisData: ["12-3", "12-4", "12-5", "12-6", "12-7", "12-8"],
+});
+import axios from "axios";
+onMounted(() => {
+  dashboardInfo();
 });
 </script>
 
