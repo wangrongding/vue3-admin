@@ -105,7 +105,8 @@ const formStyle = ref({
           v-model="formParams.data[key]"
           :true-label="itemForm.checkboxOption.trueLabel != undefined ? itemForm.checkboxOption.trueLabel : true"
           :false-label="itemForm.checkboxOption.falseLabel != undefined ? itemForm.checkboxOption.falseLabel : false"
-        >{{ itemForm.checkboxOption.label ? itemForm.checkboxOption.label : itemForm.checkboxOption }}</el-checkbox>
+          >{{ itemForm.checkboxOption.label ? itemForm.checkboxOption.label : itemForm.checkboxOption }}</el-checkbox
+        >
         <el-checkbox-group v-if="itemForm.type === 'checkboxGroup'" v-model="formParams.data[key]">
           <el-checkbox
             v-for="(checkboxOption, index) in itemForm.checkboxOptions"

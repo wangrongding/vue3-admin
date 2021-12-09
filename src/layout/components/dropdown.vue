@@ -12,9 +12,7 @@ import { ref } from "vue";
     </div>
     <template #dropdown>
       <el-dropdown-menu>
-        <el-dropdown-item><router-link to="/userInfo/index">Action 1</router-link></el-dropdown-item>
-        <el-dropdown-item>Action 2</el-dropdown-item>
-        <el-dropdown-item>Action 3</el-dropdown-item>
+        <el-dropdown-item><router-link to="/userInfo">个人信息</router-link></el-dropdown-item>
       </el-dropdown-menu>
     </template>
   </el-dropdown>

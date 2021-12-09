@@ -22,7 +22,7 @@ const resolvePath = (routePath: string) => {
     <MenuItem v-for="child in item.children" :key="child.path" :item="child" :basePath="item.path" />
   </el-sub-menu>
 
-  <el-menu-item :index="resolvePath(item.path)" v-if="item.meta.type != 'multiple' && !item.meta.hidden">
+  <el-menu-item :index="item.path" v-if="item.meta.type != 'multiple' && !item.meta.hidden">
     <el-icon v-if="item.meta.icon">
       <component :is="item.meta.icon"></component>
     </el-icon>

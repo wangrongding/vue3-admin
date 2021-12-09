@@ -11,8 +11,10 @@
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
     "types": ["element-plus/global"],
+    "baseUrl": ".",
     "paths": {
-      "@": ["./src"]
+      // "@": ["./src"],
+      "@/*": ["./src/*"]
     }
     // "suppressImplicitAnyIndexErrors": true
   },

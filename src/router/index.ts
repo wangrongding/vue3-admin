@@ -1,17 +1,15 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Layout from "@/layout/index.vue";
-export const routes: Array<RouteRecordRaw> = [
+//动态路由(暂时写这,需要去后端拿)
+export const asyncRoutes: Array<RouteRecordRaw> = [
   {
-    path: "/",
-    name: "home",
+    path: "/dashboard",
     component: Layout,
     meta: { title: "首页", type: "single", icon: "House" },
-    redirect: "/dashboard",
     children: [
       {
-        path: "dashboard",
+        path: "/dashboard",
         component: () => import("@/views/dashboard/index.vue"),
-        meta: { title: "首页" },
       },
     ],
   },
@@ -109,53 +107,29 @@ export const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
+];
+//无权限路由
+export const routes: Array<RouteRecordRaw> = [
+  {
+    path: "/",
+    name: "home",
+    component: Layout,
+    meta: { hidden: true },
+    redirect: "/dashboard",
+  },
+  ...asyncRoutes,
   {
     path: "/userInfo",
     component: Layout,
     meta: { title: "用户信息", type: "single", icon: "Setting", hidden: true },
     children: [
       {
-        path: "index",
-        component: () => import("@/views/userInfo/index.vue"),
-        // component: () => import("@/views/userInfo/index.vue"),
-        meta: { title: "编辑用户信息" },
-      },
-    ],
-  },
-  /*   {
-    path: "/AAA",
-    component: Layout,
-    meta: { title: "菜单名A", type: "single", icon: "菜单图表名", hidden: true },
-    children: [
-      {
-        path: "index",
-        component: () => import("@/views/userInfo/index.vue"),
-        meta: { title: "编辑用户信息" },
-      },
-      {
-        path: "index",
+        path: "/userInfo",
         component: () => import("@/views/userInfo/index.vue"),
         meta: { title: "编辑用户信息" },
       },
     ],
   },
-  {
-    path: "/BBB",
-    component: Layout,
-    meta: { title: "菜单名B", type: "multiple", icon: "菜单图表名" },
-    children: [
-      {
-        path: "index",
-        component: () => import("@/views/userInfo/index.vue"),
-        meta: { title: "编辑用户信息" },
-      },
-      {
-        path: "index",
-        component: () => import("@/views/userInfo/index.vue"),
-        meta: { title: "编辑用户信息" },
-      },
-    ],
-  }, */
 ];
 
 const router = createRouter({ history: createWebHistory(), routes });

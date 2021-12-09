@@ -57,7 +57,11 @@ const selectionChange = (val: any) => {
       :lazy="tableParams.lazy"
       :load="tableParams.load"
       :tree-props="tableParams.treeProps"
-      :header-cell-style="{ background: 'rgba(197, 255, 246, 1)', fontWeight: 'bold', color: '#000' }"
+      :header-cell-style="{
+        background: 'rgba(197, 255, 246, 1)',
+        fontWeight: 'bold',
+        color: '#000',
+      }"
       :row-key="tableParams.rowKey"
       :row-style="tableParams.rowStyle"
       @row-click="handleRowClick"
