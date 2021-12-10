@@ -1,21 +1,14 @@
 <script setup lang="ts">
 import { ref, reactive, computed, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { asyncRoutes } from "@/router/index";
-let menuList = reactive(asyncRoutes);
+import { routes } from "@/router/index";
+let menuList = reactive(routes);
 const router = useRouter();
+const route = useRoute();
 function handleOpen() {}
 function handleClose() {}
-function handleSelect(index: any, indexPath: any, item: any, routeResult: any) {
-  router.push({
-    path: item.indexPath.join("/"),
-  });
-  console.log("🚀 /item", item.indexPath.join("/"));
-}
 import MenuItem from "./menuItem.vue";
-
 //当前路由
-const route = useRoute();
 const activeRouter = computed(() => {
   const { path } = route;
   return path;
@@ -23,7 +16,7 @@ const activeRouter = computed(() => {
 </script>
 <template>
   <div class="page-container">
-    <el-menu :default-active="activeRouter" class="el-menu-vertical" unique-opened @open="handleOpen" @close="handleClose" @select="handleSelect">
+    <el-menu :default-active="activeRouter" class="el-menu-vertical" unique-opened @open="handleOpen" @close="handleClose" router>
       <MenuItem v-for="route in menuList" :key="route.path" :item="route" :basePath="route.path" />
     </el-menu>
   </div>

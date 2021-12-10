@@ -15,11 +15,11 @@ function newYears() {
 }
 const cascaderOptions = ref([
   {
-    value: "1",
+    value: 1,
     label: "高中",
     children: [...newYears()],
   },
-  { value: "2", label: "初中", children: [...newYears()] },
+  { value: 2, label: "初中", children: [...newYears()] },
 ]);
 const formParams = ref({
   data: { birthday: "" }, // 表单数据对象

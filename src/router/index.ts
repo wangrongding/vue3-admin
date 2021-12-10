@@ -1,14 +1,21 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Layout from "@/layout/index.vue";
-//动态路由(暂时写这,需要去后端拿)
-export const asyncRoutes: Array<RouteRecordRaw> = [
+//无权限路由
+export const routes: Array<RouteRecordRaw> = [
+  {
+    path: "/",
+    name: "home",
+    meta: { hidden: true },
+    component: Layout,
+    redirect: "/dashboard/index",
+  },
   {
     path: "/dashboard",
     component: Layout,
     meta: { title: "首页", type: "single", icon: "House" },
     children: [
       {
-        path: "/dashboard",
+        path: "index",
         component: () => import("@/views/dashboard/index.vue"),
       },
     ],
@@ -43,7 +50,7 @@ export const asyncRoutes: Array<RouteRecordRaw> = [
     ],
   },
   {
-    path: "/111221",
+    path: "/testManagement",
     component: Layout,
     meta: { title: "测试管理", type: "multiple", icon: "Setting" },
     children: [
@@ -60,31 +67,24 @@ export const asyncRoutes: Array<RouteRecordRaw> = [
     ],
   },
   {
-    path: "/1111",
+    path: "/classManagement",
     component: Layout,
     meta: { title: "班级管理", type: "single", icon: "Setting" },
-    redirect: "/1111/userManagement",
     children: [
       {
-        path: "userManagement",
+        path: "list",
         component: () => import("@/views/system/userManagement.vue"),
         meta: { title: "用户管理" },
-      },
-      {
-        path: "logs",
-        component: () => import("@/views/system/logs.vue"),
-        meta: { title: "日志管理" },
       },
     ],
   },
   {
-    path: "/2222",
+    path: "/studentManagement",
     component: Layout,
     meta: { title: "学生管理", type: "single", icon: "Setting" },
-    redirect: "/2222/userManagement",
     children: [
       {
-        path: "userManagement",
+        path: "list",
         component: () => import("@/views/system/userManagement.vue"),
         meta: { title: "用户管理" },
       },
@@ -107,17 +107,6 @@ export const asyncRoutes: Array<RouteRecordRaw> = [
       },
     ],
   },
-];
-//无权限路由
-export const routes: Array<RouteRecordRaw> = [
-  {
-    path: "/",
-    name: "home",
-    component: Layout,
-    meta: { hidden: true },
-    redirect: "/dashboard",
-  },
-  ...asyncRoutes,
   {
     path: "/userInfo",
     component: Layout,

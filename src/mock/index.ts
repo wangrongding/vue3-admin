@@ -1,5 +1,4 @@
 import Mock from "mockjs";
-console.log(Mock);
 
 Mock.setup({
   timeout: 400,
