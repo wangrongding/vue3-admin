@@ -4,12 +4,12 @@ const baseUrl = import.meta.env.VITE_APP_BASE_API as string;
 // 创建axios实例
 const request = axios.create({
   baseURL: baseUrl, // api的base_url
-  timeout: 15000, // 请求超时时间
+  timeout: 15000 // 请求超时时间
 });
 // request请求拦截器
 request.interceptors.request.use(
   (config) => {
-    let { data = {}, method } = config;
+    const { data = {}, method } = config;
     console.log(config, "config");
     return config;
   },
@@ -22,7 +22,7 @@ async function successCallback(response: any) {
   ElMessage({
     message: "this is a message.",
     grouping: true,
-    type: "success",
+    type: "success"
   });
 }
 // 请求错误回调
@@ -31,7 +31,7 @@ function errorCallback(error: any) {
   ElMessage({
     message: error,
     grouping: true,
-    type: "error",
+    type: "error"
   });
 }
 // respone返回拦截器

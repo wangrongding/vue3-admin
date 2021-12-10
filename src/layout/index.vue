@@ -7,7 +7,9 @@ import Menu from "./components/menu.vue";
   <el-container class="app-container">
     <el-header><Logo /> <Dropdown style="margin-left: auto" /></el-header>
     <el-container>
-      <el-aside width="auto"><Menu /></el-aside>
+      <el-aside width="auto">
+        <Menu />
+      </el-aside>
       <el-main>
         <div class="bread-crumbs">
           <!-- 面包屑 -->

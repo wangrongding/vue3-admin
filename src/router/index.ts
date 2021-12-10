@@ -7,7 +7,7 @@ export const routes: Array<RouteRecordRaw> = [
     name: "home",
     meta: { hidden: true },
     component: Layout,
-    redirect: "/dashboard/index",
+    redirect: "/dashboard/index"
   },
   {
     path: "/dashboard",
@@ -16,9 +16,9 @@ export const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: "index",
-        component: () => import("@/views/dashboard/index.vue"),
-      },
-    ],
+        component: () => import("@/views/dashboard/index.vue")
+      }
+    ]
   },
   {
     path: "/material",
@@ -33,21 +33,21 @@ export const routes: Array<RouteRecordRaw> = [
           {
             path: "detail",
             component: () => import("@/views/material/detail.vue"),
-            meta: { title: "课程资料" },
-          },
-        ],
+            meta: { title: "课程资料" }
+          }
+        ]
       },
       {
         path: "teachingPlan",
         component: () => import("@/views/material/index.vue"),
-        meta: { title: "教案资料" },
+        meta: { title: "教案资料" }
       },
       {
         path: "teamCoaching",
         component: () => import("@/views/material/index.vue"),
-        meta: { title: "团辅资料" },
-      },
-    ],
+        meta: { title: "团辅资料" }
+      }
+    ]
   },
   {
     path: "/testManagement",
@@ -57,14 +57,14 @@ export const routes: Array<RouteRecordRaw> = [
       {
         path: "userManagement",
         component: () => import("@/views/system/userManagement.vue"),
-        meta: { title: "用户管理" },
+        meta: { title: "用户管理" }
       },
       {
         path: "logs",
         component: () => import("@/views/system/logs.vue"),
-        meta: { title: "日志管理" },
-      },
-    ],
+        meta: { title: "日志管理" }
+      }
+    ]
   },
   {
     path: "/classManagement",
@@ -74,9 +74,9 @@ export const routes: Array<RouteRecordRaw> = [
       {
         path: "list",
         component: () => import("@/views/system/userManagement.vue"),
-        meta: { title: "用户管理" },
-      },
-    ],
+        meta: { title: "用户管理" }
+      }
+    ]
   },
   {
     path: "/studentManagement",
@@ -86,9 +86,9 @@ export const routes: Array<RouteRecordRaw> = [
       {
         path: "list",
         component: () => import("@/views/system/userManagement.vue"),
-        meta: { title: "用户管理" },
-      },
-    ],
+        meta: { title: "用户管理" }
+      }
+    ]
   },
   {
     path: "/system",
@@ -98,14 +98,14 @@ export const routes: Array<RouteRecordRaw> = [
       {
         path: "userManagement",
         component: () => import("@/views/system/userManagement.vue"),
-        meta: { title: "用户管理" },
+        meta: { title: "用户管理" }
       },
       {
         path: "logs",
         component: () => import("@/views/system/logs.vue"),
-        meta: { title: "日志管理" },
-      },
-    ],
+        meta: { title: "日志管理" }
+      }
+    ]
   },
   {
     path: "/userInfo",
@@ -115,10 +115,10 @@ export const routes: Array<RouteRecordRaw> = [
       {
         path: "/userInfo",
         component: () => import("@/views/userInfo/index.vue"),
-        meta: { title: "编辑用户信息" },
-      },
-    ],
-  },
+        meta: { title: "编辑用户信息" }
+      }
+    ]
+  }
 ];
 
 const router = createRouter({ history: createWebHistory(), routes });

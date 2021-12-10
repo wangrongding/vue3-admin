@@ -9,8 +9,8 @@ const props = defineProps({
   configuration: {
     type: Object,
     default: {},
-    required: true,
-  },
+    required: true
+  }
 });
 import { cloneDeep } from "lodash";
 let tempData = cloneDeep(props.configuration);
@@ -26,7 +26,7 @@ const configuration = ref({
   labelText: "xxxxx", //label
   center: ["50%", "40%"], //图表的占位
   radius: "60%", //图形大小
-  amplitude: 9, //波浪的波幅
+  amplitude: 9 //波浪的波幅
 });
 if (tempData.data) {
   tempData.data = [tempData.data, tempData.data - 0.05];
@@ -43,8 +43,8 @@ onMounted(() => {
       text: configuration.value.title,
       textStyle: {
         fontSize: 20,
-        fontWeight: "normal",
-      },
+        fontWeight: "normal"
+      }
     },
     graphic: [
       {
@@ -58,11 +58,11 @@ onMounted(() => {
               fill: configuration.value.labelColor,
               text: configuration.value.labelText,
               fontSize: configuration.value.labelSize,
-              fontWeight: "500",
-            },
-          },
-        ],
-      },
+              fontWeight: "500"
+            }
+          }
+        ]
+      }
     ],
     series: [
       {
@@ -74,7 +74,7 @@ onMounted(() => {
         color: configuration.value.color,
         radius: configuration.value.radius,
         backgroundStyle: {
-          color: configuration.value.background,
+          color: configuration.value.background
         },
         /* backgroundStyle: {
           color: {
@@ -100,25 +100,25 @@ onMounted(() => {
           },
         }, */
         outline: {
-          show: false,
+          show: false
         },
         itemStyle: {
           //opacity: 0.7, // 波浪的透明度
-          shadowBlur: 0, // 波浪的阴影范围
+          shadowBlur: 0 // 波浪的阴影范围
         },
         label: {
           formatter: "{c}",
-          fontSize: 28,
-        },
-      },
-    ],
+          fontSize: 28
+        }
+      }
+    ]
   });
 });
 </script>
 
 <template>
   <div class="page-container">
-    <div ref="chartDom" :style="{ width: '100%', height: '100%', minHeight: '30px' }"></div>
+    <div ref="chartDom" :style="{ width: '100%', height: '100%', minHeight: '30px' }" />
   </div>
 </template>
 

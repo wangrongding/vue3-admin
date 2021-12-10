@@ -20,20 +20,29 @@ function handleClick(item: any) {
 }
 </script>
 <template>
-  <el-sub-menu :index="item.path" v-if="item.meta.type == 'multiple' && !item.meta.hidden">
+  <el-sub-menu v-if="item.meta.type == 'multiple' && !item.meta.hidden" :index="item.path">
     <template #title>
       <el-icon v-if="item.meta.icon">
         <!-- 动态组件 -->
-        <component :is="item.meta.icon"></component>
+        <component :is="item.meta.icon" />
       </el-icon>
       <span>{{ item.meta.title }}</span>
     </template>
-    <MenuItem v-for="child in item.children" :key="child.path" :item="child" :basePath="item.path" />
+    <MenuItem
+      v-for="child in item.children"
+      :key="child.path"
+      :item="child"
+      :base-path="item.path"
+    />
   </el-sub-menu>
 
-  <el-menu-item :index="resolvePath(item)" v-if="item.meta.type != 'multiple' && !item.meta.hidden" @click="handleClick">
+  <el-menu-item
+    v-if="item.meta.type != 'multiple' && !item.meta.hidden"
+    :index="resolvePath(item)"
+    @click="handleClick"
+  >
     <el-icon v-if="item.meta.icon">
-      <component :is="item.meta.icon"></component>
+      <component :is="item.meta.icon" />
     </el-icon>
     <span>{{ item.meta.title }}</span>
   </el-menu-item>

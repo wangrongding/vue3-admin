@@ -9,19 +9,19 @@ const options: EChartsOption = {
     axisPointer: {
       type: "cross",
       label: {
-        backgroundColor: "#6a7985",
-      },
-    },
+        backgroundColor: "#6a7985"
+      }
+    }
   },
   grid: {
     left: "3%",
     right: "4%",
     bottom: "3%",
     top: "100px",
-    containLabel: true,
+    containLabel: true
   },
   xAxis: {
-    data: ["12-3", "12-4", "12-5", "12-6", "12-7", "12-8"],
+    data: ["12-3", "12-4", "12-5", "12-6", "12-7", "12-8"]
   },
   yAxis: { type: "value" },
   /* legend: {
@@ -32,7 +32,7 @@ const options: EChartsOption = {
     selectedMode: false,
     right: 60,
     top: 20,
-    icon: "circle", // 这个字段控制形状  类型包括 circle，rect ，roundRect，triangle，diamond，pin，arrow，none
+    icon: "circle" // 这个字段控制形状  类型包括 circle，rect ，roundRect，triangle，diamond，pin，arrow，none
   },
   series: [
     {
@@ -47,14 +47,14 @@ const options: EChartsOption = {
         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
           {
             offset: 0,
-            color: "rgb(0,228,185)",
+            color: "rgb(0,228,185)"
           },
           {
             offset: 1,
-            color: "rgba(255, 255, 255,0.2)",
-          },
-        ]),
-      },
+            color: "rgba(255, 255, 255,0.2)"
+          }
+        ])
+      }
     },
     {
       name: "用户量",
@@ -68,16 +68,16 @@ const options: EChartsOption = {
         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
           {
             offset: 0,
-            color: "rgb(255,143,114)",
+            color: "rgb(255,143,114)"
           },
           {
             offset: 1,
-            color: "rgba(255, 255, 255,0.2)",
-          },
-        ]),
-      },
-    },
-  ],
+            color: "rgba(255, 255, 255,0.2)"
+          }
+        ])
+      }
+    }
+  ]
 };
 const chartDom = ref<HTMLElement>();
 // 绘制图表
@@ -92,7 +92,11 @@ onMounted(() => {
 
 <template>
   <div class="page-container">
-    <div ref="chartDom" id="chartDom" :style="{ width: '100%', height: '100%', minHeight: '100px' }"></div>
+    <div
+      ref="chartDom"
+      id="chartDom"
+      :style="{ width: '100%', height: '100%', minHeight: '100px' }"
+    ></div>
   </div>
 </template>
 

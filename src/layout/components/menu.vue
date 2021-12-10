@@ -16,8 +16,15 @@ const activeRouter = computed(() => {
 </script>
 <template>
   <div class="page-container">
-    <el-menu :default-active="activeRouter" class="el-menu-vertical" unique-opened @open="handleOpen" @close="handleClose" router>
-      <MenuItem v-for="route in menuList" :key="route.path" :item="route" :basePath="route.path" />
+    <el-menu
+      :default-active="activeRouter"
+      class="el-menu-vertical"
+      unique-opened
+      router
+      @open="handleOpen"
+      @close="handleClose"
+    >
+      <MenuItem v-for="route in menuList" :key="route.path" :item="route" :base-path="route.path" />
     </el-menu>
   </div>
 </template>

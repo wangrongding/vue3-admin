@@ -13,29 +13,31 @@ export default defineComponent({
       toDetail: (val: number) => {
         console.log(router);
         router.push({
-          path: "/material/course/detail",
+          path: "/material/course/detail"
         });
       },
       menuList: [
         { name: "抑郁", value: "1" },
-        { name: "快乐", value: "2" },
-      ],
+        { name: "快乐", value: "2" }
+      ]
     });
     return {
-      ...toRefs(state),
+      ...toRefs(state)
     };
-  },
+  }
 });
 </script>
 <template>
   <div class="page-container">
     <div class="item-nav-bar">
       <el-menu :default-active="'1'" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-        <el-menu-item style="height: 46px" :index="item.value" v-for="item in menuList">{{ item.name }}</el-menu-item>
+        <el-menu-item v-for="item in menuList" style="height: 46px" :index="item.value">
+          {{ item.name }}
+        </el-menu-item>
       </el-menu>
     </div>
     <div class="course-list">
-      <div class="course-item" v-for="item in 23" @click="toDetail(item)">
+      <div v-for="item in 23" class="course-item" @click="toDetail(item)">
         <img src="../../assets/image/courseItem.png" alt="" />
         <p>asdfasdf</p>
       </div>

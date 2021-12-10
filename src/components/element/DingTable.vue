@@ -14,9 +14,9 @@ const props = defineProps({
           },
         }, */
       ],
-      tempSelectList: [],
-    },
-  },
+      tempSelectList: []
+    }
+  }
 });
 const getOption = (value: any, defaultValue: any) => {
   return value === void 0 ? defaultValue : value;
@@ -60,7 +60,7 @@ const selectionChange = (val: any) => {
       :header-cell-style="{
         background: 'rgba(197, 255, 246, 1)',
         fontWeight: 'bold',
-        color: '#000',
+        color: '#000'
       }"
       :row-key="tableParams.rowKey"
       :row-style="tableParams.rowStyle"
@@ -68,7 +68,7 @@ const selectionChange = (val: any) => {
       @selection-change="selectionChange"
     >
       <template v-if="typeof tableParams.emptyText === 'boolean'" #empty>
-        <slot name="empty"></slot>
+        <slot name="empty" />
       </template>
       <el-table-column
         v-for="(item, index) in tableParams.columnProps"
@@ -82,10 +82,10 @@ const selectionChange = (val: any) => {
         :formatter="item.formatter"
       >
         <template v-if="item.slots && item.slots.header" #header="{ column, $index }">
-          <slot :name="item.slots.header" :column="column" :index="$index"></slot>
+          <slot :name="item.slots.header" :column="column" :index="$index" />
         </template>
         <template v-if="item.slots && item.slots.default" #default="{ row, column, $index }">
-          <slot :name="item.slots.default" :row="row" :column="column" :index="$index"></slot>
+          <slot :name="item.slots.default" :row="row" :column="column" :index="$index" />
         </template>
       </el-table-column>
     </el-table>

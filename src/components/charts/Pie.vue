@@ -8,8 +8,8 @@ const props = defineProps({
   configuration: {
     type: Object,
     default: {},
-    required: true,
-  },
+    required: true
+  }
 });
 import { cloneDeep } from "lodash";
 let tempData = cloneDeep(props.configuration);
@@ -18,7 +18,7 @@ const configuration = ref({
   title: "", //title
   data: [{ value: 0, name: "-" }], //最大值为1
   color: ["rgba(255, 143, 114, 1)", "rgba(0, 224, 180, 1)", "rgba(153, 153, 153, 1)"],
-  icon: "circle",
+  icon: "circle"
 });
 // if (tempData.data) {
 //   tempData.data = [];
@@ -34,17 +34,17 @@ onMounted(() => {
     title: {
       text: "",
       subtext: "",
-      left: "left",
+      left: "left"
     },
     tooltip: {
-      trigger: "item",
+      trigger: "item"
     },
     legend: {
       orient: "vertical",
       selectedMode: false,
       left: 20,
       top: 80,
-      icon: configuration.value.icon, // 这个字段控制形状  类型包括 circle，rect ，roundRect，triangle，diamond，pin，arrow，none
+      icon: configuration.value.icon // 这个字段控制形状  类型包括 circle，rect ，roundRect，triangle，diamond，pin，arrow，none
     },
     color: configuration.value.color,
     series: [
@@ -59,24 +59,24 @@ onMounted(() => {
           itemStyle: {
             shadowBlur: 10,
             shadowOffsetX: 0,
-            shadowColor: "rgba(0, 0, 0, 0.5)",
-          },
+            shadowColor: "rgba(0, 0, 0, 0.5)"
+          }
         },
         label: {
           formatter: "{d}%",
           position: "inside",
           fontSize: 24,
-          color: "#fff",
-        },
-      },
-    ],
+          color: "#fff"
+        }
+      }
+    ]
   });
 });
 </script>
 
 <template>
   <div class="page-container">
-    <div ref="myChart" :style="{ width: '100%', height: '100%', minHeight: '100px' }"></div>
+    <div ref="myChart" :style="{ width: '100%', height: '100%', minHeight: '100px' }" />
   </div>
 </template>
 

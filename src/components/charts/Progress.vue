@@ -8,8 +8,8 @@ const props = defineProps({
   configuration: {
     type: Object,
     default: {},
-    required: true,
-  },
+    required: true
+  }
 });
 let tempData = cloneDeep(props.configuration);
 const configuration = ref({
@@ -21,7 +21,7 @@ const configuration = ref({
   opacity: 1,
   text: 0,
   subtext: "描述文本",
-  data: [0],
+  data: [0]
 });
 if (tempData.data) {
   tempData.text = tempData.data;
@@ -40,39 +40,39 @@ onMounted(() => {
     title: {
       text: configuration.value.text,
       textStyle: {
-        fontSize: 30,
+        fontSize: 30
       },
       subtext: configuration.value.subtext,
       subtextStyle: {
         color: "#666666",
-        fontSize: 20,
+        fontSize: 20
       },
       itemGap: 20,
       left: "center",
-      top: "43%",
+      top: "43%"
     },
     angleAxis: {
       max: 100,
       clockwise: true, // 逆时针
       // 隐藏刻度线
-      show: false,
+      show: false
     },
     radiusAxis: {
       type: "category",
       show: true,
       axisLabel: {
-        show: false,
+        show: false
       },
       axisLine: {
-        show: false,
+        show: false
       },
       axisTick: {
-        show: false,
-      },
+        show: false
+      }
     },
     polar: {
       center: configuration.value.center,
-      radius: configuration.value.radius, //图形大小
+      radius: configuration.value.radius //图形大小
     },
     //================
     xAxis: [
@@ -81,37 +81,37 @@ onMounted(() => {
         type: "category",
         data: [],
         axisLine: {
-          show: false,
+          show: false
         },
         splitLine: {
-          show: false,
+          show: false
         },
         splitArea: {
           interval: "auto",
-          show: false,
-        },
-      },
+          show: false
+        }
+      }
     ],
     yAxis: [
       //这里有很多的show，必须都设置成不显示
       {
         type: "value",
         axisLine: {
-          show: false,
+          show: false
         },
         axisTick: {
-          show: false,
+          show: false
         },
         minorTick: {
-          show: false,
+          show: false
         },
         splitLine: {
-          show: false,
+          show: false
         },
         axisLabel: {
-          show: false,
-        },
-      },
+          show: false
+        }
+      }
     ],
     //================
     series: [
@@ -120,15 +120,15 @@ onMounted(() => {
         data: configuration.value.data,
         showBackground: true,
         backgroundStyle: {
-          color: configuration.value.unfinishedColor,
+          color: configuration.value.unfinishedColor
         },
         coordinateSystem: "polar",
         roundCap: true,
         barWidth: configuration.value.barWidth,
         itemStyle: {
           opacity: configuration.value.opacity,
-          color: configuration.value.finishedColor,
-        },
+          color: configuration.value.finishedColor
+        }
       },
       {
         name: "aaa",
@@ -136,8 +136,8 @@ onMounted(() => {
         barWidth: "60%", //不显示，可以随便设置
         data: [0],
         itemStyle: {
-          color: "#00A1E9", //这里的图例要注意，颜色设置和仪表盘的颜色对应起来
-        },
+          color: "#00A1E9" //这里的图例要注意，颜色设置和仪表盘的颜色对应起来
+        }
       },
       {
         name: "bbb",
@@ -145,9 +145,9 @@ onMounted(() => {
         barWidth: "60%",
         data: [0],
         itemStyle: {
-          color: "#70C1B3",
-        },
-      },
+          color: "#70C1B3"
+        }
+      }
     ],
     legend: {
       //配置legend，这里的data，要对应type为‘bar’的series数据项的‘name’名称，作为图例的说明
@@ -156,15 +156,15 @@ onMounted(() => {
       left: 20,
       top: 80,
       orient: "vertical",
-      icon: "circle",
-    },
+      icon: "circle"
+    }
   });
 });
 </script>
 
 <template>
   <div class="page-container">
-    <div ref="myChart" :style="{ width: '100%', height: '100%', minHeight: '100px' }"></div>
+    <div ref="myChart" :style="{ width: '100%', height: '100%', minHeight: '100px' }" />
   </div>
 </template>
 
