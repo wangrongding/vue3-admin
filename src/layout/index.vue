@@ -2,6 +2,7 @@
 import Dropdown from "./components/dropdown.vue";
 import Logo from "./components/logo.vue";
 import Menu from "./components/menu.vue";
+import Breadcrumb from "./components/breadcrumb.vue";
 </script>
 <template>
   <el-container class="app-container">
@@ -11,9 +12,8 @@ import Menu from "./components/menu.vue";
         <Menu />
       </el-aside>
       <el-main>
-        <div class="bread-crumbs">
-          <!-- 面包屑 -->
-        </div>
+        <!-- 面包屑 -->
+        <Breadcrumb class="bread-crumbs" />
         <router-view class="content" />
       </el-main>
     </el-container>
@@ -85,6 +85,7 @@ import Menu from "./components/menu.vue";
     }
     .bread-crumbs {
       height: 30px;
+      line-height: 30px;
     }
     .content {
       height: auto;

@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { dashboardInfo } from "@/api/dashboard/index.ts";
 import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import Line from "@/components/charts/Line.vue";
 import Pie from "@/components/charts/Pie.vue";
 import Battery from "@/components/charts/Battery.vue";
 import Progress from "@/components/charts/Progress.vue";
+const router = useRouter();
 //生成选择年份列表
 function newYears() {
   const tempArr: any = [];
@@ -21,6 +23,7 @@ const cascaderOptions = ref([
   },
   { value: 2, label: "初中", children: [...newYears()] }
 ]);
+const clsssList = ref([]);
 const formParams = ref({
   data: { birthday: "" }, // 表单数据对象
   formList: {
@@ -120,15 +123,16 @@ const lineConfig = ref({
   data2: [50, 200, 396, 190, 100, 200],
   xAxisData: ["12-3", "12-4", "12-5", "12-6", "12-7", "12-8"]
 });
-import axios from "axios";
-onMounted(() => {
-  dashboardInfo();
-});
+dashboardInfo();
+function toList() {
+  router.push("/dashboard/index/recordList");
+}
+onMounted(() => {});
 </script>
 
 <template>
   <div class="page-container">
-    <DingForm :form-params="formParams" />
+    <DingForm class="ding-form" :form-params="formParams" />
     <div class="panel-list">
       <div
         v-for="(item, index) in 4"
@@ -142,23 +146,26 @@ onMounted(() => {
     </div>
     <div class="chart-box">
       <div class="chart-item">
-        <p class="chart-item-title">
+        <p class="chart-item-title chart-item-link" @click="toList">
           <i class="iconfont icon-ziliao-xuanze" />
           <span>xxxxxx</span>
+          <i class="iconfont icon-gengduo"></i>
         </p>
         <Progress :configuration="ProgressConfig" />
       </div>
       <div class="chart-item">
-        <p class="chart-item-title">
+        <p class="chart-item-title chart-item-link" @click="toList">
           <i class="iconfont icon-ziliao-xuanze" />
           <span>xxxxxx</span>
+          <i class="iconfont icon-gengduo"></i>
         </p>
         <Pie :configuration="PieConfig" />
       </div>
       <div class="chart-item Battery">
-        <p class="chart-item-title">
+        <p class="chart-item-title chart-item-link" @click="toList">
           <i class="iconfont icon-ziliao-xuanze" />
           <span>xxxxxx</span>
+          <i class="iconfont icon-gengduo"></i>
         </p>
         <Battery v-for="item in BatteryConfig" :configuration="item" />
       </div>
@@ -216,13 +223,22 @@ onMounted(() => {
   .chart-item-title {
     position: absolute;
     font-size: 24px;
-    height: 24px;
-    line-height: 24px;
-    top: 20px;
-    left: 20px;
-    i {
+    height: 40px;
+    line-height: 40px;
+    top: 10px;
+    // left: 20px;
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+    cursor: pointer;
+    z-index: 99999;
+    & > .iconfont:first-child {
       color: $base-color-default;
       margin-right: 10px;
+    }
+    .icon-gengduo {
+      float: right;
+      color: rgba(170, 170, 170, 1);
     }
   }
   .line {

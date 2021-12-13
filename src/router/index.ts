@@ -16,7 +16,14 @@ export const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: "index",
-        component: () => import("@/views/dashboard/index.vue")
+        component: () => import("@/views/dashboard/index.vue"),
+        meta: { title: "数据看板", icon: "House" },
+        children: [
+          {
+            path: "recordList",
+            component: () => import("@/views/dashboard/recordList.vue")
+          }
+        ]
       }
     ]
   },

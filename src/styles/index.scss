@@ -21,3 +21,16 @@ code {
   background-color: var(--el-color-primary-light-9);
   color: var(--el-color-primary);
 }
+
+//全局公共样式
+.ding-form {
+  background-color: white;
+  padding: 20px 20px 0 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+.ding-table {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
