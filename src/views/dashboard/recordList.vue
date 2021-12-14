@@ -1,18 +1,30 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from "vue";
+import { useRouter } from "vue-router";
 const tableParams = ref({
   data: [],
   loading: false,
   columnProps: [
-    { label: "名称", prop: "name" },
-    { label: "账号", prop: "name1" },
-    { label: "角色", prop: "name2" },
+    { label: "测试时间", prop: "name" },
+    { label: "学生姓名", prop: "name1" },
+    { label: "学号", prop: "name2" },
+    { label: "问卷名称", prop: "name2" },
+    { label: "风险等级", prop: "name2" },
+    { label: "干预状态", prop: "name2" },
     {
       label: "状态",
       prop: "name3",
       formatter: (a: any, b: any, c: any) => {
-        return c == "0" ? "其它" : c == "1" ? "后台用户" : "手机端用户";
+        return c == "0" ? "其它" : c == "1" ? "1" : "2";
       }
+    },
+    {
+      label: "操作",
+      prop: "operation",
+      slots: {
+        default: "operation"
+      },
+      width: "180px"
     }
   ]
 });
@@ -61,11 +73,20 @@ const formParams = ref({
 });
 tableParams.value.data = [1, 2, 3, 4, 5, 6] as any;
 // onMounted(() => {});
+function jumpTo(row: any) {
+  console.log(row);
+  useRouter().push("");
+}
 </script>
 <template>
   <div class="page-container">
     <DingForm class="ding-form" :formParams="formParams" />
-    <DingTable class="ding-table" :tableParams="tableParams" />
+    <DingTable class="ding-table" :tableParams="tableParams">
+      <template #operation="{ row }">
+        <el-button type="text" @click="jumpTo(row)">移出班级</el-button>
+        <el-button type="text" @click="jumpTo(row)"> 学员详情 </el-button>
+      </template>
+    </DingTable>
   </div>
 </template>
 <style lang="scss" scoped>

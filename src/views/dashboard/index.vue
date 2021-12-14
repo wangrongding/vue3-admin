@@ -125,7 +125,8 @@ const lineConfig = ref({
 });
 dashboardInfo();
 function toList() {
-  router.push("/dashboard/index/recordList");
+  // router.push("/dashboard/index/recordList");
+  router.push("/dashboard/recordList");
 }
 onMounted(() => {});
 </script>

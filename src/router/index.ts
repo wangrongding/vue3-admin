@@ -1,5 +1,8 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Layout from "@/layout/index.vue";
+import Dashboard from "@/views/dashboard/index.vue";
+import routeReplaceSelf from "./routeReplaceSelf.ts";
+
 //无权限路由
 export const routes: Array<RouteRecordRaw> = [
   {
@@ -16,14 +19,28 @@ export const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: "index",
+        // component: routeReplaceSelf(Dashboard),
+        // component: () => import("@/views/dashboard/aaa.vue"),
+        // component: routeReplaceSelf(Dashboard),
         component: () => import("@/views/dashboard/index.vue"),
-        meta: { title: "数据看板", icon: "House" },
-        children: [
-          {
-            path: "recordList",
-            component: () => import("@/views/dashboard/recordList.vue")
-          }
-        ]
+        meta: { title: "数据看板" }
+        // children: [
+        //   {
+        //     path: "recordList",
+        //     meta: { title: "记录" },
+        //     component: () => import("@/views/dashboard/recordList.vue")
+        //   }
+        // ]
+      },
+      {
+        path: "recordList",
+        component: () => import("@/views/dashboard/recordList.vue"),
+        meta: { title: "记录" }
+      },
+      {
+        path: "report",
+        component: () => import("@/views/dashboard/report/index.vue"),
+        meta: { title: "记录" }
       }
     ]
   },

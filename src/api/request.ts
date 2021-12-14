@@ -16,7 +16,7 @@ const request = axios.create({
 request.interceptors.request.use(
   (config) => {
     const { data = {}, method } = config;
-    console.log(config, "config");
+    // console.log(config, "config");
     return config;
   },
   (error) => {
