@@ -19,18 +19,18 @@ export const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: "index",
-        // component: routeReplaceSelf(Dashboard),
+        component: routeReplaceSelf(Dashboard),
         // component: () => import("@/views/dashboard/aaa.vue"),
         // component: routeReplaceSelf(Dashboard),
-        component: () => import("@/views/dashboard/index.vue"),
-        meta: { title: "数据看板" }
-        // children: [
-        //   {
-        //     path: "recordList",
-        //     meta: { title: "记录" },
-        //     component: () => import("@/views/dashboard/recordList.vue")
-        //   }
-        // ]
+        // component: () => import("@/views/dashboard/index.vue"),
+        meta: { title: "数据看板" },
+        children: [
+          {
+            path: "recordList",
+            meta: { title: "记录" },
+            component: () => import("@/views/dashboard/recordList.vue")
+          }
+        ]
       },
       {
         path: "recordList",

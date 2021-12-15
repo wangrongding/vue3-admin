@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from "vue";
 import { useRouter } from "vue-router";
+const router = useRouter();
 const tableParams = ref({
   data: [],
   loading: false,
@@ -75,7 +76,7 @@ tableParams.value.data = [1, 2, 3, 4, 5, 6] as any;
 // onMounted(() => {});
 function jumpTo(row: any) {
   console.log(row);
-  useRouter().push("");
+  router.push("/dashboard/report");
 }
 </script>
 <template>

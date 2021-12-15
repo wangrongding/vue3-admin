@@ -2,8 +2,8 @@
   <!-- 基本信息 -->
   <div class="userInfo">
     <div class="textContentTitle">
-      <!-- <img src="../../../../assets/questionnaire/titleBg.png" alt="" /> -->
-      <span class="textContentName">{{ reportData.title }}</span>
+      <img src="./assets/titleBg.png" alt="" />
+      <span class="textContentName">aaa{{ reportData.title || "基本信息" }}</span>
     </div>
     <div class="userList">
       <div class="userListItem is_active">
@@ -30,7 +30,9 @@
 defineProps({
   reportData: {
     type: Object,
-    default: () => {}
+    default: () => {
+      return {};
+    }
   }
 });
 </script>
