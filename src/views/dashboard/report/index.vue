@@ -1,21 +1,27 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import Pie from "@/components/charts/Pie.vue";
+import { ref, shallowRef } from "vue";
+import Scatter from "./components/charts/Quadrant.vue";
+import Dashboard from "./components/charts/Dashboard.vue";
 import UserInfo from "./components/userInfo.vue";
-import TextTemplate from "./components/textTemplate.vue";
+import Score from "./components/score.vue";
+const componentList = shallowRef([Scatter, Dashboard]);
 </script>
 <template>
   <div class="report">
     <div class="reportMain">
       <component :is="UserInfo"></component>
-      <component :is="TextTemplate"></component>
-      <component :is="Pie"></component>
+      <component :is="Score"></component>
+      <component
+        :is="item"
+        v-for="item in componentList"
+        style="height: 700px; width: 800px; margin: auto"
+      ></component>
     </div>
   </div>
 </template>
 <style lang="scss" scoped>
 .report {
-  height: calc(100vh - 100px) !important;
+  box-sizing: border-box;
   border-radius: 8px;
   margin: 0px auto;
   background: #f4f5fa;

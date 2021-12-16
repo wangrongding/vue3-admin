@@ -3,7 +3,7 @@
   <div class="userInfo">
     <div class="textContentTitle">
       <img src="./assets/titleBg.png" alt="" />
-      <span class="textContentName">aaa{{ reportData.title || "基本信息" }}</span>
+      <span class="textContentName">{{ reportData.title || "基本信息" }}</span>
     </div>
     <div class="userList">
       <div class="userListItem is_active">
@@ -32,8 +32,8 @@ defineProps({
     type: Object,
     default: () => {
       return {};
-    }
-  }
+    },
+  },
 });
 </script>
 

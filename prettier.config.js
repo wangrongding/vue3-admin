@@ -9,7 +9,7 @@ module.exports = {
   semi: true, // 是否在语句末尾打印分号
   singleQuote: false, // 是否使用单引号
   quoteProps: "as-needed", // 对象的key仅在需要时用引号 as-needed|consistent|preserve
-  trailingComma: "none", // 多行时尽可能打印尾随逗号 |all|es5|none
+  trailingComma: "all", // 多行时尽可能打印尾随逗号 |all|es5|none
   rangeStart: 0, // 每个文件格式化的范围是文件的全部内容
   bracketSpacing: true, // 对象文字中的括号之间打印空格
   jsxSingleQuote: false, // 在JSX中是否使用单引号
