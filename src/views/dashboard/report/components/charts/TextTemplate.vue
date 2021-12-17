@@ -2,8 +2,8 @@
 <template>
   <div class="textContent">
     <div class="textContentTitle">
-      <img src="./assets/titleBg.png" alt="" />
-      <span class="textContentName">{{ reportData.title || "" }}</span>
+      <img src="../assets/titleBg.png" alt="" />
+      <span class="textContentName">{{ reportData.title || "-" }}</span>
     </div>
     <div class="text" v-html="reportData.content"> </div>
   </div>
@@ -15,8 +15,8 @@ defineProps({
     type: Object,
     default: () => {
       return {};
-    }
-  }
+    },
+  },
 });
 </script>
 

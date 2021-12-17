@@ -1,6 +1,6 @@
 <template>
   <!-- 横线文本 -->
-  <div class="horizontalText">
+  <div class="horizontalText" v-if="reportData.content">
     <div v-for="(item, index) in reportData.content" :key="index">
       <div class="analysisTitle">
         <span><img src="../assets/heng.png" alt="" /></span>
@@ -15,15 +15,16 @@
 </template>
 
 <script setup lang="ts">
-defineProps({
+const props = defineProps({
   reportData: {
     type: Object,
     default: () => {},
   },
 });
+console.log(props.reportData, "reportData");
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .horizontalText {
   width: 1200px;
 

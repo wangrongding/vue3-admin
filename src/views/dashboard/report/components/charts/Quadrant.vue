@@ -2,6 +2,16 @@
 import { ref, onMounted } from "vue";
 import * as echarts from "echarts";
 type EChartsOption = echarts.EChartsOption;
+const chartDom = ref<HTMLElement>();
+const props = defineProps({
+  reportData: {
+    type: Object,
+    default: () => {
+      return {};
+    },
+  },
+});
+
 const options: EChartsOption = {
   grid: {
     show: true,
@@ -205,7 +215,6 @@ const options: EChartsOption = {
     },
   ],
 };
-const chartDom = ref<HTMLElement>();
 // 绘制图表
 function render() {
   const chart = echarts.init(chartDom.value as HTMLElement);
@@ -229,6 +238,8 @@ onMounted(() => {
 <style lang="scss" scoped>
 .page-container {
   min-height: 100px;
-  height: 100%;
+  height: 700px;
+  width: 800px;
+  margin: auto;
 }
 </style>

@@ -16,8 +16,9 @@
 
 <script setup lang="ts">
 import { ref, shallowRef } from "vue";
-import Scatter from "./charts/Quadrant.vue";
-const componentList = shallowRef([Scatter, Scatter]);
+import Dashboard from "./charts/Dashboard.vue";
+import Text from "./charts/Text.vue";
+const componentList = shallowRef([Dashboard, Text]);
 defineProps({
   reportData: {
     type: Object,

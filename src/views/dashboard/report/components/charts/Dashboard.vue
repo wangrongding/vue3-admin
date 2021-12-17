@@ -8,19 +8,7 @@ const props = defineProps({
   reportData: {
     type: Object,
     default: () => {
-      return {
-        content: [
-          {
-            riskLevel: "非常高",
-            score: "20.0",
-            interval: [
-              ["0.12", "#00E3B9"],
-              ["0.2", "#FAAD14"],
-              ["0.37", "#FF5752"],
-            ],
-          },
-        ],
-      };
+      return {};
     },
   },
 });

@@ -7,15 +7,27 @@ const chartDom = ref<HTMLElement>();
 const props = defineProps({
   reportData: {
     type: Object,
-    default: () => {},
+    default: () => {
+      return {
+        type: 7,
+        content: [
+          {
+            dimensionTitle: "",
+            dimensionName: ["C常规", "E企业", "R实际", "A艺术", "I调研", "S社会"],
+            dimensionScore: [10, 60, 0, 200, 0, 0],
+          },
+        ],
+        title: "",
+      };
+    },
   },
 });
 const options: EChartsOption = {
   backgroundColor: "#fff",
   grid: {
     top: "5%",
-    left: "3%",
-    right: "1%",
+    left: "5%",
+    right: "5%",
     bottom: "8%",
   },
   xAxis: [
@@ -127,7 +139,8 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .page-container {
-  min-height: 100px;
-  height: 100%;
+  width: 1000px;
+  height: 500px;
+  margin: 0 auto;
 }
 </style>
