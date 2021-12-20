@@ -14,7 +14,7 @@ import Breadcrumb from "./components/breadcrumb.vue";
       <el-main>
         <!-- 面包屑 -->
         <Breadcrumb class="bread-crumbs" />
-        <router-view class="content" />
+        <Suspense> <router-view class="content" /></Suspense>
       </el-main>
     </el-container>
   </el-container>

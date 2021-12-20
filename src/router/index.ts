@@ -10,37 +10,44 @@ export const routes: Array<RouteRecordRaw> = [
     name: "home",
     meta: { hidden: true },
     component: Layout,
-    redirect: "/dashboard/index"
+    redirect: "/dashboard/index",
   },
   {
     path: "/dashboard",
     component: Layout,
-    meta: { title: "首页", type: "single", icon: "House" },
+    meta: { title: "数据看板", type: "single", icon: "House" },
     children: [
       {
         path: "index",
         // component: routeReplaceSelf(Dashboard),
         component: () => import("@/views/dashboard/index.vue"),
-        meta: { title: "数据看板" },
+        meta: { title: "看板详情" },
         children: [
           {
             path: "recordList",
             meta: { title: "记录" },
-            component: () => import("@/views/dashboard/recordList.vue")
-          }
-        ]
+            component: () => import("@/views/dashboard/recordList.vue"),
+          },
+        ],
       },
       {
         path: "recordList",
         component: () => import("@/views/dashboard/recordList.vue"),
-        meta: { title: "记录" }
+        meta: {
+          title: "记录",
+          buttonPermissions: {
+            search: true,
+            add: true,
+            delete: true,
+          },
+        },
       },
       {
         path: "report",
         component: () => import("@/views/dashboard/report/index.vue"),
-        meta: { title: "报告详情" }
-      }
-    ]
+        meta: { title: "报告详情" },
+      },
+    ],
   },
   {
     path: "/material",
@@ -55,21 +62,21 @@ export const routes: Array<RouteRecordRaw> = [
           {
             path: "detail",
             component: () => import("@/views/material/detail.vue"),
-            meta: { title: "课程资料" }
-          }
-        ]
+            meta: { title: "课程资料" },
+          },
+        ],
       },
       {
         path: "teachingPlan",
         component: () => import("@/views/material/index.vue"),
-        meta: { title: "教案资料" }
+        meta: { title: "教案资料" },
       },
       {
         path: "teamCoaching",
         component: () => import("@/views/material/index.vue"),
-        meta: { title: "团辅资料" }
-      }
-    ]
+        meta: { title: "团辅资料" },
+      },
+    ],
   },
   {
     path: "/testManagement",
@@ -79,14 +86,14 @@ export const routes: Array<RouteRecordRaw> = [
       {
         path: "userManagement",
         component: () => import("@/views/system/userManagement.vue"),
-        meta: { title: "用户管理" }
+        meta: { title: "用户管理" },
       },
       {
         path: "logs",
         component: () => import("@/views/system/logs.vue"),
-        meta: { title: "日志管理" }
-      }
-    ]
+        meta: { title: "日志管理" },
+      },
+    ],
   },
   {
     path: "/classManagement",
@@ -96,9 +103,9 @@ export const routes: Array<RouteRecordRaw> = [
       {
         path: "list",
         component: () => import("@/views/system/userManagement.vue"),
-        meta: { title: "用户管理" }
-      }
-    ]
+        meta: { title: "用户管理" },
+      },
+    ],
   },
   {
     path: "/studentManagement",
@@ -108,9 +115,9 @@ export const routes: Array<RouteRecordRaw> = [
       {
         path: "list",
         component: () => import("@/views/system/userManagement.vue"),
-        meta: { title: "用户管理" }
-      }
-    ]
+        meta: { title: "用户管理" },
+      },
+    ],
   },
   {
     path: "/system",
@@ -120,14 +127,14 @@ export const routes: Array<RouteRecordRaw> = [
       {
         path: "userManagement",
         component: () => import("@/views/system/userManagement.vue"),
-        meta: { title: "用户管理" }
+        meta: { title: "用户管理" },
       },
       {
         path: "logs",
         component: () => import("@/views/system/logs.vue"),
-        meta: { title: "日志管理" }
-      }
-    ]
+        meta: { title: "日志管理" },
+      },
+    ],
   },
   {
     path: "/userInfo",
@@ -137,10 +144,10 @@ export const routes: Array<RouteRecordRaw> = [
       {
         path: "/userInfo",
         component: () => import("@/views/userInfo/index.vue"),
-        meta: { title: "编辑用户信息" }
-      }
-    ]
-  }
+        meta: { title: "编辑用户信息" },
+      },
+    ],
+  },
 ];
 
 const router = createRouter({ history: createWebHistory(), routes });

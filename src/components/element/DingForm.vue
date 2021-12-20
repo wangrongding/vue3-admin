@@ -18,11 +18,11 @@ const props = defineProps({
         statusIcon: false, // 是否在输入框中显示校验结果反馈图标
         validateOnRuleChange: true, // 是否在 rules 属性改变后立即触发一次验证
         size: "", // 用于控制该表单内组件的尺寸 可选值：medium / small / mini
-        disabled: false // 是否禁用该表单内的所有组件
+        disabled: false, // 是否禁用该表单内的所有组件
       };
     },
-    required: true
-  }
+    required: true,
+  },
 });
 const dingFormDom = ref<any>();
 
@@ -53,7 +53,7 @@ function cancelSubmit(cancel: any) {
 const formStyle = ref({
   textAlign: props.formParams.align || "left",
   submitButton: props.formParams.align ? "block" : "inline-block",
-  formWidth: props.formParams.align ? "100%" : ""
+  formWidth: props.formParams.align ? "100%" : "",
 });
 //文件改变钩子函数
 /* function onFileChange() {
@@ -218,6 +218,7 @@ const formStyle = ref({
           v-model="formParams.data[key]"
           :options="itemForm.cascaderOptions"
           :placeholder="itemForm.placeholder"
+          @change="itemForm.onChange"
           clearable
           filterable
         />

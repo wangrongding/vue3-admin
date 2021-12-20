@@ -9,35 +9,48 @@ const request = axios.create({
     Authorization: "Basic c3R1ZGVudDpzdHVkZW50X3NlY3JldA==",
     "platform-auth":
       "bearer " +
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiLojaPpobYiLCJhdmF0YXIiOiJodHRwOi8vbWlwYWMuZmlsZS5tZW50cGVhay5jb20vaGVhZEltYWdlLzRkOGZmMjYwLWVhN2YtNGRiOC1iYjM2LWE2NzRhNGFmNTFhZC5wbmciLCJhdXRob3JpdGllcyI6WyJhZG1pbiJdLCJjbGllbnRfaWQiOiJzdHVkZW50Iiwicm9sZV9uYW1lIjoiYWRtaW4iLCJsaWNlbnNlIjoicG93ZXJlZCBieSBwbGF0Zm9ybXgiLCJ1c2VyX2lkIjo1ODYsInJvbGVfaWQiOiIxIiwic2NvcGUiOlsiYWxsIl0sImV4cCI6MTY3NTM4NzcxMywianRpIjoiZjg4YmQ5NzMtZjI0NS00NjYwLWEyYmEtMDk5YzM2NWYyYmNkIiwiYWNjb3VudCI6IjEzNjI3MDMyNjMzIiwidGVuYW50X2NvZGUiOiIwMDAwMDEifQ.3Ji8Kxo-sqs78GrKkSDPmWIYQGI6xxueSvgWJhGZDUY"
-  }
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJoemwiLCJhdmF0YXIiOm51bGwsImF1dGhvcml0aWVzIjpbInN0dWRlbnQiXSwiY2xpZW50X2lkIjoic3R1ZGVudCIsInJvbGVfbmFtZSI6InN0dWRlbnQiLCJsaWNlbnNlIjoicG93ZXJlZCBieSBwbGF0Zm9ybXgiLCJ1c2VyX2lkIjoxNjMsInJvbGVfaWQiOiIzIiwic2NvcGUiOlsiYWxsIl0sImV4cCI6MTY3NTk2NzEzOCwianRpIjoiM2RiYmYzMTgtMWI2ZC00MDQxLWExNGUtMDFjM2RmYmZjNGYxIiwiYWNjb3VudCI6IjE1NjM4MTA5OTEwIiwidGVuYW50X2NvZGUiOiIwMDAwMDAifQ.hEFjppsH816lAhfyb5fmpSBgToWLNPtodMh7SWpLhJ4",
+  },
 });
 // request请求拦截器
 request.interceptors.request.use(
   (config) => {
-    const { data = {}, method } = config;
-    // console.log(config, "config");
+    const { data = {}, method, params } = config;
+    if (method === "post") {
+      config.data = data.data;
+    }
+    // get请求转参数key为params
+    if (method === "get") {
+      // config.headers["Content-Type"] = "application/x-www-form-urlencoded";
+      config.params = data;
+    }
     return config;
   },
   (error) => {
     return error;
-  }
+  },
 );
 // 请求成功回调
-async function successCallback(response: any) {
-  ElMessage({
-    message: "this is a message.",
-    grouping: true,
-    type: "success"
-  });
+async function successCallback(res: any) {
+  const { data } = res;
+  if (data.code == 200) {
+    return Promise.resolve(data.data);
+  } else {
+    ElMessage({
+      message: data.msg,
+      grouping: true,
+      type: "error",
+    });
+    return Promise.reject(`${data.msg}(${data.code})`);
+  }
 }
 // 请求错误回调
 function errorCallback(error: any) {
-  console.log(error);
+  console.error(error);
   ElMessage({
     message: error,
     grouping: true,
-    type: "error"
+    type: "error",
   });
 }
 // respone返回拦截器
