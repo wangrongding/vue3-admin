@@ -64,8 +64,8 @@ tableParams.value.data = [1, 2, 3, 4, 5, 6] as any;
 </script>
 <template>
   <div class="page-container">
-    <DingForm class="ding-form" :formParams="formParams" />
-    <DingTable class="ding-table" :tableParams="tableParams" />
+    <Form class="ding-form" :formParams="formParams" />
+    <Table class="ding-table" :tableParams="tableParams" />
   </div>
 </template>
 <style lang="scss" scoped>

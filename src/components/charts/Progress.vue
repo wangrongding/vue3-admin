@@ -1,78 +1,64 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { cloneDeep } from /* * as __ */ "lodash";
 import * as echarts from "echarts";
-const myChart = ref<HTMLElement>(); //也可以用const myChart = ref<any>();
-const myCharts = ref<any>();
+const chartDom = ref<HTMLElement>(); //也可以用const chartDom = ref<any>();
+let chart = <any>{};
 const props = defineProps({
   configuration: {
     type: Object,
     default: {},
-    required: true
-  }
+    required: true,
+  },
 });
-let tempData = cloneDeep(props.configuration);
-const configuration = ref({
-  radius: "130%", //图形大小
-  center: ["50%", "50%"],
-  unfinishedColor: "#eaeaea",
-  finishedColor: "#28BCFE",
-  barWidth: 20,
-  opacity: 1,
-  text: 0,
-  subtext: "描述文本",
-  data: [0]
-});
-if (tempData.data) {
-  tempData.text = tempData.data;
-  tempData.data = [tempData.data];
-} else {
-  tempData.text = 0;
-  tempData.data = [0.1];
-}
-//合并默认配置与自定义配置
-configuration.value = Object.assign(configuration.value, tempData);
 
-onMounted(() => {
-  // 绘制图表
-  myCharts.value = echarts.init(myChart.value!);
-  myCharts.value.setOption({
+function getPercentage(data1: number, data2: number) {
+  if (data1 == 0 && data2 == 0) {
+    return "0%";
+  } else {
+    return ((data1 / (data1 + data2)) * 100).toFixed(2) + "%";
+  }
+}
+
+function render() {
+  chart.setOption({
     title: {
-      text: configuration.value.text,
+      text: getPercentage(props.configuration.data[0].value, props.configuration.data[1].value),
+      // show: props.configuration.title.show,
       textStyle: {
-        fontSize: 30
+        fontSize: 30,
       },
-      subtext: configuration.value.subtext,
+      subtext: props.configuration.title.text,
       subtextStyle: {
         color: "#666666",
-        fontSize: 20
+        fontSize: 20,
       },
       itemGap: 20,
       left: "center",
-      top: "43%"
+      top: "43%",
     },
     angleAxis: {
-      max: 100,
+      max: props.configuration.data[0].value + props.configuration.data[1].value,
       clockwise: true, // 逆时针
       // 隐藏刻度线
-      show: false
+      show: false,
     },
     radiusAxis: {
       type: "category",
       show: true,
       axisLabel: {
-        show: false
+        show: false,
       },
       axisLine: {
-        show: false
+        show: false,
       },
       axisTick: {
-        show: false
-      }
+        show: false,
+      },
     },
     polar: {
-      center: configuration.value.center,
-      radius: configuration.value.radius //图形大小
+      center: props.configuration.center || ["50%", "50%"],
+      radius: props.configuration.radius || "130%", //图形大小
     },
     //================
     xAxis: [
@@ -81,90 +67,104 @@ onMounted(() => {
         type: "category",
         data: [],
         axisLine: {
-          show: false
+          show: false,
         },
         splitLine: {
-          show: false
+          show: false,
         },
         splitArea: {
           interval: "auto",
-          show: false
-        }
-      }
+          show: false,
+        },
+      },
     ],
     yAxis: [
       //这里有很多的show，必须都设置成不显示
       {
         type: "value",
         axisLine: {
-          show: false
+          show: false,
         },
         axisTick: {
-          show: false
+          show: false,
         },
         minorTick: {
-          show: false
+          show: false,
         },
         splitLine: {
-          show: false
+          show: false,
         },
         axisLabel: {
-          show: false
-        }
-      }
+          show: false,
+        },
+      },
     ],
     //================
     series: [
       {
         type: "bar",
-        data: configuration.value.data,
+        data: [props.configuration.data[0].value],
         showBackground: true,
         backgroundStyle: {
-          color: configuration.value.unfinishedColor
+          color: props.configuration.unfinishedColor,
         },
         coordinateSystem: "polar",
         roundCap: true,
-        barWidth: configuration.value.barWidth,
+        barWidth: props.configuration.barWidth || 20,
         itemStyle: {
-          opacity: configuration.value.opacity,
-          color: configuration.value.finishedColor
-        }
+          opacity: props.configuration.opacity || 1,
+          color: props.configuration.finishedColor,
+        },
       },
       {
-        name: "aaa",
+        name: props.configuration.data[0].name,
         type: "bar",
         barWidth: "60%", //不显示，可以随便设置
         data: [0],
         itemStyle: {
-          color: "#00A1E9" //这里的图例要注意，颜色设置和仪表盘的颜色对应起来
-        }
+          color: props.configuration.finishedColor, //这里的图例要注意，颜色设置和仪表盘的颜色对应起来
+        },
       },
       {
-        name: "bbb",
+        name: props.configuration.data[1].name,
         type: "bar",
         barWidth: "60%",
         data: [0],
         itemStyle: {
-          color: "#70C1B3"
-        }
-      }
+          color: props.configuration.unfinishedColor,
+        },
+      },
     ],
     legend: {
       //配置legend，这里的data，要对应type为‘bar’的series数据项的‘name’名称，作为图例的说明
-      data: ["aaa", "bbb"],
+      data: [props.configuration.data[0].name, props.configuration.data[1].name],
       selectedMode: false, //图例禁止点击
       left: 20,
       top: 80,
       orient: "vertical",
-      icon: "circle"
-    }
+      icon: "circle",
+    },
   });
+}
+
+watch(props.configuration, () => {
+  render();
+});
+onMounted(() => {
+  // 绘制图表
+  chart = echarts.init(chartDom.value!);
+  console.log(props.configuration, "==============");
+
+  render();
+  window.onresize = function () {
+    chart.resize();
+  };
 });
 </script>
 
 <template>
   <div class="page-container">
-    <div ref="myChart" :style="{ width: '100%', height: '100%', minHeight: '100px' }" />
+    <div ref="chartDom" :style="{ width: '100%', height: '100%', minHeight: '100px' }" />
   </div>
 </template>
 
@@ -172,5 +172,7 @@ onMounted(() => {
 .page-container {
   min-height: 100px;
   height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 </style>

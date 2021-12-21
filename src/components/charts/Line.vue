@@ -1,102 +1,114 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import * as echarts from "echarts";
 type EChartsOption = echarts.EChartsOption;
-const options: EChartsOption = {
-  title: { text: "" },
-  tooltip: {
-    trigger: "axis",
-    axisPointer: {
-      type: "cross",
-      label: {
-        backgroundColor: "#6a7985"
-      }
-    }
-  },
-  grid: {
-    left: "3%",
-    right: "4%",
-    bottom: "3%",
-    top: "100px",
-    containLabel: true
-  },
-  xAxis: {
-    data: ["12-3", "12-4", "12-5", "12-6", "12-7", "12-8"]
-  },
-  yAxis: { type: "value" },
-  /* legend: {
-      data: ["用户量", "用户量aaa"],
-    }, */
-  legend: {
-    orient: "horizontal",
-    selectedMode: false,
-    right: 60,
-    top: 20,
-    icon: "circle" // 这个字段控制形状  类型包括 circle，rect ，roundRect，triangle，diamond，pin，arrow，none
-  },
-  series: [
-    {
-      name: "用户量aaa",
-      type: "line",
-      smooth: true,
-      data: [5, 250, 356, 150, 100, 300],
-      // stack: "总量",
-      lineStyle: { color: "rgb(0,228,185)" },
-      areaStyle: {
-        opacity: 0.8,
-        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-          {
-            offset: 0,
-            color: "rgb(0,228,185)"
-          },
-          {
-            offset: 1,
-            color: "rgba(255, 255, 255,0.2)"
-          }
-        ])
-      }
-    },
-    {
-      name: "用户量",
-      type: "line",
-      smooth: true,
-      data: [50, 200, 316, 100, 100, 200],
-      // stack: "总量",
-      lineStyle: { color: "rgb(255,143,114)" },
-      areaStyle: {
-        opacity: 0.8,
-        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-          {
-            offset: 0,
-            color: "rgb(255,143,114)"
-          },
-          {
-            offset: 1,
-            color: "rgba(255, 255, 255,0.2)"
-          }
-        ])
-      }
-    }
-  ]
-};
 const chartDom = ref<HTMLElement>();
+let chart = {} as any;
+//传入的配置
+const props = defineProps({
+  configuration: {
+    type: Object,
+    default: {},
+    required: true,
+  },
+});
 // 绘制图表
 function render() {
-  const chart = echarts.init(chartDom.value as HTMLElement);
+  const options: EChartsOption = {
+    title: { text: props.configuration.title.text, show: props.configuration.title.show },
+    tooltip: {
+      trigger: "axis",
+      axisPointer: {
+        type: "cross",
+        label: {
+          backgroundColor: "#6a7985",
+        },
+      },
+    },
+    grid: {
+      left: "3%",
+      right: "4%",
+      bottom: "3%",
+      top: "100px",
+      containLabel: true,
+    },
+    xAxis: {
+      data: props.configuration.xAxisData,
+    },
+    yAxis: { type: "value" },
+    /* legend: {
+      data: ["用户量", "用户量aaa"],
+    }, */
+    legend: {
+      orient: "horizontal",
+      selectedMode: false,
+      right: 60,
+      top: 20,
+      icon: "circle", // 这个字段控制形状  类型包括 circle，rect ，roundRect，triangle，diamond，pin，arrow，none
+    },
+    series: [
+      {
+        name: props.configuration.data1.name,
+        type: "line",
+        smooth: true,
+        data: props.configuration.data1.data,
+        // stack: "总量",
+        lineStyle: { color: "rgb(0,228,185)" },
+        areaStyle: {
+          opacity: 0.8,
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: "rgb(0,228,185)",
+            },
+            {
+              offset: 1,
+              color: "rgba(255, 255, 255,0.2)",
+            },
+          ]),
+        },
+      },
+      {
+        name: props.configuration.data2.name,
+        type: "line",
+        smooth: true,
+        data: props.configuration.data2.data,
+        // stack: "总量",
+        lineStyle: { color: "rgb(255,143,114)" },
+        areaStyle: {
+          opacity: 0.8,
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: "rgb(255,143,114)",
+            },
+            {
+              offset: 1,
+              color: "rgba(255, 255, 255,0.2)",
+            },
+          ]),
+        },
+      },
+    ],
+  };
   chart.setOption(options);
 }
-onMounted(() => {
+watch(props.configuration, () => {
+  console.log("🚀", props.configuration);
   render();
+});
+onMounted(() => {
+  chart = echarts.init(chartDom.value as HTMLElement);
+  render();
+  window.onresize = function () {
+    chart.resize();
+  };
 });
 </script>
 
 <template>
   <div class="page-container">
-    <div
-      ref="chartDom"
-      id="chartDom"
-      :style="{ width: '100%', height: '100%', minHeight: '100px' }"
-    ></div>
+    <div ref="chartDom" id="chartDom" :style="{ height: '100%', minHeight: '100px' }"></div>
   </div>
 </template>
 
@@ -104,5 +116,7 @@ onMounted(() => {
 .page-container {
   min-height: 100px;
   height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 </style>

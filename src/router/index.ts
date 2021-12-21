@@ -20,7 +20,7 @@ export const routes: Array<RouteRecordRaw> = [
       {
         path: "index",
         // component: routeReplaceSelf(Dashboard),
-        component: () => import("@/views/dashboard/index.vue"),
+        component: () => import("@/views/dashboard/dashboard.vue"),
         meta: { title: "看板详情" },
         children: [
           {

@@ -24,7 +24,7 @@ const props = defineProps({
     required: true,
   },
 });
-const dingFormDom = ref<any>();
+const FormDom = ref<any>();
 
 function getOption(value: any, defaultValue: any) {
   return value === void 0 ? defaultValue : value;
@@ -32,7 +32,7 @@ function getOption(value: any, defaultValue: any) {
 //提交表单
 function submitForm(submit: any) {
   console.log(props.formParams.data);
-  dingFormDom.value.validate((valid: any) => {
+  FormDom.value.validate((valid: any) => {
     if (valid) {
       submit && submit();
     } else {
@@ -43,7 +43,7 @@ function submitForm(submit: any) {
 }
 //重置表单
 function resetForm() {
-  dingFormDom.value.resetFields();
+  FormDom.value.resetFields();
 }
 //取消
 function cancelSubmit(cancel: any) {
@@ -73,16 +73,16 @@ const formStyle = ref({
       console.log(file, fileList, formFileList);
     },
     validate(callback) {
-      this.$refs["dingFormDom"].validate(callback);
+      this.$refs["FormDom"].validate(callback);
     },
     resetFields() {
-      this.$refs["dingFormDom"].resetFields();
+      this.$refs["FormDom"].resetFields();
     }, */
 </script>
 <template>
   <div class="page-container">
     <el-form
-      ref="dingFormDom"
+      ref="FormDom"
       v-loading="formParams.loading"
       :model="formParams.data"
       :rules="formParams.rules"

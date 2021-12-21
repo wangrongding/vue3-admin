@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import "echarts-liquidfill";
 import * as echarts from "echarts";
 const chartDom = ref<HTMLElement>(); //也可以用const chartDom = ref<any>();
-const chart = ref<any>();
+import { cloneDeep } from "lodash";
+let chart = <any>{};
 //传入的配置
 const props = defineProps({
   configuration: {
     type: Object,
     default: {},
-    required: true
-  }
+    required: true,
+  },
 });
-import { cloneDeep } from "lodash";
-let tempData = cloneDeep(props.configuration);
+
 //默认配置
 const configuration = ref({
   title: "", //title
@@ -26,25 +26,28 @@ const configuration = ref({
   labelText: "xxxxx", //label
   center: ["50%", "40%"], //图表的占位
   radius: "60%", //图形大小
-  amplitude: 9 //波浪的波幅
+  amplitude: 9, //波浪的波幅
 });
-if (tempData.data) {
-  tempData.data = [tempData.data, tempData.data - 0.05];
-} else {
-  tempData.data = [0, 0];
-}
-//合并默认配置与自定义配置
-configuration.value = Object.assign(configuration.value, tempData);
-onMounted(() => {
-  // 绘制图表
-  chart.value = echarts.init(chartDom.value!);
-  chart.value.setOption({
+
+function render() {
+  console.log("========aa=======");
+
+  let tempData = cloneDeep(props.configuration);
+  if (tempData.data) {
+    tempData.data = [tempData.data, tempData.data - 0.05];
+  } else {
+    tempData.data = [0, 0];
+  }
+  //合并默认配置与自定义配置
+  configuration.value = Object.assign(configuration.value, tempData);
+
+  chart.setOption({
     title: {
       text: configuration.value.title,
       textStyle: {
         fontSize: 20,
-        fontWeight: "normal"
-      }
+        fontWeight: "normal",
+      },
     },
     graphic: [
       {
@@ -58,11 +61,11 @@ onMounted(() => {
               fill: configuration.value.labelColor,
               text: configuration.value.labelText,
               fontSize: configuration.value.labelSize,
-              fontWeight: "500"
-            }
-          }
-        ]
-      }
+              fontWeight: "500",
+            },
+          },
+        ],
+      },
     ],
     series: [
       {
@@ -74,45 +77,31 @@ onMounted(() => {
         color: configuration.value.color,
         radius: configuration.value.radius,
         backgroundStyle: {
-          color: configuration.value.background
+          color: configuration.value.background,
         },
-        /* backgroundStyle: {
-          color: {
-            type: "radial",
-            x: 0.5,
-            y: 0.5,
-            r: 0.55,
-            colorStops: [
-              {
-                offset: 0.5,
-                color: "rgb(255,27,52)", // 0% 处的颜色
-              },
-              {
-                offset: 0.75,
-                color: "rgb(255,41,83)", // 100% 处的颜色
-              },
-              {
-                offset: 0.95,
-                color: "rgb(255,63,135)", // 100% 处的颜色
-              },
-            ],
-            globalCoord: false, // 缺省为 false
-          },
-        }, */
         outline: {
-          show: false
+          show: false,
         },
         itemStyle: {
           //opacity: 0.7, // 波浪的透明度
-          shadowBlur: 0 // 波浪的阴影范围
+          shadowBlur: 0, // 波浪的阴影范围
         },
         label: {
           formatter: "{c}",
-          fontSize: 28
-        }
-      }
-    ]
+          fontSize: 28,
+        },
+      },
+    ],
   });
+}
+
+watch(props.configuration, () => {
+  render();
+});
+onMounted(() => {
+  // 绘制图表
+  chart = echarts.init(chartDom.value!);
+  render();
 });
 </script>
 
@@ -126,5 +115,7 @@ onMounted(() => {
 .page-container {
   min-height: 30px;
   height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 </style>

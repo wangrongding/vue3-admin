@@ -14,9 +14,9 @@ const props = defineProps({
           },
         }, */
       ],
-      tempSelectList: []
-    }
-  }
+      tempSelectList: [],
+    },
+  },
 });
 const getOption = (value: any, defaultValue: any) => {
   return value === void 0 ? defaultValue : value;
@@ -60,8 +60,10 @@ const selectionChange = (val: any) => {
       :header-cell-style="{
         background: 'rgba(197, 255, 246, 1)',
         fontWeight: 'bold',
-        color: '#000'
+        color: '#000',
+        padding: '5px',
       }"
+      :cell-style="{ height: '40px', padding: '5px', fontSize: '14px', boxSizing: 'content-box' }"
       :row-key="tableParams.rowKey"
       :row-style="tableParams.rowStyle"
       @row-click="handleRowClick"

@@ -12,9 +12,10 @@ import Line from "@/components/charts/Line.vue";
 import Pie from "@/components/charts/Pie.vue";
 import Battery from "@/components/charts/Battery.vue";
 import Progress from "@/components/charts/Progress.vue";
+import { cloneDeep } from "lodash";
 const router = useRouter();
 
-const pieColor = ["#5a91e7", "rgba(255, 143, 114, 1)", "rgba(0, 224, 180, 1)"];
+const pieColor = ["#5a91e7", "rgba(0, 224, 180, 1)", "rgba(255, 143, 114, 1)"];
 const data = reactive({
   panelItemBgList: [
     new URL("../../assets/image/itemBg1.png", import.meta.url).href,
@@ -24,26 +25,30 @@ const data = reactive({
   ],
   panelItemList: [] as any,
   ProgressConfig: {
+    title: { text: "心理筛查统计", show: false },
     finishedColor: "#00e0b4",
-    data: 77,
+    unfinishedColor: "#eaeaea",
+    description: "测试完成率",
+    data: [
+      { name: "1", value: 0 },
+      { name: "2", value: 0 },
+    ],
   },
   PieConfig: {
-    data: [
-      { value: 277, name: "扇形区间名称a", itemStyle: { color: pieColor[0] } },
-      { value: 87, name: "扇形区间名称b", itemStyle: { color: pieColor[1] } },
-      { value: 55, name: "扇形区间名称cc", itemStyle: { color: pieColor[2] } },
-    ],
+    title: { text: "筛查结果统计", show: false },
+    data: [],
+    color: ["#5a91e7", "rgba(0, 224, 180, 1)", "rgba(255, 143, 114, 1)"],
   },
   BatteryConfig: [
     {
       data: 0.3,
       color: ["#74edd5", "#00dfb3"],
       background: "rgba(0, 224, 180, 0.08)",
-      labelText: "已干预",
+      labelText: "-",
     },
     {
       data: 0.3,
-      labelText: "已转介",
+      labelText: "-",
       color: ["#76b7ff", "#0179ff"],
       background: "#ebf5ff",
     },
@@ -51,24 +56,25 @@ const data = reactive({
       data: 0.3,
       color: ["#ffc894", "#ff9939"],
       background: "rgba(255, 154, 57, 0.08)",
-      labelText: "待干预",
+      labelText: "-",
     },
     {
       data: 0.3,
       color: ["#c8c8c8", "#999999"],
       background: "rgba(153, 153, 153, 0.08)",
-      labelText: "无需干预",
+      labelText: "-",
     },
   ],
   lineConfig: {
-    data1: [],
-    data2: [],
+    data1: { data: [], name: "情绪调节-抑郁" },
+    data2: { data: [], name: "认知训练-注意力" },
     xAxisData: [],
+    title: { text: "自主干预统计", show: false },
   },
 });
 
 const formParams = reactive({
-  data: { grade: "", classId: "", academicYears: "" }, // 表单数据对象
+  data: { grade: "", classId: "", academicYears: "", beginTime: "", endTime: "" }, // 表单数据对象
   formList: {
     grade: {
       type: "cascader",
@@ -93,7 +99,7 @@ const formParams = reactive({
   inline: true,
   submit: {
     submitText: "查询",
-    submitFunction: () => {},
+    submitFunction: getDashboardInfo,
     reset: true,
   },
 });
@@ -120,10 +126,33 @@ function newAcademicYears() {
 }
 //获取数据面板信息
 async function getDashboardInfo() {
-  data.panelItemList = await cardDataCount();
-  /* data.panelItemList =  */ await courseDataCount();
-  const { battery, pie, ring } = await ringPieBatteryDataCount();
-  battery.data;
+  const params = cloneDeep(formParams.data);
+  params.beginTime = params.academicYears[0] + "";
+  params.endTime = params.academicYears[1] + "";
+  params.grade = params.grade + "";
+  data.panelItemList = await cardDataCount(params);
+  const line = await courseDataCount(params);
+  //折线图
+  data.lineConfig.data1.data = line.course;
+  data.lineConfig.data2.data = line.train;
+  data.lineConfig.xAxisData = line.time;
+  const { battery, pie, ring } = await ringPieBatteryDataCount(params);
+  //环图
+  data.ProgressConfig.data = ring.data;
+  //饼图
+  data.PieConfig.data = pie.data;
+  data.PieConfig.title.text = pie.name;
+  //电池图
+  let num = 0;
+  for (let i = 0; i < battery.data.length; i++) {
+    num += battery.data[i];
+  }
+  battery.data.forEach((item: any, index: number) => {
+    data.BatteryConfig[index].data = num == 0 ? 0 : parseInt((item / num).toFixed(2));
+    data.BatteryConfig[index].labelText = item.labelText;
+  });
+  console.log("🚀 .BatteryConfig", battery.data);
+  console.log("🚀 .BatteryConfig", data.BatteryConfig);
 }
 getDashboardInfo();
 
@@ -136,7 +165,7 @@ function toList() {
 
 <template>
   <div class="page-container">
-    <DingForm class="ding-form" :form-params="formParams" />
+    <Form class="ding-form" :form-params="formParams" />
     <div class="panel-list">
       <div
         v-for="(item, index) in data.panelItemList"
@@ -152,7 +181,7 @@ function toList() {
       <div class="chart-item">
         <p class="chart-item-title chart-item-link" @click="toList">
           <i class="iconfont icon-ziliao-xuanze" />
-          <span>xxxxxx</span>
+          <span>{{ data.ProgressConfig.title.text }}</span>
           <i class="iconfont icon-gengduo"></i>
         </p>
         <Progress :configuration="data.ProgressConfig" />
@@ -160,7 +189,7 @@ function toList() {
       <div class="chart-item">
         <p class="chart-item-title chart-item-link" @click="toList">
           <i class="iconfont icon-ziliao-xuanze" />
-          <span>xxxxxx</span>
+          <span>{{ data.PieConfig.title.text }}</span>
           <i class="iconfont icon-gengduo"></i>
         </p>
         <Pie :configuration="data.PieConfig" />
@@ -168,7 +197,7 @@ function toList() {
       <div class="chart-item Battery">
         <p class="chart-item-title chart-item-link" @click="toList">
           <i class="iconfont icon-ziliao-xuanze" />
-          <span>xxxxxx</span>
+          <span>危机干预统计</span>
           <i class="iconfont icon-gengduo"></i>
         </p>
         <Battery v-for="item in data.BatteryConfig" :configuration="item" />
@@ -177,9 +206,9 @@ function toList() {
     <div class="line">
       <p class="chart-item-title">
         <i class="iconfont icon-ziliao-xuanze" />
-        <span>xxxxxx</span>
+        <span>{{ data.lineConfig.title.text }}</span>
       </p>
-      <Line />
+      <Line :configuration="data.lineConfig" />
     </div>
   </div>
 </template>

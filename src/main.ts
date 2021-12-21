@@ -9,10 +9,10 @@ import "element-plus/dist/index.css";
 import * as Icons from "@element-plus/icons";
 
 //=====================全局挂载element-plus二次封装的组件
-import DingTable from "@/components/element/DingTable.vue";
-import DingForm from "@/components/element/DingForm.vue";
-app.component("DingTable", DingTable);
-app.component("DingForm", DingForm);
+import Table from "@/components/element/Table.vue";
+import Form from "@/components/element/Form.vue";
+app.component("Table", Table);
+app.component("Form", Form);
 
 //=====================iconFont
 import "@/assets/icon/iconfont.css";
@@ -27,6 +27,13 @@ import "@/styles/element/index.scss";
 Object.keys(Icons).forEach((key) => {
   app.component(key, Icons[key as keyof typeof Icons]);
 });
-app.use(store).use(router).use(ElementPlus, { size: "small" /* "default" */, zIndex: 3000 }).mount("#app");
+app
+  .use(store)
+  .use(router)
+  .use(ElementPlus, {
+    size: "" /* ["", "large", "medium", "small", "mini"] */,
+    zIndex: 3000,
+  })
+  .mount("#app");
 
 // console.log(import.meta.env);

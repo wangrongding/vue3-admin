@@ -172,7 +172,7 @@ const changeType = (a: any, b: any, c: any) => {
         </el-menu-item>
       </el-menu>
     </div>
-    <DingForm
+    <Form
       v-show="showType == 'userInfo'"
       :form-params="formParams"
       style="width: 1300px; margin: 0 auto"
@@ -210,13 +210,13 @@ const changeType = (a: any, b: any, c: any) => {
           </el-upload>
         </div>
       </template>
-    </DingForm>
-    <DingForm
+    </Form>
+    <Form
       v-show="showType == 'password'"
       :form-params="passwordForm"
       style="width: 500px; margin: 0 auto"
     />
-    <DingForm
+    <Form
       v-show="showType == 'phone'"
       :form-params="phoneForm"
       style="width: 500px; margin: 0 auto"
