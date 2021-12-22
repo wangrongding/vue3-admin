@@ -254,11 +254,7 @@ const formStyle = ref({
           :type="itemForm.mode"
           :value-format="itemForm.valueFormat || 'YYYY-MM-DD'"
           :default-time="itemForm.defaultTime"
-          @change="
-            () => {
-              itemForm.onChange && itemForm.onChange();
-            }
-          "
+          @change="itemForm.onChange"
         />
         <!-- <el-upload
                 v-if="itemForm.type === 'upload'"

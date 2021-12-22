@@ -23,14 +23,18 @@ code {
 }
 
 //全局公共样式
-.ding-form {
+.form-panel {
   background-color: white;
   padding: 20px 20px 0 20px;
   border-radius: 10px;
   margin-bottom: 20px;
 }
-.ding-table {
+.table-panel {
   background-color: white;
   padding: 20px;
   border-radius: 10px;
+  min-height: 700px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }

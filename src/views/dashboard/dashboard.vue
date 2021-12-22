@@ -165,7 +165,7 @@ function toList() {
 
 <template>
   <div class="page-container">
-    <Form class="ding-form" :form-params="formParams" />
+    <Form class="form-panel" :form-params="formParams" />
     <div class="panel-list">
       <div
         v-for="(item, index) in data.panelItemList"

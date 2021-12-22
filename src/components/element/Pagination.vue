@@ -2,7 +2,7 @@
   <el-pagination
     class="pagination"
     :background="background"
-    :current-page.sync="currentPage"
+    :current-page.sync="page"
     :page-size.sync="pageSize"
     :layout="layout"
     :page-sizes="pageSizes"
@@ -14,9 +14,8 @@
 </template>
 
 <script lang="ts" setup>
-import { scrollTo } from "@/utils/scroll-to.js";
-import { number } from "echarts";
-import { computed } from "vue";
+import { scrollTo } from "@/utils/scroll-to.ts";
+import { computed, ref } from "vue";
 const props = defineProps({
   total: {
     type: Number,
@@ -33,7 +32,7 @@ const props = defineProps({
   pageSizes: {
     type: Array,
     default() {
-      return [5, 10, 15, 20, 25];
+      return [10, 20, 30, 50, 100];
     },
   } as any,
   layout: {
@@ -48,9 +47,13 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  execFunction: {
+    type: Function,
+    default: () => {},
+  },
 });
 const emit = defineEmits(["update:page", "update:limit", "pagination"]);
-const currentPage = computed({
+const page = computed({
   get() {
     return props.page;
   },
@@ -67,17 +70,12 @@ const pageSize = computed({
   },
 }) as any;
 
-function handleSizeChange(val: any) {
-  emit("pagination", { currentPage: currentPage, pageSize: val });
-  if (props.autoScroll) {
-    scrollTo(0, 800);
-  }
+function handleSizeChange(val: number) {
+  emit("pagination", { page: page.value, pageSize: val });
 }
-function handleCurrentChange(val: any) {
-  emit("pagination", { currentPage: val, pageSize: pageSize });
-  if (props.autoScroll) {
-    scrollTo(0, 800);
-  }
+
+function handleCurrentChange(val: number) {
+  emit("pagination", { page: val, pageSize: pageSize.value });
 }
 </script>
 
@@ -90,9 +88,9 @@ function handleCurrentChange(val: any) {
   overflow: auto;
 }
 @media (max-width: 992px) {
-  ::v-deep .el-pager,
-  ::v-deep .btn-prev,
-  ::v-deep .btn-next {
+  :deep(.el-pager),
+  :deep(.btn-prev),
+  :deep(.btn-next) {
     display: none !important;
   }
   .pagination {

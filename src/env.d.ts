@@ -12,3 +12,4 @@ declare module "*.png";
 declare module "*.jpg";
 declare module "*.ts";
 declare module "*.js";
+declare module "file-saver";

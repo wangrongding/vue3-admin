@@ -27,6 +27,7 @@ const handleRowClick = (row: any, column: any, event: any) => {
 const selectionChange = (val: any) => {
   //选中需要确认后赋值
   console.log("选中的行：", val);
+  props.tableParams.selectList = val;
 };
 </script>
 <template>
