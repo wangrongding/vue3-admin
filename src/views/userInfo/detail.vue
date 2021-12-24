@@ -52,7 +52,7 @@ const state = reactive({
     },
     inline: true,
     align: "center",
-    labelWidth: "120px",
+    labelWidth: "200px",
     submit: {
       submitText: "查询",
       submitFunction: () => {},
@@ -122,7 +122,7 @@ const state = reactive({
       oldPassword: [{ required: true, message: "请输入姓名", trigger: "blur" }],
       newPassword: [{ required: true, message: "请输入姓名", trigger: "blur" }],
     },
-    labelWidth: "150px",
+    labelWidth: "200px",
     submit: {
       submitText: "查询",
       submitFunction: () => {},
@@ -153,12 +153,7 @@ const changeType = (a: any, b: any, c: any) => {
 <template>
   <div class="page-container">
     <div class="item-nav-bar">
-      <el-menu
-        :default-active="'userInfo'"
-        class="el-menu-demo"
-        mode="horizontal"
-        @select="changeType"
-      >
+      <el-menu :default-active="'1'" class="el-menu-demo" mode="horizontal" @select="changeType">
         <el-menu-item
           v-for="item in [
             { name: '信息', value: 'userInfo' },
@@ -172,12 +167,10 @@ const changeType = (a: any, b: any, c: any) => {
         </el-menu-item>
       </el-menu>
     </div>
-
     <Form
       v-show="showType == 'userInfo'"
       :form-params="state.formParams"
-      style="width: 1000px; margin: 0 auto"
-      class="info-form"
+      style="width: 1300px; margin: 0 auto"
     >
       <template #avatar="{ itemForm }">
         <div slot="trigger">
@@ -201,14 +194,12 @@ const changeType = (a: any, b: any, c: any) => {
     <Form
       v-show="showType == 'password'"
       :form-params="state.passwordForm"
-      style="width: 600px; margin: 0 auto"
-      class="info-form"
+      style="width: 500px; margin: 0 auto"
     />
     <Form
       v-show="showType == 'phone'"
       :form-params="state.phoneForm"
-      style="width: 600px; margin: 0 auto"
-      class="info-form"
+      style="width: 500px; margin: 0 auto"
     />
   </div>
 </template>
@@ -222,9 +213,6 @@ const changeType = (a: any, b: any, c: any) => {
     height: 50px;
     padding: 10px 0px 0;
     border-bottom: #c3c3c3;
-  }
-  .info-form {
-    padding-top: 100px;
   }
 }
 </style>

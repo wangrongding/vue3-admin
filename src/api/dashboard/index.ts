@@ -24,3 +24,7 @@ export function ringPieBatteryDataCount(data?: object) {
 export function recordList(data?: object) {
   return request.get("/his-admin/home/recordList", { data });
 }
+// 心理筛查记录
+export function findByPaperId(data?: object) {
+  return request.get("/his-test/qsn-paper/findByPaperId", { data });
+}

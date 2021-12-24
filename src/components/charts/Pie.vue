@@ -70,6 +70,14 @@ function draw() {
           },
         },
         label: {
+          // formatter: (item: any) => {
+          //   if (item.value > 0) {
+          //     console.log(item);
+          //     return item.name + "\n\n" + item.percent + "%";
+          //   } else {
+          //     return "";
+          //   }
+          // },
           formatter: "{d}%",
           position: "inside",
           fontSize: 24,

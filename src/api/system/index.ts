@@ -1,6 +1,6 @@
 import request from "../request";
 
-// 数据统计
+// 系统管理列表
 export function sysUserListPage(data?: object) {
   return request.get("/his-admin/user/sysUserListPage", { data });
 }

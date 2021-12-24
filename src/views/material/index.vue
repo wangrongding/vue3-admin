@@ -1,15 +1,15 @@
 <script lang="ts">
 import { defineComponent, watch, getCurrentInstance } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { onMounted, reactive, toRefs } from "vue";
+import { onMounted, reactive, toRefs, inject } from "vue";
 import List from "./list.vue";
 export default defineComponent({
   components: { List },
   setup(props, context) {
-    console.log(getCurrentInstance(), "context");
+    const reload = inject("reload");
     const { currentRoute } = useRouter();
     const state = reactive({
-      currentPage: 1
+      currentPage: 1,
     });
     watch(
       () => currentRoute.value,
@@ -17,15 +17,15 @@ export default defineComponent({
         currentRoute.value.path.includes("detail")
           ? (state.currentPage = 2)
           : (state.currentPage = 1);
-        // console.log(state.currentPage, "============");
-      }
+      },
+      { immediate: true },
     );
     onMounted(() => {});
     return {
       onMounted,
-      ...toRefs(state)
+      ...toRefs(state),
     };
-  }
+  },
 });
 </script>
 <template>

@@ -12,10 +12,12 @@ import * as Icons from "@element-plus/icons";
 import Table from "@/components/element/Table.vue";
 import Form from "@/components/element/Form.vue";
 import Pagination from "@/components/element/Pagination.vue";
+import Dialog from "@/components/element/Dialog.vue";
 import TopPanel from "@/components/TopPanel.vue";
 app.component("Form", Form);
 app.component("Table", Table);
 app.component("Pagination", Pagination);
+app.component("Dialog", Dialog);
 app.component("TopPanel", TopPanel);
 
 //=====================iconFont

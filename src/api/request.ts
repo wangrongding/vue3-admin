@@ -15,13 +15,19 @@ const request = axios.create({
 // request请求拦截器
 request.interceptors.request.use(
   (config) => {
-    const { data = {}, method, params } = config;
+    const { data = {}, method } = config;
+    //将请求中值为undefined,null的过滤
+    Object.keys(data).forEach((item) => {
+      if (data[item] === undefined || data[item] === null /* || data[item] === "" */) {
+        delete data[item];
+      }
+    });
+
     if (method === "post") {
       config.data = data.data;
     }
     // get请求转参数key为params
     if (method === "get") {
-      // config.headers["Content-Type"] = "application/x-www-form-urlencoded";
       config.params = data;
     }
     return config;

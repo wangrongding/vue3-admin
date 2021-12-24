@@ -50,6 +50,19 @@ export const routes: Array<RouteRecordRaw> = [
     ],
   },
   {
+    path: "/testManagement",
+    component: Layout,
+    meta: { title: "测试管理", type: "single", icon: "Setting" },
+    children: [
+      {
+        path: "list",
+        component: () => import("@/views/testing/testList.vue"),
+        meta: { title: "用户管理" },
+      },
+    ],
+  },
+
+  {
     path: "/material",
     component: Layout,
     meta: { title: "教辅资料", type: "multiple", icon: "Setting" },
@@ -57,7 +70,7 @@ export const routes: Array<RouteRecordRaw> = [
       {
         path: "course",
         component: () => import("@/views/material/index.vue"),
-        meta: { title: "课程资料" },
+        meta: { title: "课程资料", id: 301 },
         children: [
           {
             path: "detail",
@@ -69,29 +82,12 @@ export const routes: Array<RouteRecordRaw> = [
       {
         path: "teachingPlan",
         component: () => import("@/views/material/index.vue"),
-        meta: { title: "教案资料" },
+        meta: { title: "教案资料", id: 303 },
       },
       {
         path: "teamCoaching",
         component: () => import("@/views/material/index.vue"),
-        meta: { title: "团辅资料" },
-      },
-    ],
-  },
-  {
-    path: "/testManagement",
-    component: Layout,
-    meta: { title: "测试管理", type: "multiple", icon: "Setting" },
-    children: [
-      {
-        path: "userManagement",
-        component: () => import("@/views/system/userManagement.vue"),
-        meta: { title: "用户管理" },
-      },
-      {
-        path: "logs",
-        component: () => import("@/views/system/logs.vue"),
-        meta: { title: "日志管理" },
+        meta: { title: "团辅资料", id: 304 },
       },
     ],
   },
@@ -102,8 +98,8 @@ export const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: "list",
-        component: () => import("@/views/system/userManagement.vue"),
-        meta: { title: "用户管理" },
+        component: () => import("@/views/class/classList.vue"),
+        meta: { title: "班级列表" },
       },
     ],
   },
@@ -114,8 +110,8 @@ export const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: "list",
-        component: () => import("@/views/system/userManagement.vue"),
-        meta: { title: "用户管理" },
+        component: () => import("@/views/student/studentList.vue"),
+        meta: { title: "学生列表" },
       },
     ],
   },
@@ -128,6 +124,18 @@ export const routes: Array<RouteRecordRaw> = [
         path: "userManagement",
         component: () => import("@/views/system/userManagement.vue"),
         meta: { title: "用户管理" },
+        children: [
+          {
+            path: "userInfo",
+            component: () => import("@/views/userInfo/index.vue"),
+            meta: { title: "编辑/添加管理员" },
+          },
+        ],
+      },
+      {
+        path: "userInfo",
+        component: () => import("@/views/userInfo/index.vue"),
+        meta: { title: "编辑/添加管理员", hidden: true },
       },
       {
         path: "logs",

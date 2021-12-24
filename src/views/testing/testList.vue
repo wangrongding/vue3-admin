@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { reactive, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { sysUserListPage } from "@/api/system/index.ts";
-import Pagination from "@/components/element/Pagination.vue";
-import { export_json_to_excel } from "@/utils/Export2Excel";
 import { ElMessage, ElMessageBox } from "element-plus";
+import { export_json_to_excel } from "@/utils/Export2Excel";
+import { getQuestionTypeList, getTestManageList } from "@/api/testing/index.ts";
 const router = useRouter();
 const state = reactive({
   //表格参数
@@ -13,11 +12,10 @@ const state = reactive({
     loading: false,
     columnProps: [
       { type: "selection" },
-      { label: "姓名", prop: "realName" },
-      { label: "手机号", prop: "phone" },
-      { label: "可见范围", prop: "scope" },
-      { label: "角色", prop: "roleName" },
-      { label: "当前状态", prop: "xstatus" },
+      { label: "问卷类型", prop: "typeName" },
+      { label: "问卷名称", prop: "questionnaireName" },
+      { label: "适用范围", prop: "scope" },
+      { label: "班级总数", prop: "classTotal" },
       {
         label: "操作",
         prop: "operation",
@@ -37,18 +35,19 @@ const state = reactive({
   },
   //表单参数
   formParams: {
-    data: { time: [], startTime: "", endTime: "", roleId: "" }, // 表单数据对象
+    data: { name: "", roleId: "" }, // 表单数据对象
     formList: {
-      roleId: {
+      typeId: {
         type: "select",
         label: "",
         placeholder: "请选择角色",
         selectOptions: [],
+        customLabelValue: { label: "typeName", value: "id" },
       },
-      key: {
+      name: {
         type: "text",
         label: "",
-        placeholder: "请输入姓名或手机号",
+        placeholder: "请输入问卷名称",
       },
     },
     rules: {},
@@ -61,17 +60,11 @@ const state = reactive({
     },
   },
 });
-//拆分时间
-function splitTime() {
-  if (state.formParams.data.time == null) return;
-  state.formParams.data.startTime = state.formParams.data.time[0];
-  state.formParams.data.endTime = state.formParams.data.time[1];
-}
 //搜索
 function search() {
   state.tableParams.loading = true;
   const searchForm = Object.assign(state.paging, state.formParams.data);
-  sysUserListPage(searchForm).then((res: any) => {
+  getTestManageList(searchForm).then((res: any) => {
     state.tableParams.data = res.records;
     state.tableParams.loading = false;
     state.paging.total = res.current;
@@ -116,11 +109,14 @@ function paginationChange(val: any) {
   state.paging.size = val.pageSize;
   search();
 }
+//=========================exec执行块
+state.formParams.formList.typeId.selectOptions = await getQuestionTypeList();
 search();
 onMounted(() => {});
 function jumpTo(row: any) {
   router.push("/system/userInfo");
 }
+//=========================exec执行块
 </script>
 <template>
   <div class="page-container">

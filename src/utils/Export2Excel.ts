@@ -1,6 +1,5 @@
 /* eslint-disable */
 /**
- * @author zhudying
  * @description  表格下载
  * @function export_json_to_excel 下载函数
  * @param {object} 参数是对象，包括一下：
@@ -255,7 +254,6 @@ export function export_json_to_excel({
 }
 
 /**
- * @author zhudying
  * @description  文件流下载表格
  * @function exportExcel 下载函数
  * @param  response  文件流

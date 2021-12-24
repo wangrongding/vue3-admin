@@ -3,7 +3,29 @@ import Dropdown from "./components/dropdown.vue";
 import Logo from "./components/logo.vue";
 import Menu from "./components/menu.vue";
 import Breadcrumb from "./components/breadcrumb.vue";
+import { nextTick, reactive, ref, provide, watch } from "vue";
+import { useRouter } from "vue-router";
+const { currentRoute } = useRouter();
+const isRouterAlive = ref(true);
+const state = reactive({
+  // 内容区刷新
+  async reload() {
+    isRouterAlive.value = false;
+    await nextTick();
+    isRouterAlive.value = true;
+  },
+});
+// 注入刷新方法
+provide("reload", state.reload);
+watch(
+  () => currentRoute.value,
+  () => {
+    state.reload();
+  },
+  { immediate: true },
+);
 </script>
+
 <template>
   <el-container class="app-container">
     <el-header><Logo /> <Dropdown style="margin-left: auto" /></el-header>
@@ -14,7 +36,9 @@ import Breadcrumb from "./components/breadcrumb.vue";
       <el-main>
         <!-- 面包屑 -->
         <Breadcrumb class="bread-crumbs" />
-        <Suspense> <router-view class="content" /></Suspense>
+        <Suspense>
+          <router-view class="content" v-if="isRouterAlive" />
+        </Suspense>
       </el-main>
     </el-container>
   </el-container>
@@ -24,6 +48,7 @@ import Breadcrumb from "./components/breadcrumb.vue";
 .app-container {
   height: 100vh;
   background-color: $base-nav-bg-color;
+  user-select: none;
   .el-header {
     background-color: $base-nav-bg-color;
     border-bottom: 1px solid #0000001a;
@@ -32,7 +57,6 @@ import Breadcrumb from "./components/breadcrumb.vue";
     line-height: 60px;
     display: flex;
     align-items: center;
-    user-select: none;
   }
 
   .el-aside {

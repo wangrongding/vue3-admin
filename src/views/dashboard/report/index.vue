@@ -17,6 +17,7 @@ const componentList = shallowRef([UserInfo, TextTemplate, Score, ResultsAnalysis
 </template>
 <style lang="scss" scoped>
 .report {
+  // height: 100%;
   .content {
     box-sizing: border-box;
     border-radius: 8px;
@@ -27,6 +28,7 @@ const componentList = shallowRef([UserInfo, TextTemplate, Score, ResultsAnalysis
     background-repeat: no-repeat;
     background-size: 100%;
     padding-top: 400px;
+    padding-bottom: 50px;
   }
   .reportMain {
     margin: 0 auto;

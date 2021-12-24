@@ -23,7 +23,12 @@ const data = reactive({
     new URL("../../assets/image/itemBg3.png", import.meta.url).href,
     new URL("../../assets/image/itemBg4.png", import.meta.url).href,
   ],
-  panelItemList: [] as any,
+  panelItemList: [
+    { num: 0, name: "-" },
+    { num: 0, name: "-" },
+    { num: 0, name: "-" },
+    { num: 0, name: "-" },
+  ] as any,
   ProgressConfig: {
     title: { text: "心理筛查统计", show: false },
     finishedColor: "#00e0b4",
@@ -41,25 +46,25 @@ const data = reactive({
   },
   BatteryConfig: [
     {
-      data: 0.3,
+      data: 0,
       color: ["#74edd5", "#00dfb3"],
       background: "rgba(0, 224, 180, 0.08)",
       labelText: "-",
     },
     {
-      data: 0.3,
+      data: 0,
       labelText: "-",
       color: ["#76b7ff", "#0179ff"],
       background: "#ebf5ff",
     },
     {
-      data: 0.3,
+      data: 0,
       color: ["#ffc894", "#ff9939"],
       background: "rgba(255, 154, 57, 0.08)",
       labelText: "-",
     },
     {
-      data: 0.3,
+      data: 0,
       color: ["#c8c8c8", "#999999"],
       background: "rgba(153, 153, 153, 0.08)",
       labelText: "-",
@@ -93,6 +98,7 @@ const formParams = reactive({
       label: "",
       placeholder: "请选择学年",
       selectOptions: newAcademicYears(),
+      onChange: splitTime,
     },
   },
   rules: {},
@@ -103,6 +109,12 @@ const formParams = reactive({
     reset: true,
   },
 });
+//拆分时间
+function splitTime() {
+  if (state.formParams.data.time == null) return;
+  state.formParams.data.startTime = state.formParams.data.time[0];
+  state.formParams.data.endTime = state.formParams.data.time[1];
+}
 //获取年级信息
 formParams.formList.grade.cascaderOptions = await getClassList();
 //获取班级列表
@@ -127,10 +139,11 @@ function newAcademicYears() {
 //获取数据面板信息
 async function getDashboardInfo() {
   const params = cloneDeep(formParams.data);
-  params.beginTime = params.academicYears[0] + "";
-  params.endTime = params.academicYears[1] + "";
+  // params.beginTime = params.academicYears[0] + "";
+  // params.endTime = params.academicYears[1] + "";
   params.grade = params.grade + "";
-  data.panelItemList = await cardDataCount(params);
+  const tempItem = await cardDataCount(params);
+  tempItem && (data.panelItemList = tempItem);
   const line = await courseDataCount(params);
   //折线图
   data.lineConfig.data1.data = line.course;
@@ -218,7 +231,7 @@ function toList() {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-column-gap: 20px;
-
+    height: 200px;
     .item {
       height: 150px;
       text-align: center;
