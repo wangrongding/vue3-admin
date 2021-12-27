@@ -8,7 +8,7 @@ export function cardDataCount(data?: object) {
 export function getClassList(data?: object) {
   return request.get("/his-admin/class/classList", { data });
 }
-// 下拉班级学年列表
+// 下拉班级列表
 export function classIdList(data?: object) {
   return request.get("/his-admin/class/classIdList", { data });
 }
@@ -20,11 +20,21 @@ export function courseDataCount(data?: object) {
 export function ringPieBatteryDataCount(data?: object) {
   return request.get("/his-admin/home/ringPieBatteryDataCount", { data });
 }
+
+// 所有风险等级/干预状态下拉列表
+export function dictionary(data?: object) {
+  return request.get("/platform-system/dict/dictionary", { data });
+}
+// 问卷下拉列表
+export function questionnaireList(data?: object) {
+  return request.get("/his-test/questionnaire/questionnaireList", { data });
+}
 // 心理筛查记录
 export function recordList(data?: object) {
   return request.get("/his-admin/home/recordList", { data });
 }
-// 心理筛查记录
+
+// 报告详情
 export function findByPaperId(data?: object) {
   return request.get("/his-test/qsn-paper/findByPaperId", { data });
 }

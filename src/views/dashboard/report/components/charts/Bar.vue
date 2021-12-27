@@ -8,36 +8,7 @@ const props = defineProps({
   reportData: {
     type: Object,
     default: () => {
-      return {
-        /* type: 1,
-        content: [
-          {
-            dimensionTitle: "父亲的教养方式",
-            dimensionName: [
-              "父亲-严厉型",
-              "父亲-宠爱型",
-              "父亲-溺爱型",
-              "父亲-包容理解型",
-              "父亲-否定型",
-              "父亲-控制型",
-            ],
-            dimensionScore: [46, 40, 43, 43, 46, 52],
-          },
-          {
-            dimensionTitle: "母亲的教养方式",
-            dimensionName: [
-              "父亲-严厉型",
-              "父亲-宠爱型",
-              "父亲-溺爱型",
-              "父亲-包容理解型",
-              "父亲-否定型",
-              "父亲-控制型",
-            ],
-            dimensionScore: ["", "", "", "", "", ""],
-          },
-        ],
-        title: "", */
-      };
+      return {};
     },
   },
 });

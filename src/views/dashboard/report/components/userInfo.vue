@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-defineProps({
+const props = defineProps({
   reportData: {
     type: Object,
     default: () => {

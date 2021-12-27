@@ -39,7 +39,9 @@ function render() {
     /* legend: {
       data: ["用户量", "用户量aaa"],
     }, */
+    color: ["rgb(0,228,185)", "rgb(255,143,114)", "#80FF80", "#FF8096", "#800080"],
     legend: {
+      data: [props.configuration.data1.name, props.configuration.data2.name],
       orient: "horizontal",
       selectedMode: false,
       right: 60,
@@ -53,7 +55,7 @@ function render() {
         smooth: true,
         data: props.configuration.data1.data,
         // stack: "总量",
-        lineStyle: { color: "rgb(0,228,185)" },
+        // lineStyle: { color: "rgb(0,228,185)" },
         areaStyle: {
           opacity: 0.8,
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
@@ -74,7 +76,7 @@ function render() {
         smooth: true,
         data: props.configuration.data2.data,
         // stack: "总量",
-        lineStyle: { color: "rgb(255,143,114)" },
+        // lineStyle: { color: "rgb(255,143,114)" },
         areaStyle: {
           opacity: 0.8,
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [

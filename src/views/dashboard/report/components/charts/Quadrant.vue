@@ -161,7 +161,7 @@ const options: EChartsOption = {
       symbolSize: 20,
       data: [
         {
-          value: [25.0, 25.04],
+          value: props.reportData.content[0].data,
           itemStyle: {
             color: "#FECB39",
           },

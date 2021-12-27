@@ -1,16 +1,31 @@
 <script setup lang="ts">
-import { ref, shallowRef } from "vue";
+import { shallowRef, reactive } from "vue";
+import { findByPaperId } from "@/api/dashboard/index";
 import UserInfo from "./components/userInfo.vue";
 import TextTemplate from "./components/charts/TextTemplate.vue";
 import Score from "./components/score.vue";
 import ResultsAnalysis from "./components/ResultsAnalysis.vue";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
 const componentList = shallowRef([UserInfo, TextTemplate, Score, ResultsAnalysis]);
+const state = reactive({
+  reportItemList: [],
+});
+// const response = (await findByPaperId({ paperId: route.query.reportId })) as any;
+const response = (await findByPaperId({ paperId: "1473482861987434497" })) as any;
+state.reportItemList = response.detail.teacher.reportList;
+console.log("🚀🚀🚀🚀🚀🚀", state.reportItemList);
 </script>
 <template>
   <div class="report">
     <div class="content">
       <div class="reportMain">
-        <component :is="item" v-for="item in componentList"></component>
+        <component
+          :is="componentList[item.type - 1]"
+          v-for="item in state.reportItemList"
+          :reportData="item"
+        ></component>
       </div>
     </div>
   </div>

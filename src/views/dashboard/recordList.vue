@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { reactive, onMounted } from "vue";
-import { useRouter } from "vue-router";
 import { recordList } from "@/api/dashboard/index.ts";
 import Pagination from "@/components/element/Pagination.vue";
+import { reactive, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { ElMessage, ElMessageBox } from "element-plus";
 import { export_json_to_excel } from "@/utils/Export2Excel";
-import { ElMessage } from "element-plus";
 const router = useRouter();
 const state = reactive({
+  //表格参数
   tableParams: {
     data: [],
     loading: false,
@@ -20,9 +21,9 @@ const state = reactive({
       {
         label: "干预状态",
         prop: "interveneStatusName",
-        formatter: (a: any, b: any, c: any) => {
-          return c == "0" ? "其它" : c == "1" ? "1" : "2";
-        },
+        // formatter: (a: any, b: any, c: any) => {
+        //   return c == "0" ? "其它" : c == "1" ? "1" : "2";
+        // },
       },
       {
         label: "操作",
@@ -30,7 +31,7 @@ const state = reactive({
         slots: {
           default: "operation",
         },
-        width: "180px",
+        width: "220px",
       },
     ],
     selectList: [],
@@ -41,6 +42,8 @@ const state = reactive({
     size: 10,
     current: 1,
   },
+  //表单参数
+
   formParams: {
     data: { birthday: "" }, // 表单数据对象
     formList: {
@@ -84,17 +87,28 @@ const state = reactive({
   },
 });
 
+//跳转
+function jumpTo(row: any) {
+  console.log(row);
+  router.push({
+    path: "/dashboard/report",
+    query: {
+      reportId: row.reportId,
+    },
+  });
+}
+//搜索
 function search() {
   state.tableParams.loading = true;
   const searchForm = Object.assign(state.paging, state.formParams.data);
   recordList(searchForm).then((res: any) => {
-    console.log("🚀 / file: recordList.vue / line 82 / recordList / res", res);
     state.tableParams.data = res.records;
     state.tableParams.loading = false;
     state.paging.total = res.current;
     state.paging.total = res.total;
   });
 }
+//导出
 function exportExcel() {
   if (state.tableParams.selectList.length <= 0) {
     ElMessage({
@@ -104,28 +118,39 @@ function exportExcel() {
     });
     return;
   }
-  let header = <any>[];
-  let filterVal = <any>[];
-  for (let i = 1; i < state.tableParams.columnProps.length; i++) {
-    if (state.tableParams.columnProps[i].prop == "operation") continue;
-    header.push(state.tableParams.columnProps[i].label);
-    filterVal.push(state.tableParams.columnProps[i].prop);
-  }
-  export_json_to_excel({
-    list: state.tableParams.selectList,
-    header: header,
-    filterVal: filterVal,
-    filename: "管理员信息列表",
-    autoWidth: true,
-    bookType: "xlsx",
+  ElMessageBox.confirm("确定导出吗?", "提示", {
+    confirmButtonText: "确定",
+    cancelButtonText: "取消",
+    type: "warning",
+  }).then(() => {
+    let header = <any>[];
+    let filterVal = <any>[];
+    for (let i = 1; i < state.tableParams.columnProps.length; i++) {
+      if (state.tableParams.columnProps[i].prop == "operation") continue;
+      header.push(state.tableParams.columnProps[i].label);
+      filterVal.push(state.tableParams.columnProps[i].prop);
+    }
+    export_json_to_excel({
+      list: state.tableParams.selectList,
+      header: header,
+      filterVal: filterVal,
+      filename: "管理员信息列表",
+      autoWidth: true,
+      bookType: "xlsx",
+    });
   });
 }
+//分页改变回调
+function paginationChange(val: any) {
+  state.paging.current = val.page;
+  state.paging.size = val.pageSize;
+  search();
+}
+//=========================exec执行块
+// state.formParams.formList.typeId.selectOptions = (await getQuestionTypeList()) as any;
 search();
 onMounted(() => {});
-function jumpTo(row: any) {
-  console.log(row);
-  router.push("/dashboard/report");
-}
+//=========================exec执行块
 </script>
 <template>
   <div class="page-container">
@@ -135,8 +160,8 @@ function jumpTo(row: any) {
     <div class="table-panel">
       <Table :tableParams.sync="state.tableParams">
         <template #operation="{ row }">
-          <el-button type="text" @click="jumpTo(row)">移出班级</el-button>
-          <el-button type="text" @click="jumpTo(row)"> 学员详情 </el-button>
+          <el-button type="primary" size="mini" plain @click="jumpTo(row)">报告详情</el-button>
+          <el-button type="primary" size="mini" plain @click="jumpTo(row)"> 学生档案 </el-button>
         </template>
       </Table>
       <Pagination
