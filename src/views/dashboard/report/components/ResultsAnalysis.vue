@@ -40,16 +40,13 @@ defineProps({
   box-shadow: 0px 0px 8px 1px rgba(28, 193, 162, 0.15);
   border-radius: 8px;
   margin-bottom: 30px;
-
   .textContentTitle {
     width: 100%;
     position: relative;
     text-align: center;
-
     img {
       width: 346px;
     }
-
     .textContentName {
       font-size: 28px;
       font-family: PingFangSC-Semibold, PingFang SC;

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { recordList } from "@/api/dashboard/index.ts";
+import { recordList, dictionary, questionnaireList } from "@/api/dashboard/index.ts";
 import Pagination from "@/components/element/Pagination.vue";
 import { reactive, onMounted } from "vue";
 import { useRouter } from "vue-router";
@@ -18,21 +18,8 @@ const state = reactive({
       { label: "学号", prop: "userNo" },
       { label: "问卷名称", prop: "questionnaireName" },
       { label: "风险等级", prop: "riskLevelName" },
-      {
-        label: "干预状态",
-        prop: "interveneStatusName",
-        // formatter: (a: any, b: any, c: any) => {
-        //   return c == "0" ? "其它" : c == "1" ? "1" : "2";
-        // },
-      },
-      {
-        label: "操作",
-        prop: "operation",
-        slots: {
-          default: "operation",
-        },
-        width: "220px",
-      },
+      { label: "干预状态", prop: "interveneStatusName" },
+      { label: "操作", prop: "operation", slots: { default: "operation" }, width: "220px" },
     ],
     selectList: [],
   },
@@ -43,37 +30,36 @@ const state = reactive({
     current: 1,
   },
   //表单参数
-
   formParams: {
     data: { birthday: "" }, // 表单数据对象
     formList: {
       nickName: {
-        type: "text",
         label: "",
-        placeholder: "请输入管理员姓名",
+        placeholder: "请选择筛查问卷",
+        type: "select",
+        selectOptions: [],
       },
       phone: {
-        type: "number",
-        maxlength: 11,
         label: "",
-        placeholder: "请输入手机号码",
+        placeholder: "请选择风险等级",
+        type: "select",
+        selectOptions: [],
       },
       sex: {
-        type: "select",
         label: "",
-        placeholder: "请选择性别",
-        selectOptions: [
-          { label: "男", value: 0 },
-          { label: "女", value: 1 },
-        ],
+        placeholder: "请选择干预状态",
+        type: "select",
+        selectOptions: [],
+      },
+      sex1: {
+        label: "",
+        placeholder: "请选择学年",
+        type: "select",
+        selectOptions: [],
       },
       birthday: {
-        type: "date-picker",
-        label: "",
-        placeholder: "请选择出生日期",
-        /* disabledDate: (date: any) => {
-        return date.getTime() > Date.now()
-      }, */
+        type: "text",
+        placeholder: "请输入学生姓名或学号",
       },
     },
     rules: {},
@@ -149,6 +135,9 @@ function paginationChange(val: any) {
 //=========================exec执行块
 // state.formParams.formList.typeId.selectOptions = (await getQuestionTypeList()) as any;
 search();
+questionnaireList();
+dictionary({ code: "risklevel" });
+dictionary({ code: "intervene" });
 onMounted(() => {});
 //=========================exec执行块
 </script>

@@ -111,9 +111,9 @@ const formParams = reactive({
 });
 //拆分时间
 function splitTime() {
-  if (state.formParams.data.time == null) return;
-  state.formParams.data.startTime = state.formParams.data.time[0];
-  state.formParams.data.endTime = state.formParams.data.time[1];
+  if (formParams.data.academicYears == null) return;
+  formParams.data.beginTime = formParams.data.academicYears[0];
+  formParams.data.endTime = formParams.data.academicYears[1];
 }
 //获取年级信息
 formParams.formList.grade.cascaderOptions = await getClassList();
