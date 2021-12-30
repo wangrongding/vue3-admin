@@ -33,30 +33,33 @@
         :dialogForm="dialogForm"
       ></slot>
       <!-- 默认按钮组 -->
-      <span v-else slot="footer" name="footer" :dialogForm="dialogForm">
+      <!-- <span v-else slot="footer" name="footer" :dialogForm="dialogForm">
         <el-button
           :type="dialogForm.cancelType || ''"
-          @click="
-            () => {
-              dialogForm.cancelFunction ? dialogForm.cancelFunction() : dialogCancel();
-            }
-          "
+          @click="dialogForm.cancelFunction() || dialogCancel()"
           :round="dialogForm.round"
         >
           {{ dialogForm.cancelText || "取 消" }}
         </el-button>
         <el-button
           :type="dialogForm.cancelType || 'primary'"
-          @click="
-            () => {
-              dialogForm.confirmFunction ? dialogForm.confirmFunction() : dialogCancel();
-            }
-          "
+          @click="dialogForm.confirmFunction() || dialogCancel()"
           :round="dialogForm.round"
         >
           {{ dialogForm.confirmText || "确 定" }}
         </el-button>
-      </span>
+      </span> -->
+
+      <!-- <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="dialogForm.cancelFunction() || dialogCancel()">
+            {{ dialogForm.cancelText || "取 消" }}</el-button
+          >
+          <el-button type="primary" @click="dialogForm.confirmFunction() || dialogCancel()">
+            {{ dialogForm.confirmText || "确 定" }}</el-button
+          >
+        </span>
+      </template> -->
     </el-dialog>
   </div>
 </template>

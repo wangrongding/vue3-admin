@@ -22,7 +22,7 @@ const getOption = (value: any, defaultValue: any) => {
   return value === void 0 ? defaultValue : value;
 };
 const handleRowClick = (row: any, column: any, event: any) => {
-  console.log("row:", row, "\n", "column:", column, "\n", "event:", event);
+  console.log("row:", row);
 };
 const selectionChange = (val: any) => {
   //选中需要确认后赋值

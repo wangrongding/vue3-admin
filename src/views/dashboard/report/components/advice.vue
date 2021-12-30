@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref } from "vue";
+import { nextTick, reactive, ref, watch } from "vue";
 const inputDom = ref<any>();
 const props = defineProps({
   reportData: {
@@ -9,14 +9,32 @@ const props = defineProps({
     },
   },
 });
+const msg = ref("HelloWorld"); // 响应式数据：msg
+const emit = defineEmits(["confirmEdit", "closePanel"]);
 const content = reactive({
-  content:
-    "暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容暂无内容",
+  content: "",
   tempContent: "",
   id: "",
   edit: false,
 });
+watch(
+  props.reportData,
+  () => {
+    console.log("🚀 / file: advice.vue / line 24 / props.reportData.suggest", props.reportData);
+    setTimeout(() => {
+      content.content = props.reportData.suggest;
+    }, 200);
+    if (props.reportData.focus) {
+      nextTick(() => {
+        content.edit = true;
+        inputDom.value.focus();
+      });
+    }
+  },
+  { immediate: true },
+);
 
+//编辑
 function edit() {
   content.edit = !content.edit;
   content.tempContent = content.content;
@@ -26,22 +44,29 @@ function edit() {
 //确认更改
 function confirm() {
   content.content = content.tempContent;
+  emit("confirmEdit", content);
 }
 //取消更改
 function cancel() {
   content.edit = !content.edit;
   content.tempContent = content.content;
 }
+//关闭面板
+function close() {
+  emit("closePanel");
+}
+//控制编辑
+function confirmEdit() {}
 </script>
 <!-- 专家建议 -->
 <template>
-  <div class="page-container">
+  <div class="page-container" id="adviceDom" ref="adviceData">
     <div class="textContentTitle">
       <img src="./assets/titleBg.png" alt="" />
       <span class="textContentName">{{ reportData.title || "专家建议" }}</span>
       <div style="position: absolute; right: 10px; top: 10px">
         <component :is="'Edit'" class="icon-btn" @click="edit"></component>
-        <component :is="'Close'" class="icon-btn"></component>
+        <component :is="'Close'" class="icon-btn" @click="close"></component>
       </div>
     </div>
     <div class="content">
@@ -53,7 +78,7 @@ function cancel() {
         placeholder="请输入内容"
         type="textarea"
         clearable
-        autosize
+        :autosize="{ minRows: 3 }"
       ></el-input>
     </div>
     <div style="text-align: center" v-show="content.edit">

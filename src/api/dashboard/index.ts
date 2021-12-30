@@ -38,3 +38,11 @@ export function recordList(data?: object) {
 export function findByPaperId(data?: object) {
   return request.get("/his-test/qsn-paper/findByPaperId", { data });
 }
+// 报告历史记录列表
+export function getHistoryRecord(data?: object) {
+  return request.get("/his-test/bigtest/qsn-paper/getHistoryRecordById", { data });
+}
+// 修改评估意见
+export function updateSuggest(data?: object) {
+  return request.post("/his-test/qsn-paper/updateSuggest", { data });
+}

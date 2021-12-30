@@ -113,6 +113,11 @@ export const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/student/studentList.vue"),
         meta: { title: "学生列表" },
       },
+      {
+        path: "operationInfo",
+        component: () => import("@/views/student/operationInfo.vue"),
+        meta: { title: "学生信息" },
+      },
     ],
   },
   {

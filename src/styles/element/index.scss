@@ -55,3 +55,19 @@ $--colors: (
   background-color: #defff9;
   border-color: #00e3b9;
 }
+
+//dialog样式
+.el-dialog {
+  border-radius: 12px;
+  border: none;
+  overflow: hidden;
+}
+.el-dialog__header {
+  background: url("@/assets/image/dialogTitle.png") no-repeat;
+  background-size: 100% 100%;
+}
+.el-dialog__title {
+  color: white;
+  line-height: var(--el-dialog-font-line-height);
+  font-size: var(--el-dialog-title-font-size);
+}
