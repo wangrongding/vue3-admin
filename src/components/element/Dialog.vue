@@ -18,48 +18,24 @@
       :show-close="dialogForm.showClose"
       :destroy-on-close="dialogForm.destroyOnClose"
       :before-close="dialogForm.beforeClose"
-      @open="open"
-      @opened="opened"
-      @close="close"
-      @closed="closed"
+      @open="dialogForm.open"
+      @opened="dialogForm.opened"
+      @close="dialogForm.close"
+      @closed="dialogForm.closed"
     >
       <!-- 内容区域 -->
       <slot name="dialogContent"></slot>
-      <!-- 自定义底部按钮组 -->
-      <slot
-        v-if="dialogForm.customFooter"
-        name="footer"
-        slot="footer"
-        :dialogForm="dialogForm"
-      ></slot>
-      <!-- 默认按钮组 -->
-      <!-- <span v-else slot="footer" name="footer" :dialogForm="dialogForm">
-        <el-button
-          :type="dialogForm.cancelType || ''"
-          @click="dialogForm.cancelFunction() || dialogCancel()"
-          :round="dialogForm.round"
-        >
-          {{ dialogForm.cancelText || "取 消" }}
-        </el-button>
-        <el-button
-          :type="dialogForm.cancelType || 'primary'"
-          @click="dialogForm.confirmFunction() || dialogCancel()"
-          :round="dialogForm.round"
-        >
-          {{ dialogForm.confirmText || "确 定" }}
-        </el-button>
-      </span> -->
 
-      <!-- <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="dialogForm.cancelFunction() || dialogCancel()">
-            {{ dialogForm.cancelText || "取 消" }}</el-button
-          >
-          <el-button type="primary" @click="dialogForm.confirmFunction() || dialogCancel()">
-            {{ dialogForm.confirmText || "确 定" }}</el-button
-          >
+      <template #footer>
+        <span>
+          <el-button @click="dialogForm.cancelFunction()">
+            {{ dialogForm.cancelText || "取 消" }}
+          </el-button>
+          <el-button type="primary" @click="dialogForm.confirmFunction()">
+            {{ dialogForm.confirmText || "确 定" }}
+          </el-button>
         </span>
-      </template> -->
+      </template>
     </el-dialog>
   </div>
 </template>
@@ -98,27 +74,12 @@ const props = defineProps({
   },
 });
 
-// beforeClose() {},
-function open() {
-  props.dialogForm.open && props.dialogForm.open();
-} //Dialog 打开的回调
-function opened() {
-  props.dialogForm.opened && props.dialogForm.opened();
-} //Dialog 打开动画结束时的回调
-function close() {
-  props.dialogForm.close && props.dialogForm.close();
-} //Dialog 关闭的回调
-function closed() {
-  props.dialogForm.closed && props.dialogForm.closed();
-} //Dialog 关闭动画结束时的回调},
-
 //确定回调
 function dialogConfirm() {
   props.dialogForm.dialogConfirm && props.dialogForm.dialogConfirm();
 }
 //取消回调
 function dialogCancel() {
-  props.dialogForm.dialogShow = false;
   // props.dialogForm.dialogCancel && props.dialogForm.dialogCancel();
 }
 </script>

@@ -6,7 +6,7 @@ export function getImgUrl(data?: object) {
 }
 // 查看学员信息
 export function userDetail(data?: object) {
-  return request.get("/his-admin/user/userDetail", { data });
+  return request.put("/his-admin/user/userDetail", { data });
 }
 // 更新用户信息
 export function updateUserInfo(data?: object) {

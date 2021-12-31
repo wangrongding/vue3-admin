@@ -119,7 +119,10 @@ function paginationChange(val: any) {
 search();
 onMounted(() => {});
 function jumpTo(row: any) {
-  router.push("/studentManagement/operationInfo");
+  router.push({
+    path: "/studentManagement/operationInfo",
+    query: { id: row.id },
+  });
 }
 </script>
 <template>
