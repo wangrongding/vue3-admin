@@ -9,7 +9,7 @@ const request = axios.create({
     Authorization: "Basic c3R1ZGVudDpzdHVkZW50X3NlY3JldA==",
     "platform-auth":
       "bearer " +
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiLojaPpobYiLCJhdmF0YXIiOiJodHRwOi8vbWlwYWMuZmlsZS5tZW50cGVhay5jb20vaGVhZEltYWdlLzRkOGZmMjYwLWVhN2YtNGRiOC1iYjM2LWE2NzRhNGFmNTFhZC5wbmciLCJhdXRob3JpdGllcyI6WyJhZG1pbiJdLCJjbGllbnRfaWQiOiJzdHVkZW50Iiwicm9sZV9uYW1lIjoiYWRtaW4iLCJsaWNlbnNlIjoicG93ZXJlZCBieSBwbGF0Zm9ybXgiLCJ1c2VyX2lkIjo1ODYsInJvbGVfaWQiOiIxIiwic2NvcGUiOlsiYWxsIl0sImV4cCI6MTY3NjA4MDYyOCwianRpIjoiOTM4MDZlMDUtOTg5Mi00NGFiLWE5OGUtNzQxNDA1MmQxMmYxIiwiYWNjb3VudCI6IjEzNjI3MDMyNjMzIiwidGVuYW50X2NvZGUiOiIwMDAwMDEifQ.5Bu8L3d03TOUyPYHxVG9oSojSDWQT4x2o2Q6Ln1YDNg",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiLmmI7lpKnogIHluIgxIiwiYXZhdGFyIjoiaHR0cDovL21pcGFjLmZpbGUubWVudHBlYWsuY29tL2hlYWRJbWFnZS80ZDhmZjI2MC1lYTdmLTRkYjgtYmIzNi1hNjc0YTRhZjUxYWQucG5nIiwiYXV0aG9yaXRpZXMiOlsidGVhY2hlciJdLCJjbGllbnRfaWQiOiJzdHVkZW50Iiwicm9sZV9uYW1lIjoidGVhY2hlciIsImxpY2Vuc2UiOiJwb3dlcmVkIGJ5IHBsYXRmb3JteCIsInVzZXJfaWQiOjU4Nywicm9sZV9pZCI6IjIiLCJzY29wZSI6WyJhbGwiXSwiZXhwIjoxNjc3NTIxMjQxLCJqdGkiOiIzZTIxYWQwYi1iMGVlLTRkOWItOWJiYy03Y2ZiOTJlMDk1MTAiLCJhY2NvdW50IjoiMTU4MDA0NDQzMjkiLCJ0ZW5hbnRfY29kZSI6IjAwMDAwMSJ9.zOHRBTcAQfDnD1F_nLv55PKpD6eAEEBRQ4CiGXfjqhE",
   },
 });
 // request请求拦截器
@@ -22,6 +22,9 @@ request.interceptors.request.use(
         delete data[item];
       }
     });
+	if (method === "put") {
+	  config.data ={ ...data.data};
+	}
 
     if (method === "post") {
       config.data = data.data;

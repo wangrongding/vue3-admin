@@ -23,9 +23,9 @@ export function update(data?: object) {
 }
 // 【个人设置】-管理员登录密码修改
 export function updatePassWord(data?: object) {
-  return request.post("/platform-user/updatePassWord", { data });
+  return request.put("/platform-user/updatePassWord", { data });
 }
 // 【个人设置】-换绑手机号
 export function updateOldPhone(data?: object) {
-  return request.post("/platform-user/updateOldPhone", { data });
+  return request.put("/platform-user/updateOldPhone", { data });
 }

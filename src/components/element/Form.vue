@@ -145,7 +145,7 @@ const formStyle = ref({
         <el-input
           v-if="['text', 'textarea'].includes(itemForm.type)"
           v-model="formParams.data[key]"
-          :type="itemForm.type"
+          :type="itemForm.mode"
           :maxlength="itemForm.maxlength"
           :show-word-limit="!!itemForm.maxlength"
           :placeholder="itemForm.placeholder"
