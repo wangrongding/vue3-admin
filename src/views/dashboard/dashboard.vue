@@ -1,7 +1,7 @@
 <script async setup lang="ts">
 import {
   cardDataCount,
-  getClassList,
+  getGradeList,
   classIdList,
   courseDataCount,
   ringPieBatteryDataCount,
@@ -116,7 +116,7 @@ function splitTime() {
   formParams.data.endTime = formParams.data.academicYears[1];
 }
 //获取年级信息
-formParams.formList.grade.cascaderOptions = await getClassList();
+formParams.formList.grade.cascaderOptions = await getGradeList();
 //获取班级列表
 async function getClassIdList(yearClass: number[]) {
   formParams.formList.classId.selectOptions = await classIdList({ yearClass: yearClass + "" });
@@ -167,13 +167,13 @@ async function getDashboardInfo() {
   console.log("🚀 .BatteryConfig", battery.data);
   console.log("🚀 .BatteryConfig", data.BatteryConfig);
 }
-getDashboardInfo();
-
-onMounted(async () => {});
+//跳转
 function toList() {
   // router.push("/dashboard/index/recordList");
   router.push("/dashboard/recordList");
 }
+getDashboardInfo();
+onMounted(async () => {});
 </script>
 
 <template>

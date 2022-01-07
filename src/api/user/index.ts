@@ -12,3 +12,20 @@ export function userDetail(data?: object) {
 export function updateUserInfo(data?: object) {
   return request.put("/his-admin/user/updateUserInfo", { data });
 }
+
+// 【个人设置】-个人信息
+export function detail(data?: object) {
+  return request.get("/platform-user/detail", { data });
+}
+// 【个人设置】-个人信息修改
+export function update(data?: object) {
+  return request.post("/platform-user/update", { data });
+}
+// 【个人设置】-管理员登录密码修改
+export function updatePassWord(data?: object) {
+  return request.post("/platform-user/updatePassWord", { data });
+}
+// 【个人设置】-换绑手机号
+export function updateOldPhone(data?: object) {
+  return request.post("/platform-user/updateOldPhone", { data });
+}

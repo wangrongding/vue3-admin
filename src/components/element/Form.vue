@@ -176,11 +176,7 @@ const formStyle = ref({
           clearable
           :placeholder="itemForm.placeholder"
           filterable
-          @change="
-            () => {
-              itemForm.change && itemForm.change();
-            }
-          "
+          @change="itemForm.onChange"
         >
           <template v-if="itemForm.selectOptions[0] && itemForm.selectOptions[0].options">
             <el-option-group
@@ -219,6 +215,7 @@ const formStyle = ref({
           :options="itemForm.cascaderOptions"
           :placeholder="itemForm.placeholder"
           @change="itemForm.onChange"
+          :style="`${itemForm.width ? 'width:' + itemForm.width : ''}`"
           clearable
           filterable
         />
@@ -326,9 +323,7 @@ const formStyle = ref({
         <el-button type="primary" @click="submitForm(formParams.submit.submitFunction)">
           {{ formParams.submit.submitText || "提交" }}
         </el-button>
-        <el-button v-if="formParams.submit.reset" type="info" @click="resetForm()">
-          重置
-        </el-button>
+        <el-button v-if="formParams.submit.reset" type="info" @click="resetForm"> 重置 </el-button>
         <el-button
           v-if="formParams.submit.cancel"
           type="info"
@@ -337,7 +332,6 @@ const formStyle = ref({
           {{ formParams.submit.cancelText || "取消" }}
         </el-button>
       </el-form-item>
-
       <slot name="buttonGroup" />
     </el-form>
   </div>

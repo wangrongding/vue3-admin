@@ -40,7 +40,7 @@ const state = reactive({
       typeId: {
         type: "select",
         label: "",
-        placeholder: "请选择角色",
+        placeholder: "请选择问卷分类",
         selectOptions: [],
         customLabelValue: { label: "typeName", value: "id" },
       },
@@ -114,7 +114,15 @@ state.formParams.formList.typeId.selectOptions = await getQuestionTypeList();
 search();
 onMounted(() => {});
 function jumpTo(row: any) {
-  router.push("/system/userInfo");
+  router.push({
+    path: "/testManagement/testDetailList",
+    query: {
+      questionnaireId: row.questionnaireId,
+      questionnaireName: row.questionnaireName,
+      typeName: row.typeName,
+      scope: row.scope,
+    },
+  });
 }
 //=========================exec执行块
 </script>
@@ -126,8 +134,7 @@ function jumpTo(row: any) {
     <div class="table-panel">
       <Table :tableParams.sync="state.tableParams">
         <template #operation="{ row }">
-          <el-button type="primary" size="mini" plain @click="jumpTo(row)">编辑</el-button>
-          <el-button type="primary" size="mini" plain @click="jumpTo(row)"> 查看 </el-button>
+          <el-button type="primary" size="mini" plain @click="jumpTo(row)"> 测试记录 </el-button>
         </template>
       </Table>
       <Pagination

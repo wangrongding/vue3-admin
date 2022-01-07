@@ -57,7 +57,12 @@ export const routes: Array<RouteRecordRaw> = [
       {
         path: "list",
         component: () => import("@/views/testing/testList.vue"),
-        meta: { title: "用户管理" },
+        meta: { title: "测试列表" },
+      },
+      {
+        path: "testDetailList",
+        component: () => import("@/views/testing/testDetailList.vue"),
+        meta: { title: "测试记录" },
       },
     ],
   },
@@ -100,6 +105,16 @@ export const routes: Array<RouteRecordRaw> = [
         path: "list",
         component: () => import("@/views/class/classList.vue"),
         meta: { title: "班级列表" },
+      },
+      {
+        path: "classDetail",
+        component: () => import("@/views/class/classDetail.vue"),
+        meta: { title: "班级详情" },
+      },
+      {
+        path: "operationClass",
+        component: () => import("@/views/class/operationClass.vue"),
+        meta: { title: "操作班级" },
       },
     ],
   },

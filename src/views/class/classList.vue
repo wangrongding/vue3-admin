@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { reactive, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { sysUserListPage } from "@/api/system/index.ts";
+import { getClassList } from "@/api/class/index";
 import Pagination from "@/components/element/Pagination.vue";
 import { export_json_to_excel } from "@/utils/Export2Excel";
 import { ElMessage, ElMessageBox } from "element-plus";
+import { getGradeList } from "@/api/dashboard/index.ts";
 const router = useRouter();
 const state = reactive({
   //表格参数
@@ -13,22 +14,23 @@ const state = reactive({
     loading: false,
     columnProps: [
       { type: "selection" },
-      { label: "姓名", prop: "realName" },
-      { label: "手机号", prop: "phone" },
-      { label: "可见范围", prop: "scope" },
-      { label: "角色", prop: "roleName" },
-      { label: "当前状态", prop: "xstatus" },
+      { label: "班级名称", prop: "className" },
+      { label: "班主任", prop: "userName" },
+      { label: "班主任手机号", prop: "phone" },
+      { label: "学生人数", prop: "studentNum" },
+      { label: "当前状态", prop: "statusName" },
       {
         label: "操作",
         prop: "operation",
         slots: {
           default: "operation",
         },
-        width: "180px",
+        width: "200px",
       },
     ],
     selectList: [],
   },
+
   //分页参数
   paging: {
     total: 0,
@@ -39,16 +41,16 @@ const state = reactive({
   formParams: {
     data: { time: [], startTime: "", endTime: "", roleId: "" }, // 表单数据对象
     formList: {
-      roleId: {
-        type: "select",
-        label: "",
-        placeholder: "请选择角色",
-        selectOptions: [],
+      grade: {
+        type: "cascader",
+        cascaderOptions: [],
+        placeholder: "请选择年级",
       },
       key: {
         type: "text",
         label: "",
-        placeholder: "请输入姓名或手机号",
+        width: "250px",
+        placeholder: "请输入班级名称、班主任姓名",
       },
     },
     rules: {},
@@ -60,7 +62,11 @@ const state = reactive({
       reset: true,
     },
   },
+  loading: "",
 });
+
+//获取年级信息
+state.formParams.formList.grade.cascaderOptions = await getGradeList();
 //拆分时间
 function splitTime() {
   if (state.formParams.data.time == null) return;
@@ -70,8 +76,9 @@ function splitTime() {
 //搜索
 function search() {
   state.tableParams.loading = true;
-  const searchForm = Object.assign(state.paging, state.formParams.data);
-  sysUserListPage(searchForm).then((res: any) => {
+  let searchForm = <any>Object.assign(state.paging, state.formParams.data);
+  // searchForm.grade = searchForm.grade + "";
+  getClassList(searchForm).then((res: any) => {
     state.tableParams.data = res.records;
     state.tableParams.loading = false;
     state.paging.total = res.current;
@@ -118,20 +125,46 @@ function paginationChange(val: any) {
 }
 search();
 onMounted(() => {});
-function jumpTo(row: any) {
-  router.push("/system/userInfo");
+function jumpTo(row: any, type: string) {
+  if (type == "edit") {
+    router.push({
+      path: "/classManagement/operationClass",
+      query: {
+        id: row.classId,
+        type: "edit",
+      },
+    });
+  } else if (type == "add") {
+    router.push({
+      path: "/classManagement/operationClass",
+      query: {
+        id: row.classId,
+        type: "add",
+      },
+    });
+  } else {
+    router.push({
+      path: "/classManagement/classDetail",
+      query: {
+        id: row.classId,
+      },
+    });
+  }
 }
 </script>
 <template>
   <div class="page-container">
     <TopPanel :formParams="state.formParams">
+      <el-button type="primary" @click="jumpTo('', 'add')">添加</el-button>
       <el-button type="primary" @click="exportExcel">导出</el-button>
     </TopPanel>
     <div class="table-panel">
       <Table :tableParams.sync="state.tableParams">
         <template #operation="{ row }">
-          <el-button type="primary" size="mini" plain @click="jumpTo(row)">编辑</el-button>
-          <el-button type="primary" size="mini" plain @click="jumpTo(row)"> 查看 </el-button>
+          <el-button type="primary" size="mini" plain @click="jumpTo(row, 'edit')">编辑</el-button>
+          <el-button type="primary" size="mini" plain @click="jumpTo(row, 'detail')">
+            班级详情
+          </el-button>
         </template>
       </Table>
       <Pagination

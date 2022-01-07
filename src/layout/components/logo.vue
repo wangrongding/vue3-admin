@@ -4,7 +4,8 @@ import { ref } from "vue";
 <template>
   <div class="page-container">
     <img src="@/assets/image/logo.png" alt="" />
-    <span class="title">Mint-Admin</span>
+    <span class="title">xxAdmin</span>
+    <!-- <span class="title">Mint-Admin</span> -->
   </div>
 </template>
 <style lang="scss" scoped>

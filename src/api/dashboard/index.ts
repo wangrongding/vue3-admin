@@ -5,7 +5,7 @@ export function cardDataCount(data?: object) {
   return request.get("/his-admin/home/cardDataCount", { data });
 }
 // 获取下拉班级学年列表
-export function getClassList(data?: object) {
+export function getGradeList(data?: object) {
   return request.get("/his-admin/class/classList", { data });
 }
 // 下拉班级列表

@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { reactive, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { sysUserListPage } from "@/api/system/index.ts";
-import Pagination from "@/components/element/Pagination.vue";
+import { sysUserListPage, roleList } from "@/api/system/index.ts";
 import { export_json_to_excel } from "@/utils/Export2Excel";
 import { ElMessage, ElMessageBox } from "element-plus";
 const router = useRouter();

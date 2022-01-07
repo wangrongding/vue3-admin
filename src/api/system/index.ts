@@ -8,3 +8,7 @@ export function sysUserListPage(data?: object) {
 export function logListPage(data?: object) {
   return request.get("/his-admin/log/logListPage", { data });
 }
+// 角色列表
+export function roleList(data?: object) {
+  return request.get("/platform-system/role/roleList", { data });
+}

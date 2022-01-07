@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import type { ElTable } from "element-plus";
+const tableDom = ref<InstanceType<typeof ElTable>>();
+defineExpose({
+  tableDom,
+});
 const props = defineProps({
   tableParams: {
     type: Object,
@@ -26,14 +31,14 @@ const handleRowClick = (row: any, column: any, event: any) => {
 };
 const selectionChange = (val: any) => {
   //选中需要确认后赋值
-  console.log("选中的行：", val);
+  console.log("选中的行：", val, val.length);
   props.tableParams.selectList = val;
 };
 </script>
 <template>
-  <div class="page-container">
+  <div>
     <el-table
-      :ref="tableParams.ref || 'table'"
+      :ref="tableParams.ref || 'tableDom'"
       v-loading="tableParams.loading"
       :data="tableParams.data"
       :height="tableParams.height"
@@ -95,10 +100,7 @@ const selectionChange = (val: any) => {
   </div>
 </template>
 <style lang="scss" scoped>
-.page-container {
-  // margin-top: 20px;
-  .el-table {
-    border-radius: 10px;
-  }
+.el-table {
+  border-radius: 10px;
 }
 </style>
