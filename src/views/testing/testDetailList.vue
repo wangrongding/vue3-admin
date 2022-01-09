@@ -189,7 +189,6 @@ onMounted(() => {});
     background-color: white;
     padding: 20px;
     border-radius: 10px;
-    min-height: 700px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

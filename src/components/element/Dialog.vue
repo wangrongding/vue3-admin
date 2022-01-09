@@ -26,9 +26,9 @@
       <!-- 内容区域 -->
       <slot name="dialogContent"></slot>
 
-      <template #footer>
+      <template #footer v-if="!dialogForm.hiddenFooter">
         <span>
-          <el-button @click="dialogForm.cancelFunction()">
+          <el-button @click="dialogForm.cancelFunction()" v-if="dialogForm.cancelFunction">
             {{ dialogForm.cancelText || "取 消" }}
           </el-button>
           <el-button type="primary" @click="dialogForm.confirmFunction()">

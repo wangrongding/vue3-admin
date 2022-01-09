@@ -80,7 +80,7 @@ const formStyle = ref({
     }, */
 </script>
 <template>
-  <div class="page-container">
+  <div class="form-container">
     <el-form
       ref="FormDom"
       v-loading="formParams.loading"
@@ -338,7 +338,7 @@ const formStyle = ref({
 </template>
 
 <style scoped lang="scss">
-.page-container {
+.form-container {
   // text-align: v-bind("formStyle.textAlign");
   .el-form {
     width: v-bind("formStyle.formWidth");

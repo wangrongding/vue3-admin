@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { reactive, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { sysUserListPage } from "@/api/system/index.ts";
+import { sysUserListPage, roleList } from "@/api/system/index.ts";
 import Pagination from "@/components/element/Pagination.vue";
 import { export_json_to_excel } from "@/utils/Export2Excel";
 import { ElMessage, ElMessageBox } from "element-plus";
+import { format } from "path/posix";
 const router = useRouter();
 const state = reactive({
   //表格参数
@@ -44,6 +45,7 @@ const state = reactive({
         label: "",
         placeholder: "请选择角色",
         selectOptions: [],
+        customLabelValue: { label: "roleName", value: "id" },
       },
       key: {
         type: "text",
@@ -61,12 +63,7 @@ const state = reactive({
     },
   },
 });
-//拆分时间
-function splitTime() {
-  if (state.formParams.data.time == null) return;
-  state.formParams.data.startTime = state.formParams.data.time[0];
-  state.formParams.data.endTime = state.formParams.data.time[1];
-}
+state.formParams.formList.roleId.selectOptions = await roleList();
 //搜索
 function search() {
   state.tableParams.loading = true;
@@ -119,12 +116,16 @@ function paginationChange(val: any) {
 search();
 onMounted(() => {});
 function jumpTo(row: any) {
-  router.push("/system/userInfo");
+  router.push({
+    path: "/system/userInfo",
+    query: { id: row.id },
+  });
 }
 </script>
 <template>
   <div class="page-container">
     <TopPanel :formParams="state.formParams">
+      <el-button type="primary" @click="jumpTo('')">添加</el-button>
       <el-button type="primary" @click="exportExcel">导出</el-button>
     </TopPanel>
     <div class="table-panel">

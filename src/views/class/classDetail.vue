@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactive, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { avatarProps, ElMessage, ElMessageBox } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 import { export_json_to_excel } from "@/utils/Export2Excel";
 import { getGradeList, classIdList } from "@/api/dashboard/index.ts";
 import {
@@ -11,20 +11,13 @@ import {
   rollOutStudentList,
   transferStudent,
   dictionary,
+  fileDownload,
+  importUser,
 } from "@/api/class/index.ts";
+import { saveFile } from "@/utils/index";
 const route = useRoute();
 const router = useRouter();
-//生成选择学年列表
-function newAcademicYears() {
-  const tempArr = [];
-  for (let i = new Date().getFullYear(); i > new Date().getFullYear() - 50; i--) {
-    tempArr.push(
-      { value: [i + "-01-01 00:00:00", i + "-06-30 59:59:59"], label: i + "上半年" },
-      { value: [i + "-07-01 00:00:00", i + "-12-31  59:59:59"], label: i + "下半年" },
-    );
-  }
-  return tempArr;
-}
+
 const state = reactive({
   //表格参数
   tableParams: {
@@ -132,10 +125,12 @@ const state = reactive({
     selectList: [] as any,
   },
   dialogForm: {
+    dialogType: "",
     dialogShow: false,
     title: "学生列表",
     destroyOnClose: false,
     center: true,
+    hiddenFooter: true,
     width: "900px",
     cancelFunction: () => {
       state.dialogForm.dialogShow = false;
@@ -156,6 +151,24 @@ const state = reactive({
   nameOrCode: "",
   interveneList: <any>[],
   risklevelList: <any>[],
+  // 导入学生
+  importUser(file: any) {
+    let formData = new FormData();
+    formData.append("file", file.file);
+    importUser(formData).then(() => {
+      ElMessage({
+        type: "success",
+        message: "操作成功!",
+      });
+      search();
+    });
+  },
+  // 导入学生
+  downLoadFile() {
+    fileDownload().then((res: string) => {
+      saveFile(res, "模板.xlsx");
+    });
+  },
 });
 const loading = ref("");
 
@@ -271,10 +284,6 @@ function rollOut() {
     search();
   });
 }
-// 导入学生
-function importUser(val: any) {
-  search();
-}
 //跳转
 function jumpTo(row: any) {
   router.push("/system/userInfo");
@@ -324,19 +333,28 @@ onMounted(() => {});
     </div>
     <div class="table-inline-panel">
       <TopPanel :formParams="state.formParams" style="margin-bottom: 0; padding: 0">
-        <el-button type="primary" @click="state.dialogForm.dialogShow = true">转出</el-button>
-        <el-upload
-          action="#"
-          :limit="1"
-          ref="upload"
-          style="display: inline-block; margin: 0 20px"
-          :auto-upload="true"
-          :show-file-list="false"
-          accept=".pdf, .doc, .docx, .xls, .xlsx"
-          :http-request="importUser"
+        <el-button
+          type="primary"
+          @click="
+            (state.dialogForm.dialogShow = true),
+              (state.dialogForm.dialogType = 'rollOut'),
+              (state.dialogForm.hiddenFooter = false),
+              (state.dialogForm.title = '学生列表')
+          "
+          >转出</el-button
         >
-          <el-button :loading="loading == 'upload'" slot="trigger" type="primary"> 导入 </el-button>
-        </el-upload>
+
+        <el-button
+          type="primary"
+          @click="
+            (state.dialogForm.dialogShow = true),
+              (state.dialogForm.dialogType = 'import'),
+              (state.dialogForm.hiddenFooter = true),
+              (state.dialogForm.title = '请先下载模板，填写完后，可上传到系统中。')
+          "
+        >
+          导入
+        </el-button>
         <el-button type="primary" @click="exportExcel">导出</el-button>
       </TopPanel>
       <Table :tableParams.sync="state.tableParams">
@@ -355,7 +373,26 @@ onMounted(() => {});
         :execFunction="search"
       />
       <Dialog :dialogForm="state.dialogForm" class="dialog">
-        <template #dialogContent>
+        <template #dialogContent v-if="state.dialogForm.dialogType == 'import'">
+          <div style="text-align: center">
+            <el-button type="primary" @click="state.downLoadFile">下载模板</el-button>
+            <el-upload
+              action="#"
+              :limit="1"
+              ref="upload"
+              style="display: inline-block; margin: 0 20px"
+              :auto-upload="true"
+              :show-file-list="false"
+              accept=".pdf, .doc, .docx, .xls, .xlsx"
+              :http-request="state.importUser"
+            >
+              <el-button :loading="loading == 'upload'" slot="trigger" type="primary">
+                上传文件
+              </el-button>
+            </el-upload>
+          </div>
+        </template>
+        <template #dialogContent v-if="state.dialogForm.dialogType == 'rollOut'">
           <div style="position: relative">
             <el-input
               placeholder="请输入内容"
@@ -427,7 +464,6 @@ onMounted(() => {});
     background-color: white;
     padding: 20px;
     border-radius: 10px;
-    min-height: 700px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

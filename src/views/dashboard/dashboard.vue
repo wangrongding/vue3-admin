@@ -15,7 +15,6 @@ import Progress from "@/components/charts/Progress.vue";
 import { cloneDeep } from "lodash";
 const router = useRouter();
 
-const pieColor = ["#5a91e7", "rgba(0, 224, 180, 1)", "rgba(255, 143, 114, 1)"];
 const data = reactive({
   panelItemBgList: [
     new URL("../../assets/image/itemBg1.png", import.meta.url).href,

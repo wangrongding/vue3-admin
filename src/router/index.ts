@@ -114,7 +114,7 @@ export const routes: Array<RouteRecordRaw> = [
       {
         path: "operationClass",
         component: () => import("@/views/class/operationClass.vue"),
-        meta: { title: "操作班级" },
+        meta: { title: "操作班级信息" },
       },
     ],
   },
@@ -129,9 +129,14 @@ export const routes: Array<RouteRecordRaw> = [
         meta: { title: "学生列表" },
       },
       {
+        path: "studentDetail",
+        component: () => import("@/views/student/studentDetail.vue"),
+        meta: { title: "操作学生信息" },
+      },
+      {
         path: "operationInfo",
         component: () => import("@/views/student/operationInfo.vue"),
-        meta: { title: "学生信息" },
+        meta: { title: "操作学生信息" },
       },
     ],
   },
@@ -154,7 +159,7 @@ export const routes: Array<RouteRecordRaw> = [
       },
       {
         path: "userInfo",
-        component: () => import("@/views/userInfo/index.vue"),
+        component: () => import("@/views/system/operationInfo.vue"),
         meta: { title: "编辑/添加管理员", hidden: true },
       },
       {
