@@ -9,7 +9,7 @@ const request = axios.create({
     Authorization: "Basic c3R1ZGVudDpzdHVkZW50X3NlY3JldA==",
     "platform-auth":
       "bearer " +
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiLojaPpobYiLCJhdmF0YXIiOiJodHRwOi8vbWlwYWMuZmlsZS5tZW50cGVhay5jb20vaGVhZEltYWdlLzRkOGZmMjYwLWVhN2YtNGRiOC1iYjM2LWE2NzRhNGFmNTFhZC5wbmciLCJhdXRob3JpdGllcyI6WyJhZG1pbiJdLCJjbGllbnRfaWQiOiJzdHVkZW50Iiwicm9sZV9uYW1lIjoiYWRtaW4iLCJsaWNlbnNlIjoicG93ZXJlZCBieSBwbGF0Zm9ybXgiLCJ1c2VyX2lkIjo1ODYsInJvbGVfaWQiOiIxIiwic2NvcGUiOlsiYWxsIl0sImV4cCI6MTY3NzUzMjgwMywianRpIjoiOTRhMjcwN2ItYjU1Yy00YWU2LWFhNzItMTA3YjcyMDFiNzFmIiwiYWNjb3VudCI6IjEzNjI3MDMyNjMzIiwidGVuYW50X2NvZGUiOiIwMDAwMDEifQ.ZxTTMgNYiYyKDII18wSfas6IRvBfiYBp0f4iSP_HI8s",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiLmmI7lpKnogIHluIgxIiwiYXZhdGFyIjoiaHR0cDovL21pcGFjLmZpbGUubWVudHBlYWsuY29tL2hlYWRJbWFnZS82YmIwYTBiYi1lN2IxLTQ3YjctYTA5NC1iOGM0NDYyNWI5MTgucG5nIiwiYXV0aG9yaXRpZXMiOlsidGVhY2hlciJdLCJjbGllbnRfaWQiOiJzdHVkZW50Iiwicm9sZV9uYW1lIjoidGVhY2hlciIsImxpY2Vuc2UiOiJwb3dlcmVkIGJ5IHBsYXRmb3JteCIsInVzZXJfaWQiOjU4Nywicm9sZV9pZCI6IjIiLCJzY29wZSI6WyJhbGwiXSwiZXhwIjoxNjc3OTcxNDY1LCJqdGkiOiI5ZmMxOWYwOC02NzEyLTQzYTctYjhkNy1mZTA0OWI3OWQ2OGQiLCJhY2NvdW50IjoiMTU4MDA0NDQzMjkiLCJ0ZW5hbnRfY29kZSI6IjAwMDAwMSJ9.rLny9MHdIksEWc3DBWbQsRSW1zzhm1zXXIo-0Exo_is",
   },
 });
 // request请求拦截器
@@ -18,11 +18,15 @@ request.interceptors.request.use(
     const { data = {}, method } = config;
     //将请求中值为undefined,null的过滤
     Object.keys(data).forEach((item) => {
-      if (data[item] === undefined || data[item] === null /* || data[item] === "" */) {
+      if (
+        data[item] === undefined ||
+        data[item] === null ||
+        data[item] === "null"
+        /* || data[item] === "" */
+      ) {
         delete data[item];
       }
     });
-
     if (method === "post") {
       config.data = data.data;
     }
@@ -61,6 +65,7 @@ function errorCallback(error: any) {
     grouping: true,
     type: "error",
   });
+  return Promise.reject(error);
 }
 // respone返回拦截器
 request.interceptors.response.use(successCallback, errorCallback);

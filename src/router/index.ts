@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Layout from "@/layout/index.vue";
-import Dashboard from "@/views/dashboard/index.vue";
+import Dashboard from "@/views/dashboard/dashboard.vue";
 import routeReplaceSelf from "./routeReplaceSelf.ts";
-
+import { qiankunWindow } from "vite-plugin-qiankun/dist/helper";
 //无权限路由
 export const routes: Array<RouteRecordRaw> = [
   {
@@ -21,6 +21,7 @@ export const routes: Array<RouteRecordRaw> = [
         path: "index",
         // component: routeReplaceSelf(Dashboard),
         component: () => import("@/views/dashboard/dashboard.vue"),
+        // component: Dashboard,
         meta: { title: "看板详情" },
         children: [
           {
@@ -183,6 +184,10 @@ export const routes: Array<RouteRecordRaw> = [
   },
 ];
 
-const router = createRouter({ history: createWebHistory(), routes });
+// const router = createRouter({ history: createWebHistory(), routes });
+const router = createRouter({
+  history: createWebHistory(qiankunWindow.__POWERED_BY_QIANKUN__ ? "/admin" : "/"),
+  routes,
+});
 
 export default router;

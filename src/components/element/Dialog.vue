@@ -31,7 +31,11 @@
           <el-button @click="dialogForm.cancelFunction()" v-if="dialogForm.cancelFunction">
             {{ dialogForm.cancelText || "取 消" }}
           </el-button>
-          <el-button type="primary" @click="dialogForm.confirmFunction()">
+          <el-button
+            type="primary"
+            @click="dialogForm.confirmFunction()"
+            v-if="dialogForm.confirmFunction"
+          >
             {{ dialogForm.confirmText || "确 定" }}
           </el-button>
         </span>

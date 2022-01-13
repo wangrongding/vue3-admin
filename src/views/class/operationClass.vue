@@ -36,7 +36,7 @@ const state = reactive({
       className: {
         type: "text",
         label: "班级名称",
-        placeholder: "请输入班级",
+        placeholder: "请输入班级名称",
       },
       beginTime: {
         type: "date-picker",
@@ -57,7 +57,11 @@ const state = reactive({
       },
     },
     rules: {
-      sex: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+      grade: [{ required: true, message: "请选择年级", trigger: "blur" }],
+      className: [{ required: true, message: "请输入班级名称", trigger: "blur" }],
+      beginTime: [{ required: true, message: "请选择开班时间", trigger: "blur" }],
+      endTime: [{ required: true, message: "请选择结班时间", trigger: "blur" }],
+      teacherId: [{ required: true, message: "请选择班主任", trigger: "blur" }],
     },
     labelWidth: "200px",
     submit: {
@@ -155,7 +159,9 @@ function uploadStudentList(file: any) {
 // 提交
 async function submit() {
   if (route.query.type == "add") {
-    add(state.formParams.data).then(() => {
+    add(state.formParams.data).then((res) => {
+      console.log(res, "👩👩👩");
+
       ElMessage({
         type: "success",
         message: "操作成功!",

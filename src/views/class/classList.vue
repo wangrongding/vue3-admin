@@ -39,7 +39,7 @@ const state = reactive({
   },
   //表单参数
   formParams: {
-    data: { time: [], startTime: "", endTime: "", roleId: "" }, // 表单数据对象
+    data: { time: [], startTime: "", endTime: "", roleId: "", grade: [], key: "" }, // 表单数据对象
     formList: {
       grade: {
         type: "cascader",

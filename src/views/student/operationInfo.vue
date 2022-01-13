@@ -2,6 +2,7 @@
 import { ref, reactive } from "vue";
 import { getImgUrl } from "@/api/user/index";
 import { addUser, updateUserInfo, userDetail } from "@/api/student/index";
+import { dictionary } from "@/api/class/index";
 import { getGradeList, classIdList } from "@/api/dashboard/index.ts";
 import Dialog from "@/components/element/Dialog.vue";
 import { useRoute } from "vue-router";
@@ -67,11 +68,22 @@ const state = reactive({
           return date.getTime() > Date.now();
         },
       },
+
+      grade: {
+        type: "cascader",
+        label: "年级",
+        cascaderOptions: await getGradeList(),
+        placeholder: "请选择年级",
+        onChange: getClassIdList,
+        style: "width:45%",
+        width: "100%",
+      },
       classId: {
-        type: "customItem",
-        name: "classId",
+        type: "select",
         label: "班级",
-        style: "width:45%;text-align: justify;",
+        placeholder: "请选择年级后再选择班级",
+        selectOptions: [],
+        style: "width:45%",
       },
       contactPerson: {
         type: "text",
@@ -101,19 +113,17 @@ const state = reactive({
         type: "select",
         label: "干预状态",
         placeholder: "请选择干预状态",
-        selectOptions: [
-          { label: "男", value: 0 },
-          { label: "女", value: 1 },
-        ],
+        selectOptions: [],
         style: "width:45%",
+        customLabelValue: { label: "dictValue", value: "dictKey" },
       },
       status: {
         type: "select",
         label: "当前状态",
         placeholder: "请选择当前状态",
         selectOptions: [
-          { label: "男", value: 0 },
-          { label: "女", value: 1 },
+          { label: "启用", value: 0 },
+          { label: "弃用", value: 1 },
         ],
         style: "width:45%",
       },
@@ -122,12 +132,28 @@ const state = reactive({
         mode: "textarea",
         label: "备注",
         placeholder: "请输入备注",
-        style: "width:91%",
+        // style: "width:91%",
+        style: "width:45%",
+        width: "100%",
         rows: 2,
       },
+      // classId: {
+      //   type: "customItem",
+      //   name: "classId",
+      //   label: "班级",
+      //   style: "width:45%;text-align: justify;",
+      // },
     },
     rules: {
-      sex: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+      realName: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+      account: [{ required: true, message: "请输入学号", trigger: "blur" }],
+      password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+      sex: [{ required: true, message: "请选择性别", trigger: "blur" }],
+      birthdayDays: [{ required: true, message: "请选择出生日期", trigger: "blur" }],
+      grade: [{ required: true, message: "请选择年级", trigger: "blur" }],
+      classId: [{ required: true, message: "请选择班级", trigger: "blur" }],
+      contactPerson: [{ required: true, message: "请输入紧急联系人姓名", trigger: "blur" }],
+      contactPersonPhone: [{ required: true, message: "请输入紧急联系人手机号", trigger: "blur" }],
     },
     inline: true,
     align: "center",
@@ -157,35 +183,41 @@ const state = reactive({
   },
   imageList: [] as any,
   tempUrl: "",
-  classForm: {
-    data: { grade: "", classId: "" }, // 表单数据对象
-    formList: {
-      grade: {
-        type: "cascader",
-        cascaderOptions: await getGradeList(),
-        placeholder: "请选择年级",
-        onChange: getClassIdList,
-        width: "192px",
-        style: "margin:0",
-      },
-      classId: {
-        type: "select",
-        label: "",
-        placeholder: "请选择班级",
-        selectOptions: [],
-        width: "192px",
-        style: "margin:0",
-      },
-    },
-    inline: true,
-  },
+  // classForm: {
+  //   data: { grade: "", classId: "" }, // 表单数据对象
+  //   formList: {
+  //     grade: {
+  //       type: "cascader",
+  //       cascaderOptions: await getGradeList(),
+  //       placeholder: "请选择年级",
+  //       onChange: getClassIdList,
+  //       width: "192px",
+  //       style: "margin:0",
+  //     },
+  //     classId: {
+  //       type: "select",
+  //       label: "",
+  //       placeholder: "请选择班级",
+  //       selectOptions: [],
+  //       width: "192px",
+  //       style: "margin:0",
+  //     },
+  //   },
+  //   inline: true,
+  // },
 });
 const loading = ref("");
-// const tempAvatar = new URL("../../assets/image/logo.png", import.meta.url).href;
+
+//获取干预状态下拉
+dictionary({ code: "intervene" }).then((res: any) => {
+  state.formParams.formList.interveneStatus.selectOptions = res;
+});
 //获取班级列表
 async function getClassIdList(yearClass: number[]) {
-  state.classForm.formList.classId.selectOptions = await classIdList({ yearClass: yearClass + "" });
-  state.classForm.formList.classId.selectOptions.forEach((item: any) => {
+  state.formParams.formList.classId.selectOptions = await classIdList({
+    yearClass: yearClass + "",
+  });
+  state.formParams.formList.classId.selectOptions.forEach((item: any) => {
     item.label = item.className;
     item.value = item.id;
   });
@@ -195,9 +227,9 @@ async function getClassIdList(yearClass: number[]) {
 state.imageList = (await getImgUrl()) as any;
 if (route.query.id) {
   state.formParams.data = (await userDetail({ id: route.query.id })) as any;
-  state.classForm.data.grade = state.formParams.data.grade;
+  // state.classForm.data.grade = state.formParams.data.grade;
   getClassIdList(state.formParams.data.grade);
-  state.classForm.data.classId = state.formParams.data.classId;
+  // state.classForm.data.classId = state.formParams.data.classId;
 }
 async function submit() {
   if (route.query.id) {
@@ -229,9 +261,9 @@ async function submit() {
           </el-button>
         </div>
       </template>
-      <template #classId>
+      <!-- <template #classId>
         <Form :form-params="state.classForm" />
-      </template>
+      </template> -->
     </Form>
     <Dialog :dialogForm="state.dialogForm" class="dialog">
       <template #dialogContent>

@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import { reactive, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { ElMessage, ElMessageBox } from "element-plus";
-import { export_json_to_excel } from "@/utils/Export2Excel";
-import { getGradeList, classIdList } from "@/api/dashboard/index.ts";
-import { deleteStudent, transferStudent, fileDownload, importUser } from "@/api/class/index.ts";
-import { userArchiveInfo, userTestRecord, archiveList, deleteById } from "@/api/student/index.ts";
+import { ElMessage } from "element-plus";
+import { fileDownload, importUser } from "@/api/class/index.ts";
+import {
+  userArchiveInfo,
+  userTestRecord,
+  archiveList,
+  deleteById,
+  saveUserArchive,
+} from "@/api/student/index.ts";
 import { saveFile } from "@/utils/index";
 import { getPdf } from "@/utils/Export2PDF";
 const route = useRoute();
@@ -93,6 +97,7 @@ const state = reactive({
     center: true,
     hiddenFooter: true,
     width: "900px",
+    confirmText: "上传文件",
     confirmFunction: () => {},
     closed: () => {
       state.dialogForm.dialogShow = false;

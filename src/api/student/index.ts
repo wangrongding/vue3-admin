@@ -14,7 +14,7 @@ export function updateUserInfo(data?: object) {
 }
 // 【学员管理】- 新增学员信息
 export function addUser(data?: object) {
-  return request.put("/his-admin/user/save", { data });
+  return request.post("/his-admin/user/save", { data });
 }
 // 【学员管理】- 学员管理列表
 export function userListPage(data?: object) {

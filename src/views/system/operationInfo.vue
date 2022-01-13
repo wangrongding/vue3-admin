@@ -23,8 +23,8 @@ const state = reactive({
       realName: "",
       phone: "",
       password: "",
-      grade: "",
-      sex: "",
+      grade: [],
+      // sex: "",
       birthdayDays: "",
       classId: "",
     } as any, // 表单数据对象
@@ -110,7 +110,7 @@ const state = reactive({
         ],
         style: "width:45%",
       },
-      areaId: {
+      areaIds: {
         style: "width:45%",
         label: "所在地",
         width: "100%",
@@ -131,7 +131,12 @@ const state = reactive({
       },
     },
     rules: {
-      sex: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+      realName: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+      phone: [{ required: true, message: "请输入手机号", trigger: "blur" }],
+      password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+      roleId: [{ required: true, message: "请选择角色", trigger: "blur" }],
+      grade: [{ required: true, message: "请选择年级", trigger: "blur" }],
+      classId: [{ required: true, message: "请选择班级", trigger: "blur" }],
     },
     inline: true,
     align: "center",
@@ -161,33 +166,11 @@ const state = reactive({
   },
   imageList: [] as any,
   tempUrl: "",
-  // classForm: {
-  //   data: { grade: "", classId: "" }, // 表单数据对象
-  //   formList: {
-  //     grade: {
-  //       type: "cascader",
-  //       cascaderOptions: await getGradeList(),
-  //       placeholder: "请选择年级",
-  //       onChange: getClassIdList,
-  //       width: "192px",
-  //       style: "margin:0",
-  //     },
-  //     classId: {
-  //       type: "select",
-  //       label: "",
-  //       placeholder: "请选择班级",
-  //       selectOptions: [],
-  //       width: "192px",
-  //       style: "margin:0",
-  //     },
-  //   },
-  //   inline: true,
-  // },
   async getroleList() {
     state.formParams.formList.roleId.selectOptions = await roleList();
   },
   async getAddress() {
-    state.formParams.formList.areaId.cascaderOptions = await getAddress();
+    state.formParams.formList.areaIds.cascaderOptions = await getAddress();
   },
 });
 const loading = ref("");
@@ -212,10 +195,12 @@ state.imageList = (await getImgUrl()) as any;
 if (route.query.id) {
   state.formParams.data = (await sysUserDetail({ id: route.query.id })) as any;
   getClassIdList(state.formParams.data.grade);
+  if (state.formParams.data.classId == -1) {
+    state.formParams.data.classId = "";
+  }
 }
 async function submit() {
   if (route.query.id) {
-    state.formParams.data.areaId = state.formParams.data.areaId[1];
     await updateUser(state.formParams.data);
   } else {
     await saveUser(state.formParams.data);
