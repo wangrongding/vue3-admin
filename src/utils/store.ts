@@ -21,7 +21,7 @@ export const setStore = (params = {}) => {
  * 获取localStorage
  */
 
-export const getStore = (params = {}) => {
+ export const getStore = (params = {}) => {
     let { name, debug } = params;
     // name = keyName + name
     let obj = {},

@@ -132,7 +132,7 @@ export const routes: Array<RouteRecordRaw> = [
       {
         path: "studentDetail",
         component: () => import("@/views/student/studentDetail.vue"),
-        meta: { title: "操作学生信息" },
+        meta: { title: "学生详情" },
       },
       {
         path: "operationInfo",

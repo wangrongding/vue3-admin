@@ -24,10 +24,11 @@ const state = reactive({
     loading: false,
     columnProps: [
       { type: "selection" },
-      { label: "问卷类型", prop: "typeName" },
-      { label: "问卷名称", prop: "questionnaireName" },
-      { label: "适用范围", prop: "scope" },
-      { label: "班级总数", prop: "classTotal" },
+      { label: "班级名称", prop: "className" },
+      { label: "班主任", prop: "teacherName" },
+      { label: "已测人数", prop: "testPeople" },
+      { label: "学生总数", prop: "totalStudent" },
+      { label: "测试率", prop: "testRate" },
       {
         label: "操作",
         prop: "operation",
@@ -65,6 +66,7 @@ const state = reactive({
       name: {
         type: "text",
         label: "",
+        width: "250px",
         placeholder: "请输入班级名称、班主任姓名",
       },
     },
@@ -73,14 +75,12 @@ const state = reactive({
     submit: {
       submitText: "查询",
       submitFunction: search,
-      reset: true,
+      // reset: true,
     },
   },
 });
 //拆分时间
 function splitTime() {
-  console.log(123);
-
   if (state.formParams.data.academicYears == null) return;
   state.formParams.data.beginTime = state.formParams.data.academicYears[0];
   state.formParams.data.endTime = state.formParams.data.academicYears[1];
@@ -91,7 +91,7 @@ function search() {
   state.tableParams.loading = true;
   const searchForm = Object.assign(state.paging, state.formParams.data);
   getTestRecordList(searchForm).then((res: any) => {
-    state.tableParams.data = res.records;
+    state.tableParams.data = res.records; 
     state.tableParams.loading = false;
     state.paging.total = res.current;
     state.paging.total = res.total;

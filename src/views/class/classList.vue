@@ -39,7 +39,7 @@ const state = reactive({
   },
   //表单参数
   formParams: {
-    data: { time: [], startTime: "", endTime: "", roleId: "", grade: [], key: "" }, // 表单数据对象
+    data: { time: [], roleId: "", grade: [], key: "" }, // 表单数据对象
     formList: {
       grade: {
         type: "cascader",
@@ -67,12 +67,7 @@ const state = reactive({
 
 //获取年级信息
 state.formParams.formList.grade.cascaderOptions = await getGradeList();
-//拆分时间
-function splitTime() {
-  if (state.formParams.data.time == null) return;
-  state.formParams.data.startTime = state.formParams.data.time[0];
-  state.formParams.data.endTime = state.formParams.data.time[1];
-}
+
 //搜索
 function search() {
   state.tableParams.loading = true;

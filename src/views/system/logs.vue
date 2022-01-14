@@ -30,7 +30,7 @@ const state = reactive({
   },
   //表单参数
   formParams: {
-    data: { time: [], startTime: "", endTime: "" }, // 表单数据对象
+    data: { time: [] }, // 表单数据对象
     formList: {
       time: {
         type: "date-picker",
@@ -40,7 +40,6 @@ const state = reactive({
         disabledDate: (date: any) => {
           return date.getTime() > Date.now();
         },
-        onChange: splitTime,
       },
       key: {
         type: "text",
@@ -58,16 +57,18 @@ const state = reactive({
     },
   },
 });
-//拆分时间
-function splitTime() {
-  if (state.formParams.data.time == null) return;
-  state.formParams.data.startTime = state.formParams.data.time[0];
-  state.formParams.data.endTime = state.formParams.data.time[1];
-}
+
 //搜索
 function search() {
   state.tableParams.loading = true;
-  const searchForm = Object.assign(state.paging, state.formParams.data);
+  const searchForm = Object.assign(state.paging, state.formParams.data) as any;
+  if (searchForm.time) {
+    searchForm.startTime = searchForm.time[0];
+    searchForm.endTime = searchForm.time[1];
+  } else {
+    searchForm.startTime = null;
+    searchForm.endTime = null;
+  }
   logListPage(searchForm).then((res: any) => {
     state.tableParams.data = res.records;
     state.tableParams.loading = false;

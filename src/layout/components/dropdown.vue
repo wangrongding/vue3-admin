@@ -1,11 +1,28 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ElMessage } from "element-plus";
+import { reactive } from "vue";
+const state = reactive({
+  userInfo: JSON.parse(sessionStorage.getItem("loginInfo") as string),
+});
+function logout() {
+  sessionStorage.clear();
+  window.history.pushState({}, "/student", "/student");
+  ElMessage({
+    type: "success",
+    message: "退出成功！",
+  });
+}
 </script>
 <template>
   <el-dropdown trigger="click">
     <div class="avatar-wrapper">
-      <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
-      <span>用户名</span>
+      <el-avatar
+        :src="
+          state.userInfo.headUrl ||
+          'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
+        "
+      />
+      <span>{{ state.userInfo.real_name || "-" }}</span>
       <el-icon color="#000" :size="15">
         <arrow-down />
       </el-icon>
@@ -15,6 +32,7 @@ import { ref } from "vue";
         <el-dropdown-item>
           <router-link to="/userInfo"> 个人信息 </router-link>
         </el-dropdown-item>
+        <el-dropdown-item divided @click.native="logout"> 退出登录 </el-dropdown-item>
       </el-dropdown-menu>
     </template>
   </el-dropdown>

@@ -43,7 +43,7 @@ const state = reactive({
       key: {
         type: "text",
         label: "",
-        placeholder: "请输入姓名或手机号",
+        placeholder: "请输入学生姓名或学号",
       },
     },
     rules: {},
@@ -91,12 +91,7 @@ const state = reactive({
   },
 });
 const loading = ref("");
-//拆分时间
-function splitTime() {
-  if (state.formParams.data.time == null) return;
-  state.formParams.data.startTime = state.formParams.data.time[0];
-  state.formParams.data.endTime = state.formParams.data.time[1];
-}
+
 //搜索
 function search() {
   state.tableParams.loading = true;

@@ -16,6 +16,12 @@ const route = useRoute();
 const router = useRouter();
 
 const state = reactive({
+  userStatus: {
+    intervene: 0,
+    interveneStatusName: "",
+    risklevel: 0,
+    risklevelStatusName: "",
+  },
   //表格参数
   tableParams: {
     data: [],
@@ -65,7 +71,7 @@ const state = reactive({
     submit: {
       submitText: "查询",
       submitFunction: search,
-      reset: true,
+      // reset: true,
     },
   },
 
@@ -135,18 +141,16 @@ const state = reactive({
 });
 const loading = ref("");
 
-function getBackground(item: any) {
-  //todo 颜色和个数需要确认
-  const itemList = [
-    "#BCBCBCFF",
-    "#BCBCBCFF",
-    "#FF5752FF",
-    "#FAAD14FF",
-    "#FF5752FF",
-    "#027AFFFF",
-    "#00E3B9FF",
-  ];
-  return itemList[item];
+function getBackground(type: string, item: any) {
+  const itemList = {
+    intervene: { 1: "#FF5752FF", 2: "#027AFFFF", 3: "#00E3B9FF", 4: "#BCBCBCFF" },
+    risklevel: {
+      1: "#FF5752FF",
+      2: "#FAAD14FF",
+      3: "#BCBCBCFF",
+    },
+  } as any;
+  return itemList[type][item];
 }
 
 //拆分时间
@@ -181,7 +185,8 @@ function search() {
   state.tableParams.loading = true;
   const searchForm = Object.assign(state.paging, state.formParams.data);
   userTestRecord(searchForm).then((res: any) => {
-    state.tableParams.data = res.list;
+    state.userStatus.intervene = res.intervene;
+    state.userStatus.risklevel = res.risklevel;
     state.tableParams.loading = false;
     state.paging.total = res.current;
     state.paging.total = res.total;
@@ -301,8 +306,13 @@ onMounted(() => {});
           <span class="table-title">测试记录</span>
           <span
             class="status-item"
-            :style="{ background: getBackground(state.studentInfo.interveneStatus) }"
-            >{{ state.studentInfo.interveneStatusName }}</span
+            :style="{ background: getBackground('intervene', state.userStatus.intervene) }"
+            >{{ state.userStatus.interveneStatusName || "-" }}</span
+          >
+          <span
+            class="status-item"
+            :style="{ background: getBackground('risklevel', state.userStatus.risklevel) }"
+            >{{ state.userStatus.interveneStatusName || "-" }}</span
           >
         </div>
         <Table :tableParams.sync="state.tableParams">
@@ -399,10 +409,10 @@ onMounted(() => {});
       background-color: #00e3b9;
       color: white;
       font-weight: bold;
-      border-radius: 10px;
+      border-radius: 5px;
       padding: 0 10px;
-      margin: 0 10px;
-      line-height: 25px;
+      margin: 0 5px;
+      line-height: 30px;
     }
   }
   .table-inline-panel {

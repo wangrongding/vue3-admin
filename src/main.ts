@@ -47,9 +47,8 @@ function render(props: IRenderProps) {
     app.component(key, Icons[key as keyof typeof Icons]);
   });
   const { container } = props;
-  console.log("😀😀😀", container, typeof container === "string", app);
   app.use(store).use(router).use(ElementPlus, {
-    size: "" /* ["", "large", "medium", "small", "mini"] */,
+    size: "medium",
     zIndex: 3000,
   });
   app.mount(

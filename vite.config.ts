@@ -1,22 +1,24 @@
 import { defineConfig, loadEnv } from "vite";
 import vue from "@vitejs/plugin-vue";
 import path from "path";
-
 import { name } from "./package.json";
-import html from "@rollup/plugin-html";
 import qiankun from "vite-plugin-qiankun";
 //===============ElementPlus自动导入的插件
 // import Components from "unplugin-vue-components/vite";
 // import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 // https://vitejs.dev/config/
+
+console.log("🚗🚗 http://192.168.1.126:9421");
 export default defineConfig((config) => {
   return {
-    // base: "http://localhost:9421",
-    // base: "/",
+    base:
+      config.mode === "development"
+        ? "/"
+        : loadEnv(config.mode, process.cwd()).VITE_APP_SITE_ADDRESS,
     plugins: [
       vue(),
       // 这里的 'admin' 是子应用名，主应用注册时AppName需保持一致
-      qiankun("admin", {
+      qiankun(name, {
         useDevMode: true,
       }),
       //     //自动导入

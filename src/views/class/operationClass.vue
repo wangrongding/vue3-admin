@@ -51,7 +51,7 @@ const state = reactive({
         label: "结班时间",
         placeholder: "请选择结班时间",
       },
-      teacherId: {
+      userId: {
         type: "customItem",
         label: "班主任",
       },
@@ -61,7 +61,7 @@ const state = reactive({
       className: [{ required: true, message: "请输入班级名称", trigger: "blur" }],
       beginTime: [{ required: true, message: "请选择开班时间", trigger: "blur" }],
       endTime: [{ required: true, message: "请选择结班时间", trigger: "blur" }],
-      teacherId: [{ required: true, message: "请选择班主任", trigger: "blur" }],
+      userId: [{ required: true, message: "请选择班主任", trigger: "blur" }],
     },
     labelWidth: "200px",
     submit: {
@@ -77,8 +77,18 @@ const state = reactive({
       { type: "selection" },
       { label: "姓名", prop: "realName" },
       { label: "手机号", prop: "phone" },
-      { label: "性别", prop: "scope" },
-      { label: "角色", prop: "roleName" },
+      {
+        label: "性别",
+        prop: "sex",
+        formatter: ({ sex }: any, b) => {
+          // console.log(b);
+          sex == 1 ? "女" : sex == 0 ? "男" : "未知";
+        },
+      },
+      {
+        label: "角色",
+        prop: "roleName",
+      },
     ],
     selectList: [] as any,
   },
@@ -202,7 +212,7 @@ TeacherList();
         <Dialog :dialogForm="state.dialogForm" class="dialog">
           <template #dialogContent>
             <el-input
-              placeholder="请输入内容"
+              placeholder="请输入班主任名称"
               v-model="state.nameOrPhone"
               clearable
               style="width: 300px"

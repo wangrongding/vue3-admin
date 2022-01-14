@@ -105,7 +105,7 @@ const formParams = reactive({
   submit: {
     submitText: "查询",
     submitFunction: getDashboardInfo,
-    reset: true,
+    // reset: true,
   },
 });
 //拆分时间

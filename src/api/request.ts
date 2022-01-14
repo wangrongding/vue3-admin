@@ -1,15 +1,15 @@
 import axios from "axios";
+import { getStore } from "@/utils/store";
 import { ElMessage } from "element-plus";
 const baseUrl = import.meta.env.VITE_APP_BASE_API as string;
+
 // 创建axios实例
 const request = axios.create({
   baseURL: baseUrl, // api的base_url
   timeout: 15000, // 请求超时时间
   headers: {
     Authorization: "Basic c3R1ZGVudDpzdHVkZW50X3NlY3JldA==",
-    "platform-auth":
-      "bearer " +
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiLmmI7lpKnogIHluIgxIiwiYXZhdGFyIjoiaHR0cDovL21pcGFjLmZpbGUubWVudHBlYWsuY29tL2hlYWRJbWFnZS82YmIwYTBiYi1lN2IxLTQ3YjctYTA5NC1iOGM0NDYyNWI5MTgucG5nIiwiYXV0aG9yaXRpZXMiOlsidGVhY2hlciJdLCJjbGllbnRfaWQiOiJzdHVkZW50Iiwicm9sZV9uYW1lIjoidGVhY2hlciIsImxpY2Vuc2UiOiJwb3dlcmVkIGJ5IHBsYXRmb3JteCIsInVzZXJfaWQiOjU4Nywicm9sZV9pZCI6IjIiLCJzY29wZSI6WyJhbGwiXSwiZXhwIjoxNjc3OTcxNDY1LCJqdGkiOiI5ZmMxOWYwOC02NzEyLTQzYTctYjhkNy1mZTA0OWI3OWQ2OGQiLCJhY2NvdW50IjoiMTU4MDA0NDQzMjkiLCJ0ZW5hbnRfY29kZSI6IjAwMDAwMSJ9.rLny9MHdIksEWc3DBWbQsRSW1zzhm1zXXIo-0Exo_is",
+    "platform-auth": "bearer " + JSON.parse(sessionStorage.getItem("loginInfo") as string).token,
   },
 });
 // request请求拦截器
@@ -37,6 +37,7 @@ request.interceptors.request.use(
     if (method === "put") {
       config.data = { ...data.data };
     }
+    // console.log((config.headers as any)["platform-auth"], "🚗🚗🚗🚗🚗🚗");
     return config;
   },
   (error) => {
@@ -48,6 +49,13 @@ async function successCallback(res: any) {
   const { data } = res;
   if (data.code == 200) {
     return Promise.resolve(data.data);
+  } else if (data.code == 401) {
+    sessionStorage.clear();
+    ElMessage({
+      type: "warning",
+      message: "请重新登录！",
+    });
+    window.history.pushState({}, "/student", "/student");
   } else {
     ElMessage({
       message: data.msg,
@@ -59,7 +67,7 @@ async function successCallback(res: any) {
 }
 // 请求错误回调
 function errorCallback(error: any) {
-  console.error(error);
+  console.error(error, "🚗🚗🚗");
   ElMessage({
     message: error,
     grouping: true,

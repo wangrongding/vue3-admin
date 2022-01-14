@@ -31,7 +31,7 @@ const state = reactive({
   },
   //表单参数
   formParams: {
-    data: { birthday: "" }, // 表单数据对象
+    data: { key: "" }, // 表单数据对象
     formList: {
       nickName: {
         label: "",
@@ -57,7 +57,7 @@ const state = reactive({
         type: "select",
         selectOptions: [],
       },
-      birthday: {
+      key: {
         type: "text",
         placeholder: "请输入学生姓名或学号",
       },

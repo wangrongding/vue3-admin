@@ -55,7 +55,7 @@ const state = reactive({
         selectOptions: [
           { label: "男", value: 0 },
           { label: "女", value: 1 },
-          { label: "未知", value: -1 },
+          { label: "未知", value: 2 },
         ],
         style: "width:45%",
       },
@@ -230,6 +230,12 @@ if (route.query.id) {
   // state.classForm.data.grade = state.formParams.data.grade;
   getClassIdList(state.formParams.data.grade);
   // state.classForm.data.classId = state.formParams.data.classId;
+  if (state.formParams.data.classId == -1) {
+    state.formParams.data.classId = "";
+  }
+  if (state.formParams.data.interveneStatus == -1) {
+    state.formParams.data.interveneStatus = "";
+  }
 }
 async function submit() {
   if (route.query.id) {
