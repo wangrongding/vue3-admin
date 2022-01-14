@@ -48,12 +48,12 @@
 //   return routeReplaceSelf;
 // }
 
-import { h, computed, getCurrentInstance } from "vue";
+import { h, computed, getCurrentInstance, defineComponent } from "vue";
 import { useRoute, useRouter, onBeforeRouteLeave } from "vue-router";
-export default function routeReplaceSelf(component) {
+export default function routeReplaceSelf(component: any) {
   return {
     name: "routeReplaceSelf",
-    setup(props) {
+    setup(props: any) {
       const instance = getCurrentInstance();
       const route = useRoute();
       const router = useRouter();
@@ -61,12 +61,12 @@ export default function routeReplaceSelf(component) {
       const showChild = computed(() => {
         const deepestMatchedRoute = route.matched[route.matched.length - 1].instances;
         console.log(route.matched, "instances");
-        return deepestMatchedRoute !== instance;
+        return deepestMatchedRoute != instance;
       });
-      // console.log(instance, "showChild");
 
+      // console.log(instance, "showChild");
       const child = showChild.value ? h("router-view") : h(component);
       return () => h("keep-alive", [child]);
-    }
+    },
   };
 }

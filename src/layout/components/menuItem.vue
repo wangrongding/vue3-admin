@@ -8,10 +8,10 @@ const resolvePath = (item: any) => {
     return "/dashboard";
   }
   if (item.meta.type === "single") {
-    // console.log(props.basePath + "/" + item.children[0].path);
+    // console.log(props.basePath + "/" + item.children[0].path, "🚗🚗🚗🚗");
     return props.basePath + "/" + item.children[0].path;
   } else {
-    // console.log(props.basePath + "/" + item.path);
+    // console.log(props.basePath + "/" + item.path, "🚄🚄🚄🚄");
     return props.basePath + "/" + item.path;
   }
 };

@@ -16,12 +16,12 @@ export const routes: Array<RouteRecordRaw> = [
     path: "/dashboard",
     component: Layout,
     meta: { title: "数据看板", type: "single", icon: "House" },
+    redirect: "/dashboard/index",
     children: [
       {
         path: "index",
         // component: routeReplaceSelf(Dashboard),
         component: () => import("@/views/dashboard/dashboard.vue"),
-        // component: Dashboard,
         meta: { title: "看板详情" },
         children: [
           {
@@ -54,6 +54,7 @@ export const routes: Array<RouteRecordRaw> = [
     path: "/testManagement",
     component: Layout,
     meta: { title: "测试管理", type: "single", icon: "Setting" },
+    redirect: "/testManagement/list",
     children: [
       {
         path: "list",
@@ -72,6 +73,7 @@ export const routes: Array<RouteRecordRaw> = [
     path: "/material",
     component: Layout,
     meta: { title: "教辅资料", type: "multiple", icon: "Setting" },
+    redirect: "/material/course",
     children: [
       {
         path: "course",
@@ -101,6 +103,7 @@ export const routes: Array<RouteRecordRaw> = [
     path: "/classManagement",
     component: Layout,
     meta: { title: "班级管理", type: "single", icon: "Setting" },
+    redirect: "/classManagement/list",
     children: [
       {
         path: "list",
@@ -123,6 +126,7 @@ export const routes: Array<RouteRecordRaw> = [
     path: "/studentManagement",
     component: Layout,
     meta: { title: "学生管理", type: "single", icon: "Setting" },
+    redirect: "/studentManagement/list",
     children: [
       {
         path: "list",
@@ -145,6 +149,7 @@ export const routes: Array<RouteRecordRaw> = [
     path: "/system",
     component: Layout,
     meta: { title: "系统管理", type: "multiple", icon: "Setting" },
+    redirect: "/system/list",
     children: [
       {
         path: "userManagement",
@@ -174,9 +179,10 @@ export const routes: Array<RouteRecordRaw> = [
     path: "/userInfo",
     component: Layout,
     meta: { title: "用户信息", type: "single", icon: "Setting", hidden: true },
+    redirect: "/userInfo/index",
     children: [
       {
-        path: "/userInfo",
+        path: "index",
         component: () => import("@/views/userInfo/index.vue"),
         meta: { title: "编辑用户信息" },
       },
