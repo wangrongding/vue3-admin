@@ -24,7 +24,6 @@ import "@/styles/element/index.scss";
 // import "@/mock/index.ts";
 //=====================vite-plugin-qiankun 支持集成vite开发环境调试的微前端插件
 import { renderWithQiankun, qiankunWindow } from "vite-plugin-qiankun/dist/helper";
-
 declare global {
   interface Window {
     __POWERED_BY_QIANKUN__?: boolean;

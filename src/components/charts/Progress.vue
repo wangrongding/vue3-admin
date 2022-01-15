@@ -153,8 +153,6 @@ watch(props.configuration, () => {
 onMounted(() => {
   // 绘制图表
   chart = echarts.init(chartDom.value!);
-  console.log(props.configuration, "==============");
-
   render();
   window.onresize = function () {
     chart.resize();

@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { reactive, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
-import { userListPage } from "@/api/student/index.ts";
-import { fileDownload, importUser } from "@/api/class/index.ts";
+import { userListPage, saveUserArchive, fileDownload, importUser } from "@/api/student/index.ts";
 import { export_json_to_excel } from "@/utils/Export2Excel";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { saveFile } from "@/utils/index";
@@ -25,7 +24,7 @@ const state = reactive({
         slots: {
           default: "operation",
         },
-        width: "180px",
+        width: "250px",
       },
     ],
     selectList: [],
@@ -85,6 +84,7 @@ const state = reactive({
   },
   // 导入学生
   downLoadFile() {
+    //todo 缺一个接口
     fileDownload().then((res: string) => {
       saveFile(res, "模板.xlsx");
     });
@@ -161,7 +161,7 @@ function jumpTo(row: any, type: string) {
   <div class="page-container">
     <TopPanel :formParams="state.formParams">
       <el-button type="primary" @click="jumpTo('', 'add')">添加</el-button>
-      <el-button type="primary" @click="exportExcel">导入</el-button>
+      <el-button type="primary" @click="state.dialogForm.dialogShow = true">导入</el-button>
       <el-button type="primary" @click="exportExcel">导出</el-button>
     </TopPanel>
     <div class="table-panel">
@@ -169,7 +169,7 @@ function jumpTo(row: any, type: string) {
         <template #operation="{ row }">
           <el-button type="primary" size="mini" plain @click="jumpTo(row, 'edit')">编辑</el-button>
           <el-button type="primary" size="mini" plain @click="jumpTo(row, 'detail')">
-            查看
+            学生档案
           </el-button>
         </template>
       </Table>

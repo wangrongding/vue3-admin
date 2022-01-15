@@ -39,14 +39,14 @@ const state = reactive({
   },
   //表单参数
   formParams: {
-    data: { time: [], roleId: "", grade: [], key: "" }, // 表单数据对象
+    data: { time: [], roleId: "", grade: [], classOrUserName: "" }, // 表单数据对象
     formList: {
       grade: {
         type: "cascader",
         cascaderOptions: [],
         placeholder: "请选择年级",
       },
-      key: {
+      classOrUserName: {
         type: "text",
         label: "",
         width: "250px",

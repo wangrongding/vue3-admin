@@ -45,6 +45,7 @@ function draw() {
     },
     tooltip: {
       trigger: "item",
+      // formatter: "{a}{b}{c}",
     },
     legend: {
       orient: "vertical",

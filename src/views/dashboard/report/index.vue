@@ -148,7 +148,7 @@ onMounted(() => {});
     padding-bottom: 50px;
     position: relative;
     .btn-group {
-      z-index: 99999;
+      z-index: 299;
       position: fixed;
       top: 60px;
       right: 20px;

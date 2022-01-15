@@ -11,7 +11,7 @@ import {
   rollOutStudentList,
   transferStudent,
   dictionary,
-  fileDownload,
+  studentTemplate,
   importUser,
 } from "@/api/class/index.ts";
 import { saveFile } from "@/utils/index";
@@ -127,7 +127,7 @@ const state = reactive({
   dialogForm: {
     dialogType: "",
     dialogShow: false,
-    title: "学生列表",
+    title: "",
     destroyOnClose: false,
     center: true,
     hiddenFooter: true,
@@ -165,7 +165,7 @@ const state = reactive({
   },
   // 导入学生
   downLoadFile() {
-    fileDownload().then((res: string) => {
+    studentTemplate().then((res: string) => {
       saveFile(res, "模板.xlsx");
     });
   },
@@ -198,8 +198,13 @@ async function getMoveStudentList() {
     classId: route.query.id,
   });
 }
+
+function getClassInfo() {
+  findClassById({ classId: route.query.id }).then((res: any) => {
+    state.classInfo = res;
+  });
+}
 // 获取班级信息
-state.classInfo = (await findClassById({ classId: route.query.id })) as any;
 
 //搜索
 function search() {
@@ -262,6 +267,7 @@ function removeSdudent(item: any) {
   });
   getMoveStudentList();
   search();
+  getClassInfo();
 }
 // 批量转出学生
 function rollOut() {
@@ -286,10 +292,26 @@ function rollOut() {
 }
 //跳转
 function jumpTo(row: any) {
-  router.push("/system/userInfo");
+  if (row) {
+    router.push({
+      path: "/studentManagement/studentDetail",
+      query: {
+        id: row.userId,
+      },
+    });
+  } else {
+    router.push({
+      path: "/classManagement/operationClass",
+      query: {
+        id: state.classInfo.id,
+        type: "edit",
+      },
+    });
+  }
 }
 //=========================exec执行块
 search();
+getClassInfo();
 onMounted(() => {});
 //=========================exec执行块
 </script>
@@ -339,7 +361,7 @@ onMounted(() => {});
             (state.dialogForm.dialogShow = true),
               (state.dialogForm.dialogType = 'rollOut'),
               (state.dialogForm.hiddenFooter = false),
-              (state.dialogForm.title = '学生列表')
+              (state.dialogForm.title = '转出学生')
           "
           >转出</el-button
         >

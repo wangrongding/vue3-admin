@@ -3,13 +3,7 @@ import { reactive, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
 import { fileDownload, importUser } from "@/api/class/index.ts";
-import {
-  userArchiveInfo,
-  userTestRecord,
-  archiveList,
-  deleteById,
-  saveUserArchive,
-} from "@/api/student/index.ts";
+import { userArchiveInfo, userTestRecord, archiveList, deleteById } from "@/api/student/index.ts";
 import { saveFile } from "@/utils/index";
 import { getPdf } from "@/utils/Export2PDF";
 const route = useRoute();
@@ -98,7 +92,7 @@ const state = reactive({
   dialogForm: {
     dialogType: "",
     dialogShow: false,
-    title: "学生列表",
+    title: "",
     destroyOnClose: false,
     center: true,
     hiddenFooter: true,
@@ -143,11 +137,16 @@ const loading = ref("");
 
 function getBackground(type: string, item: any) {
   const itemList = {
-    intervene: { 1: "#FF5752FF", 2: "#027AFFFF", 3: "#00E3B9FF", 4: "#BCBCBCFF" },
+    intervene: {
+      1: "#BCBCBCFF",
+      2: "#FF5752FF",
+      3: "#027AFFFF",
+      4: "#00E3B9FF",
+    },
     risklevel: {
-      1: "#FF5752FF",
+      1: "#BCBCBCFF",
       2: "#FAAD14FF",
-      3: "#BCBCBCFF",
+      3: "#FF5752FF",
     },
   } as any;
   return itemList[type][item];
@@ -164,8 +163,8 @@ function newAcademicYears() {
   const tempArr = [];
   for (let i = new Date().getFullYear(); i > new Date().getFullYear() - 50; i--) {
     tempArr.push(
-      { value: [i + "-01-01 00:00:00", i + "-06-30 59:59:59"], label: i + "上半年" },
-      { value: [i + "-07-01 00:00:00", i + "-12-31  59:59:59"], label: i + "下半年" },
+      { value: [i + "-01-01 00:00:00", i + "-06-30 23:59:59"], label: i + "上半年" },
+      { value: [i + "-07-01 00:00:00", i + "-12-31 23:59:59"], label: i + "下半年" },
     );
   }
   return tempArr;
@@ -187,7 +186,10 @@ function search() {
   userTestRecord(searchForm).then((res: any) => {
     state.userStatus.intervene = res.intervene;
     state.userStatus.risklevel = res.risklevel;
+    state.userStatus.interveneStatusName = res.interveneStatusName;
+    state.userStatus.risklevelStatusName = res.risklevelStatusName;
     state.tableParams.loading = false;
+    state.tableParams.data = res.list;
     state.paging.total = res.current;
     state.paging.total = res.total;
   });
@@ -216,7 +218,7 @@ function deleteUserFile(row: any) {
 
 //跳转
 function jumpTo(row: any) {
-  router.push("/system/userInfo");
+  router.push(`/studentManagement/operationInfo?id=${state.studentInfo.id}&type=edit`);
 }
 //=========================exec执行块
 search();
@@ -282,20 +284,22 @@ onMounted(() => {});
           </div>
 
           <p class="desc">
-            <span class="small-text">昵称：{{ state.studentInfo.name }}</span>
-            <span class="small-text">性别：{{ state.studentInfo.sex }}</span>
-            <span class="small-text">所在班级：{{ state.studentInfo.className }}</span>
+            <span class="small-text">昵称：{{ state.studentInfo.name || "-" }}</span>
+            <span class="small-text">性别：{{ state.studentInfo.sex == 1 ? "女" : "男" }}</span>
+            <span class="small-text">所在班级：{{ state.studentInfo.className || "-" }}</span>
             <span class="small-text"
-              >紧急联系人手机号：{{ state.studentInfo.contactPersonPhone }}</span
+              >紧急联系人手机号：{{ state.studentInfo.contactPersonPhone || "-" }}</span
             >
-            <span class="small-text">学号：{{ state.studentInfo.account }}</span>
-            <span class="small-text">出生日期：{{ state.studentInfo.birthdayDays }}</span>
-            <span class="small-text">班主任：{{ state.studentInfo.teacherName }}</span>
-            <span class="small-text">紧急联系人：{{ state.studentInfo.contactPerson }}</span>
-            <span class="small-text">手机号：{{ state.studentInfo.phone }}</span>
-            <span class="small-text">已学课时：{{ state.studentInfo.courseCount }}</span>
-            <span class="small-text">班主任手机号：{{ state.studentInfo.teacherPhone }}</span>
-            <span class="small-text">金豆数：{{ state.studentInfo.goldenCount }}</span>
+            <span class="small-text">学号：{{ state.studentInfo.account || "-" }}</span>
+            <span class="small-text">出生日期：{{ state.studentInfo.birthdayDays || "-" }}</span>
+            <span class="small-text">班主任：{{ state.studentInfo.teacherName || "-" }}</span>
+            <span class="small-text">紧急联系人：{{ state.studentInfo.contactPerson || "-" }}</span>
+            <span class="small-text">手机号：{{ state.studentInfo.phone || "-" }}</span>
+            <span class="small-text">已学课时：{{ state.studentInfo.courseCount || "-" }}</span>
+            <span class="small-text"
+              >班主任手机号：{{ state.studentInfo.teacherPhone || "-" }}</span
+            >
+            <span class="small-text">金豆数：{{ state.studentInfo.goldenCount || "-" }}</span>
           </p>
         </div>
       </div>
@@ -306,13 +310,15 @@ onMounted(() => {});
           <span class="table-title">测试记录</span>
           <span
             class="status-item"
+            v-if="state.userStatus.intervene != -1"
             :style="{ background: getBackground('intervene', state.userStatus.intervene) }"
             >{{ state.userStatus.interveneStatusName || "-" }}</span
           >
           <span
             class="status-item"
+            v-if="state.userStatus.risklevel != -1"
             :style="{ background: getBackground('risklevel', state.userStatus.risklevel) }"
-            >{{ state.userStatus.interveneStatusName || "-" }}</span
+            >{{ state.userStatus.risklevelStatusName || "-" }}</span
           >
         </div>
         <Table :tableParams.sync="state.tableParams">

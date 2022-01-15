@@ -12,6 +12,9 @@ function logout() {
     message: "退出成功！",
   });
 }
+function toMain() {
+  window.history.pushState({}, "/student", "/student");
+}
 </script>
 <template>
   <el-dropdown trigger="click">
@@ -32,6 +35,7 @@ function logout() {
         <el-dropdown-item>
           <router-link to="/userInfo"> 个人信息 </router-link>
         </el-dropdown-item>
+        <el-dropdown-item divided @click.native="toMain"> 返回主页 </el-dropdown-item>
         <el-dropdown-item divided @click.native="logout"> 退出登录 </el-dropdown-item>
       </el-dropdown-menu>
     </template>

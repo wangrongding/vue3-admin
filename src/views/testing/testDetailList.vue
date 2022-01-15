@@ -11,8 +11,11 @@ function newAcademicYears() {
   const tempArr = [];
   for (let i = new Date().getFullYear(); i > new Date().getFullYear() - 50; i--) {
     tempArr.push(
-      { value: [i + "-01-01 00:00:00", i + "-06-30 59:59:59"], label: i + "上半年" },
-      { value: [i + "-07-01 00:00:00", i + "-12-31  59:59:59"], label: i + "下半年" },
+      { value: [`${i}-01-01 00:00:00`, `${i}-06-30 23:59:59`], label: i + "上半年" },
+      {
+        value: [`${i}-07-01 00:00:00`, `${i}-12-31 23:59:59`],
+        label: i + "下半年",
+      },
     );
   }
   return tempArr;
@@ -91,7 +94,7 @@ function search() {
   state.tableParams.loading = true;
   const searchForm = Object.assign(state.paging, state.formParams.data);
   getTestRecordList(searchForm).then((res: any) => {
-    state.tableParams.data = res.records; 
+    state.tableParams.data = res.records;
     state.tableParams.loading = false;
     state.paging.total = res.current;
     state.paging.total = res.total;
@@ -137,7 +140,7 @@ function paginationChange(val: any) {
 }
 //跳转
 function jumpTo(row: any) {
-  router.push("/system/userInfo");
+  router.push(`/classManagement/classDetail?id=${row.classId}`);
 }
 //=========================exec执行块
 search();
@@ -159,7 +162,7 @@ onMounted(() => {});
       </TopPanel>
       <Table :tableParams.sync="state.tableParams">
         <template #operation="{ row }">
-          <el-button type="primary" size="mini" plain @click="jumpTo(row)"> 测试记录 </el-button>
+          <el-button type="primary" size="mini" plain @click="jumpTo(row)"> 班级详情 </el-button>
         </template>
       </Table>
       <Pagination

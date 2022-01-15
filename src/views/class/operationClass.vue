@@ -94,7 +94,7 @@ const state = reactive({
   },
   dialogForm: {
     dialogShow: false,
-    title: "班主任列表",
+    title: "添加班主任",
     destroyOnClose: false,
     center: true,
     width: "900px",

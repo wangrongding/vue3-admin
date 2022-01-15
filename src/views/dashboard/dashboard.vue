@@ -129,8 +129,8 @@ function newAcademicYears() {
   const tempArr = [];
   for (let i = new Date().getFullYear(); i > new Date().getFullYear() - 50; i--) {
     tempArr.push(
-      { value: [i + "-01-01 00:00:00", i + "-06-30 59:59:59"], label: i + "上半年" },
-      { value: [i + "-07-01 00:00:00", i + "-12-31  59:59:59"], label: i + "下半年" },
+      { value: [i + "-01-01 00:00:00", i + "-06-30 23:59:59"], label: i + "上半年" },
+      { value: [i + "-07-01 00:00:00", i + "-12-31 23:59:59"], label: i + "下半年" },
     );
   }
   return tempArr;
@@ -160,11 +160,9 @@ async function getDashboardInfo() {
     num += battery.data[i];
   }
   battery.data.forEach((item: any, index: number) => {
-    data.BatteryConfig[index].data = num == 0 ? 0 : parseInt((item / num).toFixed(2));
+    data.BatteryConfig[index].data = item.data;
     data.BatteryConfig[index].labelText = item.labelText;
   });
-  console.log("🚀 .BatteryConfig", battery.data);
-  console.log("🚀 .BatteryConfig", data.BatteryConfig);
 }
 //跳转
 function toList() {

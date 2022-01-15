@@ -26,7 +26,7 @@ export const routes: Array<RouteRecordRaw> = [
         children: [
           {
             path: "recordList",
-            meta: { title: "记录" },
+            meta: { title: "心理筛查记录" },
             component: () => import("@/views/dashboard/recordList.vue"),
           },
         ],
@@ -35,7 +35,7 @@ export const routes: Array<RouteRecordRaw> = [
         path: "recordList",
         component: () => import("@/views/dashboard/recordList.vue"),
         meta: {
-          title: "记录",
+          title: "心理筛查记录",
           buttonPermissions: {
             search: true,
             add: true,
@@ -149,7 +149,7 @@ export const routes: Array<RouteRecordRaw> = [
     path: "/system",
     component: Layout,
     meta: { title: "系统管理", type: "multiple", icon: "Setting" },
-    redirect: "/system/list",
+    redirect: "/system/userManagement",
     children: [
       {
         path: "userManagement",

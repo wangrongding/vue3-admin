@@ -96,7 +96,6 @@ function render() {
   chart.setOption(options);
 }
 watch(props.configuration, () => {
-  console.log("🚀", props.configuration);
   render();
 });
 onMounted(() => {

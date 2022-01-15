@@ -32,9 +32,17 @@ export function userTestRecord(data?: object) {
 export function archiveList(data?: object) {
   return request.get("/his-admin/userArchive/archiveList", { data });
 }
+// 【学员管理】- 导入学员信息模板地址
+export function fileDownload(data?: object) {
+  return request.get("/his-admin/user/fileDownload", { data });
+}
+// 【学员管理】- 导入学员信息
+export function importUser(data?: object) {
+  return request.post("/his-admin/user/importUser", { data });
+}
 // 【学生档案】- 上传学员文档记录
 export function saveUserArchive(data?: object) {
-  return request.get("/his-admin/userArchive/saveUserArchive", { data });
+  return request.post("/his-admin/userArchive/saveUserArchive", { data });
 }
 // 【学生档案】- 删除学员用户文档
 export function deleteById(data?: object) {

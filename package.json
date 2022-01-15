@@ -24,10 +24,11 @@
     "jspdf": "^2.5.0",
     "lodash": "^4.17.21",
     "mockjs": "^1.1.0",
+    "path-to-regexp": "^6.2.0",
+    "pinia": "^2.0.0-rc.10",
     "unplugin-vue-components": "^0.17.0",
     "vue": "^3.2.16",
     "vue-router": "^4.0.12",
-    "vuex": "^4.0.2",
     "xlsx": "^0.17.4"
   },
   "devDependencies": {

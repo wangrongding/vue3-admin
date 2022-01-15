@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { recordList, dictionary, questionnaireList } from "@/api/dashboard/index.ts";
+import { recordList, dictionary, questionnaireList, getGradeList } from "@/api/dashboard/index.ts";
 import Pagination from "@/components/element/Pagination.vue";
 import { reactive, onMounted } from "vue";
 import { useRouter } from "vue-router";
@@ -31,31 +31,35 @@ const state = reactive({
   },
   //表单参数
   formParams: {
-    data: { key: "" }, // 表单数据对象
+    data: { key: "" } as any, // 表单数据对象
     formList: {
-      nickName: {
+      questionnaireId: {
         label: "",
         placeholder: "请选择筛查问卷",
         type: "select",
-        selectOptions: [],
+        selectOptions: await questionnaireList(),
+        customLabelValue: { label: "name", value: "id" },
       },
-      phone: {
+      riskLevel: {
         label: "",
         placeholder: "请选择风险等级",
         type: "select",
-        selectOptions: [],
+        selectOptions: await dictionary({ code: "risklevel" }),
+        customLabelValue: { label: "dictValue", value: "dictKey" },
       },
-      sex: {
+      interveneStatus: {
         label: "",
         placeholder: "请选择干预状态",
         type: "select",
-        selectOptions: [],
+        selectOptions: await dictionary({ code: "intervene" }),
+        customLabelValue: { label: "dictValue", value: "dictKey" },
       },
-      sex1: {
+      academicYears: {
+        type: "select",
         label: "",
         placeholder: "请选择学年",
-        type: "select",
-        selectOptions: [],
+        selectOptions: newAcademicYears(),
+        onChange: splitTime,
       },
       key: {
         type: "text",
@@ -68,20 +72,42 @@ const state = reactive({
     submit: {
       submitText: "查询",
       submitFunction: search,
-      reset: true,
+      // reset: true,
     },
   },
 });
-
+//拆分时间
+function splitTime() {
+  if (state.formParams.data.academicYears == null) return;
+  state.formParams.data.beginTime = state.formParams.data.academicYears[0];
+  state.formParams.data.endTime = state.formParams.data.academicYears[1];
+}
+//生成选择学年列表
+function newAcademicYears() {
+  const tempArr = [];
+  for (let i = new Date().getFullYear(); i > new Date().getFullYear() - 50; i--) {
+    tempArr.push(
+      { value: [i + "-01-01 00:00:00", i + "-06-30 23:59:59"], label: i + "上半年" },
+      { value: [i + "-07-01 00:00:00", i + "-12-31 23:59:59"], label: i + "下半年" },
+    );
+  }
+  return tempArr;
+}
 //跳转
-function jumpTo(row: any) {
-  console.log(row);
-  router.push({
-    path: "/dashboard/report",
-    query: {
-      reportId: row.reportId,
-    },
-  });
+function jumpTo(row: any, type: string) {
+  if (type == "report") {
+    router.push({
+      path: "/dashboard/report",
+      query: {
+        reportId: row.reportId,
+      },
+    });
+  } else {
+    router.push({
+      path: "/studentManagement/studentDetail",
+      query: { id: row.userId },
+    });
+  }
 }
 //搜索
 function search() {
@@ -133,11 +159,7 @@ function paginationChange(val: any) {
   search();
 }
 //=========================exec执行块
-// state.formParams.formList.typeId.selectOptions = (await getQuestionTypeList()) as any;
 search();
-questionnaireList();
-dictionary({ code: "risklevel" });
-dictionary({ code: "intervene" });
 onMounted(() => {});
 //=========================exec执行块
 </script>
@@ -149,14 +171,19 @@ onMounted(() => {});
     <div class="table-panel">
       <Table :tableParams.sync="state.tableParams">
         <template #operation="{ row }">
-          <el-button type="primary" size="mini" plain @click="jumpTo(row)">报告详情</el-button>
-          <el-button type="primary" size="mini" plain @click="jumpTo(row)"> 学生档案 </el-button>
+          <el-button type="primary" size="mini" plain @click="jumpTo(row, 'report')"
+            >报告详情</el-button
+          >
+          <el-button type="primary" size="mini" plain @click="jumpTo(row, 'student')">
+            学生档案
+          </el-button>
         </template>
       </Table>
       <Pagination
         :total="state.paging.total"
         :page.sync="state.paging.current"
         :limit.sync="state.paging.size"
+        @pagination="paginationChange"
         :execFunction="search"
       />
     </div>

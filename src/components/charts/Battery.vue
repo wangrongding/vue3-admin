@@ -30,8 +30,6 @@ const configuration = ref({
 });
 
 function render() {
-  console.log("========aa=======");
-
   let tempData = cloneDeep(props.configuration);
   if (tempData.data) {
     tempData.data = [tempData.data, tempData.data - 0.05];

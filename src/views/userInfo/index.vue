@@ -4,6 +4,8 @@ import { ElMessage } from "element-plus";
 import Dialog from "@/components/element/Dialog.vue";
 import { detail, update, updatePassWord, updateOldPhone } from "@/api/user/index.ts";
 import { getImgUrl } from "@/api/user/index";
+import { useStore } from "@/store";
+const store = useStore();
 const state = reactive({
   formParams: {
     data: {
@@ -232,7 +234,7 @@ const changeType = (a: any, b: any, c: any) => {
 // 查询个人信息
 function detailData() {
   const param = {
-    id: 587,
+    id: store.loginInfo.id,
   };
   detail(param).then((res: any) => {
     state.formParams.data = res;

@@ -26,6 +26,10 @@ export function getStudentList(data?: object) {
 }
 // 下载模板
 export function fileDownload(data?: object) {
+  return request.get("/his-admin/user/fileTeacherDownload", { data });
+}
+// 下载模板
+export function studentTemplate(data?: object) {
   return request.get("/his-admin/user/fileDownload", { data });
 }
 // 导入用户
