@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { recordList, dictionary, questionnaireList, getGradeList } from "@/api/dashboard/index.ts";
 import Pagination from "@/components/element/Pagination.vue";
-import { reactive, onMounted } from "vue";
+import { reactive, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { export_json_to_excel } from "@/utils/Export2Excel";
@@ -17,8 +17,8 @@ const state = reactive({
       { label: "学生姓名", prop: "userName" },
       { label: "学号", prop: "userNo" },
       { label: "问卷名称", prop: "questionnaireName" },
-      { label: "风险等级", prop: "riskLevelName" },
-      { label: "干预状态", prop: "interveneStatusName" },
+      { label: "风险等级", prop: "riskLevelName", slots: { default: "riskLevelName" } },
+      { label: "风险等级", prop: "interveneStatusName", slots: { default: "interveneStatusName" } },
       { label: "操作", prop: "operation", slots: { default: "operation" }, width: "220px" },
     ],
     selectList: [],
@@ -120,6 +120,7 @@ function search() {
     state.paging.total = res.total;
   });
 }
+const tableDom = ref<any>(null);
 //导出
 function exportExcel() {
   if (state.tableParams.selectList.length <= 0) {
@@ -146,10 +147,11 @@ function exportExcel() {
       list: state.tableParams.selectList,
       header: header,
       filterVal: filterVal,
-      filename: "管理员信息列表",
+      filename: "心理筛查记录列表",
       autoWidth: true,
       bookType: "xlsx",
     });
+    tableDom.value.tableDom.clearSelection();
   });
 }
 //分页改变回调
@@ -169,7 +171,39 @@ onMounted(() => {});
       <el-button type="primary" @click="exportExcel">导出</el-button>
     </TopPanel>
     <div class="table-panel">
-      <Table :tableParams.sync="state.tableParams">
+      <Table :tableParams.sync="state.tableParams" ref="tableDom">
+        <template #riskLevelName="{ row }">
+          <span
+            :style="{
+              color:
+                row.riskLevel == '1'
+                  ? '#4293EEFF'
+                  : row.riskLevel == '2'
+                  ? '#FAAD14FF'
+                  : row.riskLevel == '3'
+                  ? '#FF5752FF'
+                  : '',
+            }"
+            >{{ row.riskLevelName }}</span
+          >
+        </template>
+        <template #interveneStatusName="{ row }">
+          <span
+            :style="{
+              color:
+                row.interveneStatus == '1'
+                  ? ''
+                  : row.interveneStatus == '2'
+                  ? '#FF5752FF'
+                  : row.interveneStatus == '3'
+                  ? '#4293EEFF'
+                  : row.interveneStatus == '4'
+                  ? '#00E3B9FF'
+                  : '',
+            }"
+            >{{ row.interveneStatusName }}</span
+          >
+        </template>
         <template #operation="{ row }">
           <el-button type="primary" size="mini" plain @click="jumpTo(row, 'report')"
             >报告详情</el-button

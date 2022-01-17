@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, onMounted } from "vue";
+import { reactive, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { getClassList } from "@/api/class/index";
 import Pagination from "@/components/element/Pagination.vue";
@@ -80,6 +80,7 @@ function search() {
     state.paging.total = res.total;
   });
 }
+const tableDom = ref<any>(null);
 //导出
 function exportExcel() {
   if (state.tableParams.selectList.length <= 0) {
@@ -106,10 +107,11 @@ function exportExcel() {
       list: state.tableParams.selectList,
       header: header,
       filterVal: filterVal,
-      filename: "管理员信息列表",
+      filename: "班级列表",
       autoWidth: true,
       bookType: "xlsx",
     });
+    tableDom.value.tableDom.clearSelection();
   });
 }
 //分页改变回调
@@ -154,7 +156,7 @@ function jumpTo(row: any, type: string) {
       <el-button type="primary" @click="exportExcel">导出</el-button>
     </TopPanel>
     <div class="table-panel">
-      <Table :tableParams.sync="state.tableParams">
+      <Table :tableParams.sync="state.tableParams" ref="tableDom">
         <template #operation="{ row }">
           <el-button type="primary" size="mini" plain @click="jumpTo(row, 'edit')">编辑</el-button>
           <el-button type="primary" size="mini" plain @click="jumpTo(row, 'detail')">

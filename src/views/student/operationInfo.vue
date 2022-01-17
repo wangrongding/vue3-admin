@@ -74,7 +74,10 @@ const state = reactive({
         label: "年级",
         cascaderOptions: await getGradeList(),
         placeholder: "请选择年级",
-        onChange: getClassIdList,
+        onChange: (yearClass: any) => {
+          state.formParams.data.classId = null;
+          getClassIdList(yearClass);
+        },
         style: "width:45%",
         width: "100%",
       },
@@ -123,7 +126,7 @@ const state = reactive({
         placeholder: "请选择当前状态",
         selectOptions: [
           { label: "启用", value: 0 },
-          { label: "弃用", value: 1 },
+          { label: "禁用", value: 1 },
         ],
         style: "width:45%",
       },
@@ -183,28 +186,6 @@ const state = reactive({
   },
   imageList: [] as any,
   tempUrl: "",
-  // classForm: {
-  //   data: { grade: "", classId: "" }, // 表单数据对象
-  //   formList: {
-  //     grade: {
-  //       type: "cascader",
-  //       cascaderOptions: await getGradeList(),
-  //       placeholder: "请选择年级",
-  //       onChange: getClassIdList,
-  //       width: "192px",
-  //       style: "margin:0",
-  //     },
-  //     classId: {
-  //       type: "select",
-  //       label: "",
-  //       placeholder: "请选择班级",
-  //       selectOptions: [],
-  //       width: "192px",
-  //       style: "margin:0",
-  //     },
-  //   },
-  //   inline: true,
-  // },
 });
 const loading = ref("");
 
@@ -212,6 +193,7 @@ const loading = ref("");
 dictionary({ code: "intervene" }).then((res: any) => {
   state.formParams.formList.interveneStatus.selectOptions = res;
 });
+
 //获取班级列表
 async function getClassIdList(yearClass: number[]) {
   state.formParams.formList.classId.selectOptions = await classIdList({

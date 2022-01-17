@@ -5,6 +5,8 @@ import { getGradeList, classIdList } from "@/api/dashboard/index.ts";
 import Dialog from "@/components/element/Dialog.vue";
 import { useRoute } from "vue-router";
 import { ElMessage } from "element-plus";
+import { useStore } from "@/store";
+const store = useStore();
 import {
   sysUserDetail,
   saveUser,
@@ -202,6 +204,9 @@ if (route.query.id) {
 async function submit() {
   if (route.query.id) {
     await updateUser(state.formParams.data);
+    if (route.query.id == store.userInfo.id) {
+      await store.login();
+    }
   } else {
     await saveUser(state.formParams.data);
   }

@@ -78,7 +78,7 @@ export const routes: Array<RouteRecordRaw> = [
       {
         path: "course",
         component: () => import("@/views/material/index.vue"),
-        meta: { title: "课程资料", id: 301 },
+        meta: { title: "课程资料", id: 7 },
         children: [
           {
             path: "detail",
@@ -90,12 +90,12 @@ export const routes: Array<RouteRecordRaw> = [
       {
         path: "teachingPlan",
         component: () => import("@/views/material/index.vue"),
-        meta: { title: "教案资料", id: 303 },
+        meta: { title: "教案资料", id: 8 },
       },
       {
         path: "teamCoaching",
         component: () => import("@/views/material/index.vue"),
-        meta: { title: "团辅资料", id: 304 },
+        meta: { title: "团辅资料", id: 9 },
       },
     ],
   },

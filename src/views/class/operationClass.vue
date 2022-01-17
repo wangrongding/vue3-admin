@@ -13,14 +13,6 @@ import { useRoute } from "vue-router";
 import { ElMessage } from "element-plus";
 import { saveFile } from "@/utils/index.ts";
 const route = useRoute();
-const props = defineProps({
-  userInfo: {
-    type: Object,
-    default: () => {
-      return {};
-    },
-  },
-});
 const state = reactive({
   // 表单数据对象
   formParams: {
@@ -80,9 +72,8 @@ const state = reactive({
       {
         label: "性别",
         prop: "sex",
-        formatter: ({ sex }: any, b) => {
-          // console.log(b);
-          sex == 1 ? "女" : sex == 0 ? "男" : "未知";
+        formatter: ({ sex }: any) => {
+          return sex == 1 ? "女" : sex == 0 ? "男" : "未知";
         },
       },
       {
@@ -99,17 +90,26 @@ const state = reactive({
     center: true,
     width: "900px",
     cancelFunction: () => {
-      state.dialogForm.dialogShow = false;
-    },
-    confirmFunction: () => {
       if (state.teacherTable.selectList.length == 1) {
-        state.formParams.data.teacherName = state.teacherTable.selectList[0]["realName"];
-        state.formParams.data.userId = state.teacherTable.selectList[0]["id"];
+        tableDom.value.tableDom.clearSelection(); 
         state.dialogForm.dialogShow = false;
       } else {
         ElMessage({
           type: "warning",
-          message: "只能选择一位班主任！",
+          message: "请选择一位班主任！",
+        });
+      }
+    },
+    confirmFunction: () => {
+      if (state.teacherTable.selectList.length == 1) {
+        state.selectItem = state.teacherTable.selectList[0];
+        state.formParams.data.teacherName = state.selectItem["realName"];
+        state.formParams.data.userId = state.selectItem["id"];
+        state.dialogForm.dialogShow = false;
+      } else {
+        ElMessage({
+          type: "warning",
+          message: "请选择一位班主任！",
         });
       }
     },
@@ -117,7 +117,6 @@ const state = reactive({
       state.dialogForm.dialogShow = false;
     },
     opened: () => {
-      console.log("🚀🚀🚀🚀", state.teacherTable.selectList);
       //选中后端返回的老师
       state.selectItem && tableDom.value.tableDom.toggleRowSelection(state.selectItem, true);
     },
@@ -125,10 +124,15 @@ const state = reactive({
   imageList: [] as any,
   tempUrl: "",
   nameOrPhone: "",
-  selectItem: "",
+  selectItem: {} as any,
 });
 const loading = ref("");
 const tableDom = ref<any>(null);
+
+//控制选择老师
+function selectionChange(val: any) {
+  state.teacherTable.selectList = val;
+}
 
 // 获取班主任列表
 async function TeacherList() {
@@ -206,8 +210,8 @@ TeacherList();
         <!--  @close="removeTeacher(index, item)"
           closable -->
         <!-- {{ item["realName"] }} -->
-        <el-tag style="margin-left: 10px; padding: 0 20px" v-if="state.teacherTable.selectList[0]">
-          {{ state.teacherTable.selectList[0].realName }}
+        <el-tag style="margin-left: 10px; padding: 0 20px" v-if="state.selectItem">
+          {{ state.selectItem.realName }}
         </el-tag>
         <Dialog :dialogForm="state.dialogForm" class="dialog">
           <template #dialogContent>
@@ -230,7 +234,6 @@ TeacherList();
               </el-button>
               <el-upload
                 action="#"
-                :limit="1"
                 ref="upload"
                 style="display: inline-block; margin-left: 20px"
                 :auto-upload="true"
@@ -243,7 +246,11 @@ TeacherList();
                 </el-button>
               </el-upload>
             </div>
-            <Table :table-params="state.teacherTable" ref="tableDom"></Table>
+            <Table
+              :table-params="state.teacherTable"
+              @selectionChange="selectionChange"
+              ref="tableDom"
+            ></Table>
           </template>
         </Dialog>
       </template>

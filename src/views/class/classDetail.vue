@@ -120,7 +120,13 @@ const state = reactive({
       { type: "selection" },
       { label: "姓名", prop: "name" },
       { label: "学号", prop: "studentNum" },
-      { label: "性别", prop: "sex" },
+      {
+        label: "性别",
+        prop: "sex",
+        formatter: ({ sex }: any) => {
+          return sex == 1 ? "女" : sex == 0 ? "男" : "未知";
+        },
+      },
     ],
     selectList: [] as any,
   },
@@ -218,6 +224,7 @@ function search() {
   });
 }
 
+const tableDom = ref<any>(null);
 //导出
 function exportExcel() {
   if (state.tableParams.selectList.length <= 0) {
@@ -244,10 +251,11 @@ function exportExcel() {
       list: state.tableParams.selectList,
       header: header,
       filterVal: filterVal,
-      filename: "管理员信息列表",
+      filename: "学院信息列表",
       autoWidth: true,
       bookType: "xlsx",
     });
+    tableDom.value.tableDom.clearSelection();
   });
 }
 
@@ -379,7 +387,7 @@ onMounted(() => {});
         </el-button>
         <el-button type="primary" @click="exportExcel">导出</el-button>
       </TopPanel>
-      <Table :tableParams.sync="state.tableParams">
+      <Table :tableParams.sync="state.tableParams" ref="tableDom">
         <template #operation="{ row }">
           <el-button type="primary" size="mini" plain @click="removeSdudent(row)">
             移出班级
@@ -400,7 +408,6 @@ onMounted(() => {});
             <el-button type="primary" @click="state.downLoadFile">下载模板</el-button>
             <el-upload
               action="#"
-              :limit="1"
               ref="upload"
               style="display: inline-block; margin: 0 20px"
               :auto-upload="true"
@@ -417,7 +424,7 @@ onMounted(() => {});
         <template #dialogContent v-if="state.dialogForm.dialogType == 'rollOut'">
           <div style="position: relative">
             <el-input
-              placeholder="请输入内容"
+              placeholder="请输入学生姓名、学号"
               v-model="state.nameOrCode"
               clearable
               style="width: 300px; margin-bottom: 20px"

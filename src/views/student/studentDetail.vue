@@ -23,8 +23,20 @@ const state = reactive({
     columnProps: [
       { label: "问卷分类", prop: "questionnaireTypeName" },
       { label: "问卷名称", prop: "questionnaireName" },
-      { label: "测试结果", prop: "testResult" },
-      { label: "测试时间", prop: "testTime" },
+      {
+        label: "测试结果",
+        prop: "testResult",
+        formatter: ({ testResult }: { testResult: string }) => {
+          return testResult == "" ? "-" : testResult;
+        },
+      },
+      {
+        label: "测试时间",
+        prop: "testTime",
+        formatter: ({ testTime }: { testTime: string }) => {
+          return testTime == "" ? "-" : testTime;
+        },
+      },
       {
         label: "操作",
         prop: "operation",
@@ -218,7 +230,11 @@ function deleteUserFile(row: any) {
 
 //跳转
 function jumpTo(row: any) {
-  router.push(`/studentManagement/operationInfo?id=${state.studentInfo.id}&type=edit`);
+  if (row) {
+    router.push(`/dashboard/report?reportId=${row.reportId}`);
+  } else {
+    router.push(`/studentManagement/operationInfo?id=${state.studentInfo.id}&type=edit`);
+  }
 }
 //=========================exec执行块
 search();
@@ -323,7 +339,15 @@ onMounted(() => {});
         </div>
         <Table :tableParams.sync="state.tableParams">
           <template #operation="{ row }">
-            <el-button type="primary" size="mini" plain @click="jumpTo(row)"> 查看详情 </el-button>
+            <el-button
+              type="primary"
+              :disabled="row.testTime == ''"
+              size="mini"
+              plain
+              @click="jumpTo(row)"
+            >
+              查看详情
+            </el-button>
           </template>
         </Table>
         <!-- <Pagination

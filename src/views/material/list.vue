@@ -49,7 +49,7 @@ export default defineComponent({
         <p>{{ item.name }}</p>
       </div>
     </div>
-    <div v-else> 暂无数据 </div>
+    <div v-else style="text-align: center; line-height: 100px; font-size: 20px"> 暂无数据 </div>
   </div>
 </template>
 <style lang="scss" scoped>

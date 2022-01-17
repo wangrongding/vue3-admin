@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref, reactive } from "vue";
+import { ref, reactive, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 import Dialog from "@/components/element/Dialog.vue";
-import { detail, update, updatePassWord, updateOldPhone } from "@/api/user/index.ts";
+import { detail, update, updatePassWord, updateOldPhone, codemsg } from "@/api/user/index.ts";
 import { getImgUrl } from "@/api/user/index";
 import { useStore } from "@/store";
 const store = useStore();
@@ -52,6 +52,7 @@ const state = reactive({
             label: "女",
             value: 1,
           },
+          { label: "未知", value: -1 },
         ],
         style: "width:45%",
       },
@@ -78,6 +79,8 @@ const state = reactive({
   passwordForm: {
     data: {
       phone: "",
+      oldPassWord: "",
+      newPassWord: "",
     }, // 表单数据对象
     formList: {
       phone: {
@@ -109,13 +112,19 @@ const state = reactive({
           trigger: "blur",
         },
         {
+          validator: validatePhone,
+          message: "密码必须由字母加数字组成",
+          trigger: "change",
+        },
+        {
           validator: (rule: any, value: any, callback: any) => {
-            var patt = /^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{6,20}$/;
-            if (!patt.test(value)) {
-              return callback(new Error(""));
+            if (state.passwordForm.data.oldPassWord !== state.passwordForm.data.newPassWord) {
+              callback(new Error(""));
+            } else {
+              callback();
             }
           },
-          message: "请输入正确密码",
+          message: "两次密码不一致",
           trigger: "change",
         },
       ],
@@ -127,12 +136,13 @@ const state = reactive({
         },
         {
           validator: (rule: any, value: any, callback: any) => {
-            var patt = /^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{6,20}$/;
-            if (!patt.test(value)) {
-              return callback(new Error(""));
+            if (state.passwordForm.data.oldPassWord !== state.passwordForm.data.newPassWord) {
+              callback(new Error(""));
+            } else {
+              callback();
             }
           },
-          message: "请输入正确密码",
+          message: "两次密码不一致",
           trigger: "change",
         },
       ],
@@ -145,7 +155,7 @@ const state = reactive({
     },
   },
   phoneForm: {
-    data: <any>{}, // 表单数据对象
+    data: <any>{ codeMsg: "" }, // 表单数据对象
     formList: {
       oldPhone: {
         type: "number",
@@ -162,10 +172,10 @@ const state = reactive({
         style: "width:100%",
       },
       codeMsg: {
-        type: "text",
+        type: "customItem",
+        name: "codeMsg",
         label: "验证码：",
         placeholder: "请输入验证码",
-        style: "width:100%",
       },
     },
     rules: {
@@ -230,17 +240,21 @@ const changeType = (a: any, b: any, c: any) => {
   showType.value = a;
   console.log(a, b, c);
 };
+//验证手机号
+function validatePhone(rule: any, value: any, callback: any) {
+  var patt = /^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{6,20}$/;
+  if (!patt.test(value)) {
+    callback(new Error(""));
+  } else {
+    callback();
+  }
+}
 
 // 查询个人信息
-function detailData() {
-  const param = {
-    id: store.loginInfo.id,
-  };
-  detail(param).then((res: any) => {
-    state.formParams.data = res;
-    state.passwordForm.data.phone = res.phone;
-    state.phoneForm.data.oldPhone = res.phone;
-  });
+async function detailData() {
+  state.formParams.data = store.userInfo;
+  state.passwordForm.data.phone = store.userInfo.phone;
+  state.phoneForm.data.oldPhone = store.userInfo.phone;
 }
 //个人信息保存修改
 function personalInformation() {
@@ -273,10 +287,25 @@ function saveUpdateOldPhone() {
     });
   });
 }
+//发送验证码
+function sendCode() {
+  const params = new URLSearchParams();
+  params.append("phone", state.phoneForm.data.phone);
+  params.append("sign", 5 as any);
+  params.append("Authorization", "Basic c3R1ZGVudDpzdHVkZW50X3NlY3JldA==");
+  codemsg(params).then(() => {
+    ElMessage({
+      type: "success",
+      message: "已发送！",
+    });
+  });
+}
 //=========================exec执行块
-detailData();
-// 获取头像列表
-state.imageList = (await getImgUrl()) as any;
+onMounted(() => {
+  detailData();
+}),
+  // 获取头像列表
+  (state.imageList = (await getImgUrl()) as any);
 </script>
 <template>
   <div class="page-container">
@@ -354,7 +383,21 @@ state.imageList = (await getImgUrl()) as any;
       :form-params="state.phoneForm"
       style="width: 600px; margin: 0 auto"
       class="info-form"
-    />
+    >
+      <template #codeMsg="{ itemForm }">
+        <div style="display: flex; justify-content: space-between">
+          <el-input
+            v-model="state.phoneForm.data.codeMsg"
+            placeholder="请输入验证码"
+            style="margin-right: 20px"
+            size="medium"
+            clearable
+            @change=""
+          ></el-input>
+          <el-button type="primary" size="medium" @click="sendCode">发送验证码</el-button>
+        </div>
+      </template>
+    </Form>
   </div>
 </template>
 <style lang="scss" scoped>

@@ -26,6 +26,7 @@
     "mockjs": "^1.1.0",
     "path-to-regexp": "^6.2.0",
     "pinia": "^2.0.0-rc.10",
+    "pinia-plugin-persist": "^0.0.92",
     "unplugin-vue-components": "^0.17.0",
     "vue": "^3.2.16",
     "vue-router": "^4.0.12",

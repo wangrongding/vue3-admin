@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { ElMessage } from "element-plus";
-import { reactive } from "vue";
-const state = reactive({
-  userInfo: JSON.parse(sessionStorage.getItem("loginInfo") as string),
-});
+import { useStore } from "@/store";
+const store = useStore();
+
 function logout() {
   sessionStorage.clear();
   window.history.pushState({}, "/student", "/student");
@@ -21,11 +20,11 @@ function toMain() {
     <div class="avatar-wrapper">
       <el-avatar
         :src="
-          state.userInfo.headUrl ||
+          store.userInfo.headUrl ||
           'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
         "
       />
-      <span>{{ state.userInfo.real_name || "-" }}</span>
+      <span>{{ store.userInfo.realName || "-" }}</span>
       <el-icon color="#000" :size="15">
         <arrow-down />
       </el-icon>

@@ -7,11 +7,6 @@ import { nextTick, reactive, ref, provide, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "@/store";
 const store = useStore();
-
-//设置用户信息
-store.$patch({
-  loginInfo: JSON.parse(sessionStorage.getItem("loginInfo") as any),
-});
 store.login();
 const { currentRoute } = useRouter();
 const isRouterAlive = ref(true);

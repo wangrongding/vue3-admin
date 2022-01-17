@@ -25,6 +25,10 @@ export function update(data?: object) {
 export function updatePassWord(data?: object) {
   return request.put("/platform-user/updatePassWord", { data });
 }
+// 换绑手机号-短信验证码 sign参数 5
+export function codemsg(data?: object) {
+  return request.post("/platform-user/codemsg", { data });
+}
 // 【个人设置】-换绑手机号
 export function updateOldPhone(data?: object) {
   return request.put("/platform-user/updateOldPhone", { data });

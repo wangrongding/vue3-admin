@@ -2823,6 +2823,13 @@ picomatch@^2.0.4, picomatch@^2.2.1, picomatch@^2.2.2, picomatch@^2.2.3:
   resolved "https://registry.nlark.com/picomatch/download/picomatch-2.3.0.tgz?cache=0&sync_timestamp=1621648305056&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fpicomatch%2Fdownload%2Fpicomatch-2.3.0.tgz#f1f061de8f6a4bf022892e2d128234fb98302972"
   integrity sha1-8fBh3o9qS/AiiS4tEoI0+5gwKXI=
 
+pinia-plugin-persist@^0.0.92:
+  version "0.0.92"
+  resolved "https://registry.npmjs.org/pinia-plugin-persist/-/pinia-plugin-persist-0.0.92.tgz#5043af2c047e16e499073053dbab498df220df28"
+  integrity sha512-eBNv1mqWwtiRPg4lraHuhXTqsPt51tRT2yaukW8+Gj9NIbLuPKS/VhnwmTF46WpIMJ0OP5xC4cwz9JOKJGX3GQ==
+  dependencies:
+    vue-demi "^0.11.4"
+
 pinia@^2.0.0-rc.10:
   version "2.0.0-rc.10"
   resolved "https://registry.npmjs.org/pinia/-/pinia-2.0.0-rc.10.tgz#81e823931897a4cf5c53c113d0c0e63b7bba9973"
@@ -3808,6 +3815,11 @@ vue-demi@*:
   version "0.12.1"
   resolved "https://registry.npmmirror.com/vue-demi/download/vue-demi-0.12.1.tgz?cache=0&sync_timestamp=1637503318064&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fvue-demi%2Fdownload%2Fvue-demi-0.12.1.tgz#f7e18efbecffd11ab069d1472d7a06e319b4174c"
   integrity sha1-9+GO++z/0RqwadFHLXoG4xm0F0w=
+
+vue-demi@^0.11.4:
+  version "0.11.4"
+  resolved "https://registry.npmjs.org/vue-demi/-/vue-demi-0.11.4.tgz#6101992fe4724cf5634018a16e953f3052e94e2a"
+  integrity sha512-/3xFwzSykLW2HiiLie43a+FFgNOcokbBJ+fzvFXd0r2T8MYohqvphUyDQ8lbAwzQ3Dlcrb1c9ykifGkhSIAk6A==
 
 vue-eslint-parser@^8.0.1:
   version "8.0.1"
