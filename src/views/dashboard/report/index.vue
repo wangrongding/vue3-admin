@@ -6,12 +6,13 @@ import TextTemplate from "./components/charts/TextTemplate.vue";
 import Score from "./components/score.vue";
 import ResultsAnalysis from "./components/ResultsAnalysis.vue";
 import advice from "./components/advice.vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { getPdf } from "@/utils/Export2PDF";
 const route = useRoute();
 const componentList = shallowRef([UserInfo, TextTemplate, Score, ResultsAnalysis, advice]);
 const state = reactive({
   id: "",
+  questionnaireId: "",
   userId: "",
   reportItemList: [],
   adviceInfo: {} as any,
@@ -22,8 +23,10 @@ const state = reactive({
     destroyOnClose: false,
     center: true,
     width: "900px",
-    confirmFunction: () => {},
-    closed: () => {},
+    // confirmFunction: () => {},
+    closed: () => {
+      state.dialogForm.dialogShow = false;
+    },
   },
   //表格参数
   tableParams: {
@@ -51,6 +54,7 @@ async function fetchReport(paperId: string) {
   const response = (await findByPaperId({ paperId })) as any;
   state.userId = response.userId;
   state.id = response.id;
+  state.questionnaireId = response.questionnaireId;
   state.reportItemList = response.detail.teacher.reportList;
   state.showAdvice = state.reportItemList.some((item: any) => {
     if (item.type == 9 && item.suggest) {
@@ -78,11 +82,15 @@ function operationText() {
 function downloadReport() {
   getPdf("报告详情", document.getElementById("reportDetail") as HTMLElement);
 }
+const router = useRouter();
+function jumpTo(reportId: any) {
+  router.push(`/dashboard/report?reportId=${reportId}`);
+}
 //显示历史报告列表
-function showHistory(userId: string, questionnaireId: string) {
+function showHistory() {
   state.dialogForm.dialogShow = true;
   state.tableParams.loading = true;
-  getHistoryRecord({ userId, questionnaireId }).then((res) => {
+  getHistoryRecord({ userId: state.userId, questionnaireId: state.questionnaireId }).then((res) => {
     state.tableParams.data = res as any;
     state.tableParams.loading = false;
   });
@@ -96,14 +104,12 @@ onMounted(() => {});
 </script>
 <template>
   <div class="report">
+    <div class="btn-group">
+      <el-button type="primary" size="mini" @click="operationText">添加意见</el-button>
+      <el-button type="primary" size="mini" @click="showHistory()"> 历史记录 </el-button>
+      <el-button type="primary" size="mini" @click="downloadReport">报告下载</el-button>
+    </div>
     <div class="content" id="reportDetail">
-      <div class="btn-group">
-        <el-button type="primary" size="mini" @click="operationText">添加意见</el-button>
-        <el-button type="primary" size="mini" @click="showHistory(/* state.userId */ '587', '22')">
-          历史记录
-        </el-button>
-        <el-button type="primary" size="mini" @click="downloadReport">报告下载</el-button>
-      </div>
       <div class="reportMain">
         <component
           :is="componentList[item['type'] - 1]"
@@ -124,7 +130,7 @@ onMounted(() => {});
       <template #dialogContent>
         <Table :table-params="state.tableParams" style="max-height: 400px; overflow-y: auto">
           <template #operation="{ row }">
-            <el-button type="primary" size="mini" plain @click="fetchReport(row.reportId)">
+            <el-button type="primary" size="mini" plain @click="jumpTo(row.reportId)">
               查看详情
             </el-button>
           </template>
@@ -135,6 +141,13 @@ onMounted(() => {});
 </template>
 <style lang="scss" scoped>
 .report {
+  position: relative;
+  .btn-group {
+    z-index: 299;
+    position: fixed;
+    top: 60px;
+    right: 20px;
+  }
   .content {
     box-sizing: border-box;
     border-radius: 8px;
@@ -147,12 +160,6 @@ onMounted(() => {});
     padding-top: 400px;
     padding-bottom: 50px;
     position: relative;
-    .btn-group {
-      z-index: 299;
-      position: fixed;
-      top: 60px;
-      right: 20px;
-    }
   }
   .reportMain {
     margin: 0 auto;

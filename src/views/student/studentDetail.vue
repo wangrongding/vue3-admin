@@ -3,9 +3,19 @@ import { reactive, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
 import { fileDownload, importUser } from "@/api/class/index.ts";
-import { userArchiveInfo, userTestRecord, archiveList, deleteById } from "@/api/student/index.ts";
+import {
+  userArchiveInfo,
+  userTestRecord,
+  archiveList,
+  deleteById,
+  saveUserArchive,
+  fileUpload,
+} from "@/api/student/index.ts";
+
 import { saveFile } from "@/utils/index";
+import { inputFile } from "@/utils/inputFile";
 import { getPdf } from "@/utils/Export2PDF";
+import { useStore } from "@/store";
 const route = useRoute();
 const router = useRouter();
 
@@ -110,7 +120,20 @@ const state = reactive({
     hiddenFooter: true,
     width: "900px",
     confirmText: "上传文件",
-    confirmFunction: () => {},
+    confirmFunction: async () => {
+      let file = (await inputFile()) as any;
+      let formData = new FormData();
+      formData.append("file", file[0] as any);
+      fileUpload(formData).then((res: any) => {
+        const { userInfo } = useStore();
+        let sendObj = Object.assign(res, { userId: state.studentInfo.id });
+        saveUserArchive(sendObj).then(() => {
+          getArchiveList();
+          ElMessage({ type: "success", message: "上传成功" });
+        });
+      });
+      // state.dialogForm.dialogShow = false;
+    },
     closed: () => {
       state.dialogForm.dialogShow = false;
     },
@@ -146,7 +169,7 @@ const state = reactive({
   },
 });
 const loading = ref("");
-
+//获取颜色
 function getBackground(type: string, item: any) {
   const itemList = {
     intervene: {
@@ -188,7 +211,7 @@ async function getArchiveList() {
     userId: route.query.id,
   });
 }
-// 获取班级信息
+// 获取学生信息
 state.studentInfo = (await userArchiveInfo({ id: route.query.id })) as any;
 
 //搜索

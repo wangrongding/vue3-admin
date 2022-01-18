@@ -40,6 +40,10 @@ export function fileDownload(data?: object) {
 export function importUser(data?: object) {
   return request.post("/his-admin/user/importUser", { data });
 }
+// 上传文件
+export function fileUpload(data?: object) {
+  return request.post("/platform-user/fileUploadController/fileUpload", { data });
+}
 // 【学生档案】- 上传学员文档记录
 export function saveUserArchive(data?: object) {
   return request.post("/his-admin/userArchive/saveUserArchive", { data });

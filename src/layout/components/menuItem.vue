@@ -24,7 +24,8 @@ function handleClick(item: any) {
     <template #title>
       <el-icon v-if="item.meta.icon">
         <!-- 动态组件 -->
-        <component :is="item.meta.icon" />
+        <!-- <component :is="item.meta.icon" /> -->
+        <i :class="`iconfont ${item.meta.icon}`" />
       </el-icon>
       <span>{{ item.meta.title }}</span>
     </template>
@@ -42,7 +43,8 @@ function handleClick(item: any) {
     @click="handleClick"
   >
     <el-icon v-if="item.meta.icon">
-      <component :is="item.meta.icon" />
+      <i :class="`iconfont ${item.meta.icon}`" />
+      <!-- <component :is="item.meta.icon" /> -->
     </el-icon>
     <span>{{ item.meta.title }}</span>
   </el-menu-item>

@@ -1,4 +1,4 @@
-async function handleAttribute(inputFile, multiple) {
+async function handleAttribute(inputFile: any, multiple: any) {
   if (multiple) {
     await inputFile.setAttribute("multiple", "multiple");
   } else {
@@ -6,17 +6,13 @@ async function handleAttribute(inputFile, multiple) {
   }
 }
 
-export function inputFile(multiple = true) {
+export function inputFile(multiple = false) {
   return new Promise(async function (resolve, reject) {
     if (document.getElementById("myInput")) {
-      let inputFile = document.getElementById("myInput");
+      let inputFile = document.getElementById("myInput") as any;
       await handleAttribute(inputFile, multiple);
-      inputFile.onchange = (e) => {
-        let urlArr = [];
-        for (let i = 0; i < e.target.files.length; i++) {
-          urlArr.push(URL.createObjectURL(e.target.files[i]));
-        }
-        resolve(urlArr);
+      inputFile.onchange = (e: any) => {
+        resolve(e.target.files);
       };
       inputFile.click();
     } else {
@@ -27,15 +23,10 @@ export function inputFile(multiple = true) {
       inputFile.setAttribute("name", "file");
       await handleAttribute(inputFile, multiple);
       inputFile.setAttribute("style", "display: none");
-      inputFile.onchange = (e) => {
-        let urlArr = [];
-        for (let i = 0; i < e.target.files.length; i++) {
-          urlArr.push(URL.createObjectURL(e.target.files[i]));
-        }
-        resolve(urlArr);
+      inputFile.onchange = (e: any) => {
+        resolve(e.target.files);
       };
       document.body.appendChild(inputFile);
-      console.log(3);
       inputFile.click();
     }
   });

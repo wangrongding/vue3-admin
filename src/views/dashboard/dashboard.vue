@@ -6,6 +6,7 @@ import {
   courseDataCount,
   ringPieBatteryDataCount,
 } from "@/api/dashboard/index.ts";
+import { getPdf } from "@/utils/Export2PDF";
 import { ref, reactive, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import Line from "@/components/charts/Line.vue";
@@ -169,56 +170,66 @@ function toList() {
   // router.push("/dashboard/index/recordList");
   router.push("/dashboard/recordList");
 }
+
+//下载报告
+function downloadReport() {
+  getPdf("报告详情", document.getElementById("report") as HTMLElement);
+}
 getDashboardInfo();
 onMounted(async () => {});
 </script>
 
 <template>
   <div class="page-container">
-    <Form class="form-panel" :form-params="formParams" />
-    <div class="panel-list">
-      <div
-        v-for="(item, index) in data.panelItemList"
-        :key="index"
-        class="item"
-        :style="`background:url(${data.panelItemBgList[index]});background-size:cover;`"
-      >
-        <span>{{ item.num }}</span>
-        <span>{{ item.name || "---" }}</span>
+    <!-- <Form class="form-panel" :form-params="formParams" /> -->
+    <TopPanel :form-params="formParams">
+      <el-button type="primary" @click="downloadReport">报告下载</el-button>
+    </TopPanel>
+    <div id="report"
+      ><div class="panel-list">
+        <div
+          v-for="(item, index) in data.panelItemList"
+          :key="index"
+          class="item"
+          :style="`background:url(${data.panelItemBgList[index]});background-size:cover;`"
+        >
+          <span>{{ item.num }}</span>
+          <span>{{ item.name || "---" }}</span>
+        </div>
       </div>
-    </div>
-    <div class="chart-box">
-      <div class="chart-item">
-        <p class="chart-item-title chart-item-link" @click="toList">
+      <div class="chart-box">
+        <div class="chart-item">
+          <p class="chart-item-title chart-item-link" @click="toList">
+            <i class="iconfont icon-ziliao-xuanze" />
+            <span>{{ data.ProgressConfig.title.text }}</span>
+            <i class="iconfont icon-gengduo"></i>
+          </p>
+          <Progress :configuration="data.ProgressConfig" />
+        </div>
+        <div class="chart-item">
+          <p class="chart-item-title chart-item-link" @click="toList">
+            <i class="iconfont icon-ziliao-xuanze" />
+            <span>{{ data.PieConfig.title.text }}</span>
+            <i class="iconfont icon-gengduo"></i>
+          </p>
+          <Pie :configuration="data.PieConfig" />
+        </div>
+        <div class="chart-item Battery">
+          <p class="chart-item-title chart-item-link" @click="toList">
+            <i class="iconfont icon-ziliao-xuanze" />
+            <span>危机干预统计</span>
+            <i class="iconfont icon-gengduo"></i>
+          </p>
+          <Battery v-for="item in data.BatteryConfig" :configuration="item" />
+        </div>
+      </div>
+      <div class="line">
+        <p class="chart-item-title">
           <i class="iconfont icon-ziliao-xuanze" />
-          <span>{{ data.ProgressConfig.title.text }}</span>
-          <i class="iconfont icon-gengduo"></i>
+          <span>{{ data.lineConfig.title.text }}</span>
         </p>
-        <Progress :configuration="data.ProgressConfig" />
+        <Line :configuration="data.lineConfig" />
       </div>
-      <div class="chart-item">
-        <p class="chart-item-title chart-item-link" @click="toList">
-          <i class="iconfont icon-ziliao-xuanze" />
-          <span>{{ data.PieConfig.title.text }}</span>
-          <i class="iconfont icon-gengduo"></i>
-        </p>
-        <Pie :configuration="data.PieConfig" />
-      </div>
-      <div class="chart-item Battery">
-        <p class="chart-item-title chart-item-link" @click="toList">
-          <i class="iconfont icon-ziliao-xuanze" />
-          <span>危机干预统计</span>
-          <i class="iconfont icon-gengduo"></i>
-        </p>
-        <Battery v-for="item in data.BatteryConfig" :configuration="item" />
-      </div>
-    </div>
-    <div class="line">
-      <p class="chart-item-title">
-        <i class="iconfont icon-ziliao-xuanze" />
-        <span>{{ data.lineConfig.title.text }}</span>
-      </p>
-      <Line :configuration="data.lineConfig" />
     </div>
   </div>
 </template>

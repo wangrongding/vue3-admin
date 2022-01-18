@@ -5,7 +5,7 @@ import {
   getTeacherList,
   update,
   fileDownload,
-  importUser,
+  importTeacher,
   add,
 } from "@/api/class/index";
 import { getGradeList } from "@/api/dashboard/index.ts";
@@ -91,7 +91,7 @@ const state = reactive({
     width: "900px",
     cancelFunction: () => {
       if (state.teacherTable.selectList.length == 1) {
-        tableDom.value.tableDom.clearSelection(); 
+        tableDom.value.tableDom.clearSelection();
         state.dialogForm.dialogShow = false;
       } else {
         ElMessage({
@@ -162,7 +162,7 @@ function templateDownload() {
 function uploadStudentList(file: any) {
   let tempFile = new FormData();
   tempFile.append("file", file.file);
-  importUser(tempFile).then((res) => {
+  importTeacher(tempFile).then((res) => {
     if (!res) return;
     ElMessage({
       type: "success",

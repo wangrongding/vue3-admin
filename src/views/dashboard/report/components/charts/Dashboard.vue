@@ -28,7 +28,7 @@ const options: EChartsOption = {
       min: 0,
       max: 1,
       splitNumber: 8,
-      radius: "90%",
+      radius: "120%",
       axisLine: {
         lineStyle: {
           width: 20,
@@ -36,6 +36,7 @@ const options: EChartsOption = {
         },
         show: true,
       },
+      center: ["50%", "75%"],
       pointer: {
         icon: "path://M12.8,0.7l12,40.1H0.7L12.8,0.7z",
         length: "10%",

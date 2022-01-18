@@ -18,7 +18,7 @@ const state = reactive({
       { label: "学号", prop: "userNo" },
       { label: "问卷名称", prop: "questionnaireName" },
       { label: "风险等级", prop: "riskLevelName", slots: { default: "riskLevelName" } },
-      { label: "风险等级", prop: "interveneStatusName", slots: { default: "interveneStatusName" } },
+      { label: "干预状态", prop: "interveneStatusName", slots: { default: "interveneStatusName" } },
       { label: "操作", prop: "operation", slots: { default: "operation" }, width: "220px" },
     ],
     selectList: [],

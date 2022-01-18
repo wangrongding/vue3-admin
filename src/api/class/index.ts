@@ -32,6 +32,10 @@ export function fileDownload(data?: object) {
 export function studentTemplate(data?: object) {
   return request.get("/his-admin/user/fileDownload", { data });
 }
+// 导入班主任
+export function importTeacher(data?: object) {
+  return request.post("/his-admin/user/importTeacher", { data });
+}
 // 导入用户
 export function importUser(data?: object) {
   return request.post("/his-admin/user/importUser", { data });

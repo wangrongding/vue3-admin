@@ -53,6 +53,12 @@ function draw() {
       left: 20,
       top: 80,
       icon: "circle", // 这个字段控制形状  类型包括 circle，rect ，roundRect，triangle，diamond，pin，arrow，none
+      formatter: (name: string) => {
+        const val = props.configuration.data.find((item: any) => {
+          return item.name == name;
+        });
+        return val.value + " 人 " + name;
+      },
     },
     color: props.configuration.color,
     series: [
@@ -81,7 +87,7 @@ function draw() {
           // },
           formatter: "{d}%",
           position: "inside",
-          fontSize: 24,
+          fontSize: 20,
           color: "#fff",
         },
       },

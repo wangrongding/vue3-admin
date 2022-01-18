@@ -143,6 +143,12 @@ function render() {
       top: 80,
       orient: "vertical",
       icon: "circle",
+      formatter: (name: string) => {
+        const val = props.configuration.data.find((item: any) => {
+          return item.name == name;
+        });
+        return val.value + " 人 " + name;
+      },
     },
   });
 }

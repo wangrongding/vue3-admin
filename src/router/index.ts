@@ -15,7 +15,7 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: "/dashboard",
     component: Layout,
-    meta: { title: "数据看板", type: "single", icon: "House" },
+    meta: { title: "数据看板", type: "single", icon: "icon-shujukanban" },
     redirect: "/dashboard/index",
     children: [
       {
@@ -53,7 +53,7 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: "/testManagement",
     component: Layout,
-    meta: { title: "测试管理", type: "single", icon: "Setting" },
+    meta: { title: "测试管理", type: "single", icon: "icon-ceshiguanli" },
     redirect: "/testManagement/list",
     children: [
       {
@@ -72,7 +72,7 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: "/material",
     component: Layout,
-    meta: { title: "教辅资料", type: "multiple", icon: "Setting" },
+    meta: { title: "教辅资料", type: "multiple", icon: "icon-ziliao" },
     redirect: "/material/course",
     children: [
       {
@@ -102,7 +102,7 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: "/classManagement",
     component: Layout,
-    meta: { title: "班级管理", type: "single", icon: "Setting" },
+    meta: { title: "班级管理", type: "single", icon: "icon-banji" },
     redirect: "/classManagement/list",
     children: [
       {
@@ -125,7 +125,7 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: "/studentManagement",
     component: Layout,
-    meta: { title: "学生管理", type: "single", icon: "Setting" },
+    meta: { title: "学生管理", type: "single", icon: "icon-xuesheng" },
     redirect: "/studentManagement/list",
     children: [
       {
@@ -148,7 +148,7 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: "/system",
     component: Layout,
-    meta: { title: "系统管理", type: "multiple", icon: "Setting" },
+    meta: { title: "系统管理", type: "multiple", icon: "icon-xitongguanli" },
     redirect: "/system/userManagement",
     children: [
       {
