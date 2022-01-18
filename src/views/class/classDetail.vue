@@ -300,7 +300,7 @@ function rollOut() {
 }
 //跳转
 function jumpTo(row: any) {
-  if (row) {
+  if (row.userId) {
     router.push({
       path: "/studentManagement/studentDetail",
       query: {

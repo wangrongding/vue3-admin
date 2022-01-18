@@ -157,10 +157,11 @@ const state = reactive({
       search();
     });
   },
-  // 导入学生
+  // 下载学生
   downLoadFile() {
     fileDownload().then((res: string) => {
-      saveFile(res, "模板.xlsx");
+      // saveFile(res, "模板.xlsx");
+      saveFile(res, "");
     });
   },
   //下载报告
@@ -238,7 +239,7 @@ function paginationChange(val: any) {
 }
 //下载档案
 function downloadFile(row: any) {
-  saveFile(row.fileUrl, row.realName + "-" + row.archiveName + ".xlsx");
+  saveFile(row.fileUrl, row.realName + "-" + row.archiveName);
 }
 //删除档案
 function deleteUserFile(row: any) {
@@ -253,7 +254,7 @@ function deleteUserFile(row: any) {
 
 //跳转
 function jumpTo(row: any) {
-  if (row) {
+  if (row.reportId) {
     router.push(`/dashboard/report?reportId=${row.reportId}`);
   } else {
     router.push(`/studentManagement/operationInfo?id=${state.studentInfo.id}&type=edit`);

@@ -7,19 +7,26 @@
         <span class="title">{{ item.title }}</span>
         <span><img src="../assets/heng.png" alt="" /></span>
       </div>
-      <div class="emotionalContent">
-        <span v-html="item.content"></span>
-      </div>
+      <div class="emotionalContent" v-html="item.content"> </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { onMounted } from "vue";
+
 const props = defineProps({
   reportData: {
     type: Object,
     default: () => {},
   },
+});
+onMounted(() => {
+  console.log(document.querySelectorAll(".emotionalContent p"));
+  let domList = document.querySelectorAll(".emotionalContent p");
+  domList.forEach((item: any) => {
+    item.style.textIndent = "40px";
+  });
 });
 console.log(props.reportData, "reportData");
 </script>
@@ -63,7 +70,10 @@ console.log(props.reportData, "reportData");
     font-weight: 400;
     color: #29363d;
     line-height: 27px;
-    text-indent: 40px;
+    p {
+      text-indent: 40px;
+      color: red;
+    }
   }
 }
 </style>

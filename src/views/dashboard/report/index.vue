@@ -13,6 +13,7 @@ const componentList = shallowRef([UserInfo, TextTemplate, Score, ResultsAnalysis
 const state = reactive({
   id: "",
   questionnaireId: "",
+  questionnaireName: "",
   userId: "",
   reportItemList: [],
   adviceInfo: {} as any,
@@ -55,6 +56,7 @@ async function fetchReport(paperId: string) {
   state.userId = response.userId;
   state.id = response.id;
   state.questionnaireId = response.questionnaireId;
+  state.questionnaireName = response.questionnaireName;
   state.reportItemList = response.detail.teacher.reportList;
   state.showAdvice = state.reportItemList.some((item: any) => {
     if (item.type == 9 && item.suggest) {
@@ -110,6 +112,7 @@ onMounted(() => {});
       <el-button type="primary" size="mini" @click="downloadReport">报告下载</el-button>
     </div>
     <div class="content" id="reportDetail">
+      <p class="title">{{ state.questionnaireName }}</p>
       <div class="reportMain">
         <component
           :is="componentList[item['type'] - 1]"
@@ -156,10 +159,21 @@ onMounted(() => {});
     background-color: #ffffff;
     background-image: url("./components/assets/repoetBack.png");
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-position: center top;
+    // background-size: 100%;
+    background-size: 1400px;
     padding-top: 400px;
     padding-bottom: 50px;
     position: relative;
+    .title {
+      text-align: center;
+      position: absolute;
+      top: 120px;
+      left: 50%;
+      font-size: 36px;
+      font-weight: bolder;
+      transform: translateX(-50%);
+    }
   }
   .reportMain {
     margin: 0 auto;
