@@ -255,6 +255,16 @@ function deleteUserFile(row: any) {
 //跳转
 function jumpTo(row: any) {
   if (row.reportId) {
+    let type = row.questionnaireId == 27 ? "mipa" : "";
+    if (type) {
+      router.push({
+        path: "/dashboard/mipaReport",
+        query: {
+          reportId: row.reportId,
+        },
+      });
+      return;
+    }
     router.push(`/dashboard/report?reportId=${row.reportId}`);
   } else {
     router.push(`/studentManagement/operationInfo?id=${state.studentInfo.id}&type=edit`);

@@ -388,7 +388,7 @@ onMounted(() => {
           ></el-input>
           <el-button
             type="primary"
-            v-loading="state.time > 0"
+            :loading="state.time > 0"
             style="width: 100px; padding: 0 10px"
             size="medium"
             @click="sendCode"

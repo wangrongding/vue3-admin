@@ -51,6 +51,35 @@ async function successCallback(res: any) {
   if (data.code == 200) {
     return Promise.resolve(data.data);
   } else {
+    if (Object.prototype.toString.apply(data) === "[object Blob]") {
+      //判断文件流是否正常
+      /*  let fileReader = new FileReader();
+      fileReader.onload = (val) => {
+        // responseType为blob时的异常捕获;
+        try {
+          let jsonData = JSON.parse(val.target.result);
+          console.log(jsonData);
+          if (jsonData.code) {
+            // 说明是普通对象数据，后台转换失败
+            console.log("正常的文件流转换失败");
+            Message({
+              message: `${jsonData.msg}(${jsonData.code})`,
+              type: "error",
+            });
+            return Promise.reject("错误");
+            // throw new Error("错误");
+          }
+        } catch (err) {
+          console.log(err, "正常的文件流");
+          // 解析成对象失败，说明是正常的文件流
+          Promise.resolve(val.target.result);
+          // return val.target.result;
+        }
+      };
+      fileReader.readAsText(res); */
+      return Promise.resolve(data);
+    }
+
     ElMessage({
       message: data.msg,
       grouping: true,
