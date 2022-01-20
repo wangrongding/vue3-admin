@@ -174,6 +174,7 @@ const formStyle = ref({
           :multiple-limit="itemForm.multipleLimit"
           :style="`${itemForm.width ? 'width:' + itemForm.width : ''}`"
           clearable
+          :disabled="itemForm.disabled"
           :placeholder="itemForm.placeholder"
           filterable
           @change="itemForm.onChange"
@@ -213,6 +214,7 @@ const formStyle = ref({
           v-if="itemForm.type === 'cascader'"
           v-model="formParams.data[key]"
           :options="itemForm.cascaderOptions"
+          :disabled="itemForm.disabled"
           :placeholder="itemForm.placeholder"
           @change="itemForm.onChange"
           :style="`${itemForm.width ? 'width:' + itemForm.width : ''}`"
@@ -228,10 +230,12 @@ const formStyle = ref({
         <el-slider v-if="itemForm.type === 'slider'" v-model="formParams.data[key]" />
         <el-time-select
           v-if="itemForm.type === 'time-select'"
+          :disabled="itemForm.disabled"
           v-model="formParams.data[key]"
           :placeholder="itemForm.placeholder"
         />
         <el-time-picker
+          :disabled="itemForm.disabled"
           v-if="itemForm.type === 'time-picker'"
           v-model="formParams.data[key]"
           :placeholder="itemForm.placeholder"
@@ -242,6 +246,7 @@ const formStyle = ref({
         />
         <el-date-picker
           v-if="itemForm.type === 'date-picker'"
+          :disabled="itemForm.disabled"
           v-model="formParams.data[key]"
           :placeholder="itemForm.placeholder"
           :disabled-date="itemForm.disabledDate"
@@ -320,7 +325,11 @@ const formStyle = ref({
       </el-form-item>
 
       <el-form-item v-if="formParams.submit">
-        <el-button type="primary" @click="submitForm(formParams.submit.submitFunction)">
+        <el-button
+          type="primary"
+          @click="submitForm(formParams.submit.submitFunction)"
+          :disabled="formParams.submit.disabled"
+        >
           {{ formParams.submit.submitText || "提交" }}
         </el-button>
         <el-button v-if="formParams.submit.reset" type="info" @click="resetForm"> 重置 </el-button>

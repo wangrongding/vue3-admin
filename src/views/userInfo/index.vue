@@ -116,34 +116,12 @@ const state = reactive({
           message: "密码必须由字母加数字组成",
           trigger: "change",
         },
-        {
-          validator: (rule: any, value: any, callback: any) => {
-            if (state.passwordForm.data.oldPassWord !== state.passwordForm.data.newPassWord) {
-              callback(new Error(""));
-            } else {
-              callback();
-            }
-          },
-          message: "两次密码不一致",
-          trigger: "change",
-        },
       ],
       newPassWord: [
         {
           required: true,
           message: "请输入新密码",
           trigger: "blur",
-        },
-        {
-          validator: (rule: any, value: any, callback: any) => {
-            if (state.passwordForm.data.oldPassWord !== state.passwordForm.data.newPassWord) {
-              callback(new Error(""));
-            } else {
-              callback();
-            }
-          },
-          message: "两次密码不一致",
-          trigger: "change",
         },
       ],
     },

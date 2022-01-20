@@ -3,8 +3,8 @@ import { ref } from "vue";
 </script>
 <template>
   <div class="page-container">
-    <img src="@/assets/image/logo.png" alt="" />
-    <span class="title">xxAdmin</span>
+    <img src="@/assets/image/navLogo.png" alt="" />
+    <!-- <span class="title">xxAdmin</span> -->
     <!-- <span class="title">Mint-Admin</span> -->
   </div>
 </template>
@@ -25,7 +25,7 @@ import { ref } from "vue";
   }
   img {
     margin-right: 10px;
-    height: 44px;
+    height: 28px;
   }
 }
 </style>

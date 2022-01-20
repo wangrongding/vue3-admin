@@ -167,12 +167,13 @@ const state = reactive({
         message: "操作成功!",
       });
       search();
+      state.dialogForm.dialogShow = false;
     });
   },
   // 导入学生
   downLoadFile() {
     studentTemplate().then((res: string) => {
-      saveFile(res, "模板.xlsx");
+      saveFile(res, "学生信息模板.xlsx");
     });
   },
 });
@@ -272,10 +273,10 @@ function removeSdudent(item: any) {
       type: "success",
       message: "操作成功！",
     });
+    getMoveStudentList();
+    search();
+    getClassInfo();
   });
-  getMoveStudentList();
-  search();
-  getClassInfo();
 }
 // 批量转出学生
 function rollOut() {

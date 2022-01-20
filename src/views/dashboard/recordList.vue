@@ -17,7 +17,7 @@ const state = reactive({
       { label: "学生姓名", prop: "userName" },
       { label: "学号", prop: "userNo" },
       { label: "问卷名称", prop: "questionnaireName" },
-      { label: "风险等级", prop: "riskLevelName", slots: { default: "riskLevelName" } },
+      { label: "风险等级", prop: "riskResult", slots: { default: "riskResult" } },
       { label: "干预状态", prop: "interveneStatusName", slots: { default: "interveneStatusName" } },
       { label: "操作", prop: "operation", slots: { default: "operation" }, width: "220px" },
     ],
@@ -96,10 +96,21 @@ function newAcademicYears() {
 //跳转
 function jumpTo(row: any, type: string) {
   if (type == "report") {
+    let type = row.questionnaireId == 27 ? "mipa" : "";
+    if (type) {
+      router.push({
+        path: "/dashboard/mipaReport",
+        query: {
+          reportId: row.reportId,
+        },
+      });
+      return;
+    }
     router.push({
       path: "/dashboard/report",
       query: {
         reportId: row.reportId,
+        type,
       },
     });
   } else {
@@ -172,7 +183,7 @@ onMounted(() => {});
     </TopPanel>
     <div class="table-panel">
       <Table :tableParams.sync="state.tableParams" ref="tableDom">
-        <template #riskLevelName="{ row }">
+        <template #riskResult="{ row }">
           <span
             :style="{
               color:
@@ -184,7 +195,7 @@ onMounted(() => {});
                   ? '#FF5752FF'
                   : '',
             }"
-            >{{ row.riskLevelName }}</span
+            >{{ row.riskResult }}</span
           >
         </template>
         <template #interveneStatusName="{ row }">

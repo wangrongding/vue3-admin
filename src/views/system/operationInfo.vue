@@ -145,6 +145,7 @@ const state = reactive({
     labelWidth: "200px",
     submit: {
       submitText: "确定",
+      disabled: route.query.type == "view" ? true : false,
       submitFunction: submit,
       reset: true,
     },
@@ -199,6 +200,13 @@ if (route.query.id) {
   getClassIdList(state.formParams.data.grade);
   if (state.formParams.data.classId == -1) {
     state.formParams.data.classId = "";
+  }
+
+  if (route.query.type == "view") {
+    for (let item in state.formParams.formList) {
+      (state.formParams.formList as any)[item].disabled = true;
+      console.log(item, "🚗🚗🚗");
+    }
   }
 }
 async function submit() {

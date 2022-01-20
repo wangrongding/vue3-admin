@@ -9,9 +9,11 @@ import advice from "./components/advice.vue";
 import { useRoute, useRouter } from "vue-router";
 import { getPdf } from "@/utils/Export2PDF";
 const route = useRoute();
+const router = useRouter();
 const componentList = shallowRef([UserInfo, TextTemplate, Score, ResultsAnalysis, advice]);
 const state = reactive({
   id: "",
+  loading: true,
   questionnaireId: "",
   questionnaireName: "",
   userId: "",
@@ -52,6 +54,7 @@ const state = reactive({
 const adviceData = ref<any>(null);
 //获取报告内容
 async function fetchReport(paperId: string) {
+  state.loading = true;
   const response = (await findByPaperId({ paperId })) as any;
   state.userId = response.userId;
   state.id = response.id;
@@ -64,6 +67,7 @@ async function fetchReport(paperId: string) {
     }
     return item.type == 9 && item.suggest;
   });
+  state.loading = false;
   state.dialogForm.dialogShow = false;
 }
 //操作建议
@@ -84,7 +88,7 @@ function operationText() {
 function downloadReport() {
   getPdf("报告详情", document.getElementById("reportDetail") as HTMLElement);
 }
-const router = useRouter();
+
 function jumpTo(reportId: any) {
   router.push(`/dashboard/report?reportId=${reportId}`);
 }
@@ -92,7 +96,11 @@ function jumpTo(reportId: any) {
 function showHistory() {
   state.dialogForm.dialogShow = true;
   state.tableParams.loading = true;
-  getHistoryRecord({ userId: state.userId, questionnaireId: state.questionnaireId }).then((res) => {
+  getHistoryRecord({
+    userId: state.userId,
+    questionnaireId: state.questionnaireId,
+    paperId: route.query.reportId,
+  }).then((res) => {
     state.tableParams.data = res as any;
     state.tableParams.loading = false;
   });
@@ -111,7 +119,7 @@ onMounted(() => {});
       <el-button type="primary" size="mini" @click="showHistory()"> 历史记录 </el-button>
       <el-button type="primary" size="mini" @click="downloadReport">报告下载</el-button>
     </div>
-    <div class="content" id="reportDetail">
+    <div class="content" id="reportDetail" v-loading="state.loading">
       <p class="title">{{ state.questionnaireName }}</p>
       <div class="reportMain">
         <component

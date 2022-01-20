@@ -5,9 +5,10 @@ import { addUser, updateUserInfo, userDetail } from "@/api/student/index";
 import { dictionary } from "@/api/class/index";
 import { getGradeList, classIdList } from "@/api/dashboard/index.ts";
 import Dialog from "@/components/element/Dialog.vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
 const route = useRoute();
+const router = useRouter();
 
 const state = reactive({
   formParams: {
@@ -163,8 +164,12 @@ const state = reactive({
     labelWidth: "200px",
     submit: {
       submitText: "确定",
+      cancelFunction: () => {
+        router.go(-1);
+      },
+      cancel: "确定",
       submitFunction: submit,
-      reset: true,
+      // reset: true,
     },
   },
   dialogForm: {

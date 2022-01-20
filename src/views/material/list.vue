@@ -1,19 +1,32 @@
 <script lang="ts">
 import { defineComponent } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { reactive, toRefs } from "vue";
 import { appList, categoryList } from "@/api/material/index";
 export default defineComponent({
   props: ["type"],
   setup(props) {
+    const route = useRoute();
     const router = useRouter();
     const state = reactive({
+      loading: false,
       handleSelect(val: string) {
         state.getCategoryList(val);
       },
       toDetail(val: any) {
+        console.log(val, "🚗🚗🚗🚗");
+        // return;
+
+        let path = route.path.includes("course")
+          ? "course"
+          : route.path.includes("teachingPlan")
+          ? "teachingPlan"
+          : route.path.includes("teamCoaching")
+          ? "teamCoaching"
+          : "";
+
         router.push({
-          path: "/material/course/detail",
+          path: `/material/${path}/detail`,
           query: { courseId: val.id },
         });
       },
@@ -22,7 +35,9 @@ export default defineComponent({
         state.getCategoryList(state.menuList[0].id);
       },
       async getCategoryList(id: string) {
+        state.loading = true;
         state.itemList = (await categoryList({ categoryId: id })) as any;
+        state.loading = false;
       },
       menuList: [] as any,
       itemList: [] as any,
@@ -43,13 +58,17 @@ export default defineComponent({
         </el-menu-item>
       </el-menu>
     </div>
-    <div class="course-list" v-if="itemList.length">
-      <div v-for="item in itemList" :key="item" class="course-item" @click="toDetail(item)">
-        <img :src="item.icon" alt="" />
-        <p>{{ item.name }}</p>
+    <div v-loading="loading">
+      <div class="course-list" v-if="itemList.length">
+        <div v-for="item in itemList" :key="item" class="course-item" @click="toDetail(item)">
+          <img :src="item.icon" alt="" />
+          <p>{{ item.name }}</p>
+        </div>
+      </div>
+      <div v-else style="text-align: center; line-height: 200px; font-size: 20px; color: #c9c9c9">
+        暂无数据
       </div>
     </div>
-    <div v-else style="text-align: center; line-height: 100px; font-size: 20px"> 暂无数据 </div>
   </div>
 </template>
 <style lang="scss" scoped>

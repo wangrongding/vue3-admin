@@ -118,10 +118,10 @@ function paginationChange(val: any) {
 }
 search();
 onMounted(() => {});
-function jumpTo(row: any) {
+function jumpTo(row?: any, type?: string) {
   router.push({
     path: "/system/userInfo",
-    query: { id: row.id },
+    query: { id: row.id, type },
   });
 }
 </script>
@@ -134,8 +134,10 @@ function jumpTo(row: any) {
     <div class="table-panel">
       <Table :tableParams.sync="state.tableParams" ref="tableDom">
         <template #operation="{ row }">
-          <el-button type="primary" size="mini" plain @click="jumpTo(row)">编辑</el-button>
-          <el-button type="primary" size="mini" plain @click="jumpTo(row)"> 查看 </el-button>
+          <el-button type="primary" size="mini" plain @click="jumpTo(row, 'edit')">编辑</el-button>
+          <el-button type="primary" size="mini" plain @click="jumpTo(row, 'view')">
+            查看
+          </el-button>
         </template>
       </Table>
       <Pagination

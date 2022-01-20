@@ -48,6 +48,11 @@ export const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/dashboard/report/index.vue"),
         meta: { title: "报告详情" },
       },
+      {
+        path: "mipaReport",
+        component: () => import("@/views/dashboard/mipa/report.vue"),
+        meta: { title: "报告详情" },
+      },
     ],
   },
   {
@@ -83,7 +88,7 @@ export const routes: Array<RouteRecordRaw> = [
           {
             path: "detail",
             component: () => import("@/views/material/detail.vue"),
-            meta: { title: "课程资料" },
+            meta: { title: "资料详情" },
           },
         ],
       },
@@ -91,11 +96,25 @@ export const routes: Array<RouteRecordRaw> = [
         path: "teachingPlan",
         component: () => import("@/views/material/index.vue"),
         meta: { title: "教案资料", id: 8 },
+        children: [
+          {
+            path: "detail",
+            component: () => import("@/views/material/detail.vue"),
+            meta: { title: "资料详情" },
+          },
+        ],
       },
       {
         path: "teamCoaching",
         component: () => import("@/views/material/index.vue"),
         meta: { title: "团辅资料", id: 9 },
+        children: [
+          {
+            path: "detail",
+            component: () => import("@/views/material/detail.vue"),
+            meta: { title: "资料详情" },
+          },
+        ],
       },
     ],
   },

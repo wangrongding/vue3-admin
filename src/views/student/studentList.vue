@@ -79,6 +79,7 @@ const state = reactive({
         type: "success",
         message: "操作成功!",
       });
+      state.dialogForm.dialogShow = false;
       search();
     });
   },
@@ -86,7 +87,7 @@ const state = reactive({
   downLoadFile() {
     //todo 缺一个接口
     fileDownload().then((res: string) => {
-      saveFile(res, "模板.xlsx");
+      saveFile(res, "学生信息模板.xlsx");
     });
   },
 });

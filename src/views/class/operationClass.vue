@@ -155,7 +155,7 @@ function removeTeacher(index: number, item: any) {
 // 下载模板
 function templateDownload() {
   fileDownload().then((res) => {
-    saveFile(res);
+    saveFile(res, "班主任信息模板");
   });
 }
 // 上传模板
@@ -215,38 +215,41 @@ TeacherList();
         </el-tag>
         <Dialog :dialogForm="state.dialogForm" class="dialog">
           <template #dialogContent>
-            <el-input
-              placeholder="请输入班主任名称"
-              v-model="state.nameOrPhone"
-              clearable
-              style="width: 300px"
-              class="input-with-select"
-            >
-              <template #append>
-                <el-button slot="append" type="primary" size="mini" @click="TeacherList">
-                  搜索
-                </el-button>
-              </template>
-            </el-input>
-            <div style="float: right; margin-bottom: 20px">
-              <el-button slot="append" type="primary" plain @click="templateDownload">
-                下载模板
-              </el-button>
-              <el-upload
-                action="#"
-                ref="upload"
-                style="display: inline-block; margin-left: 20px"
-                :auto-upload="true"
-                :show-file-list="false"
-                accept=".pdf, .doc, .docx, .xls, .xlsx"
-                :http-request="uploadStudentList"
+            <div>
+              <el-input
+                placeholder="请输入班主任名称"
+                v-model="state.nameOrPhone"
+                clearable
+                style="width: 300px"
+                class="input-with-select"
               >
-                <el-button :loading="loading == 'upload'" slot="trigger" type="primary">
-                  批量上传
+                <template #append>
+                  <el-button slot="append" type="primary" size="mini" @click="TeacherList">
+                    搜索
+                  </el-button>
+                </template>
+              </el-input>
+              <div style="float: right; margin-bottom: 20px">
+                <el-button slot="append" type="primary" plain @click="templateDownload">
+                  下载模板
                 </el-button>
-              </el-upload>
+                <el-upload
+                  action="#"
+                  ref="upload"
+                  style="display: inline-block; margin-left: 20px"
+                  :auto-upload="true"
+                  :show-file-list="false"
+                  accept=".pdf, .doc, .docx, .xls, .xlsx"
+                  :http-request="uploadStudentList"
+                >
+                  <el-button :loading="loading == 'upload'" slot="trigger" type="primary">
+                    批量上传
+                  </el-button>
+                </el-upload>
+              </div>
             </div>
             <Table
+              style="max-height: 400px; overflow-y: auto; width: 100%"
               :table-params="state.teacherTable"
               @selectionChange="selectionChange"
               ref="tableDom"
