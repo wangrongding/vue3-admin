@@ -7,6 +7,8 @@ import { getImgUrl } from "@/api/user/index";
 import { useStore } from "@/store";
 const store = useStore();
 const state = reactive({
+  loading: false,
+  time: 0,
   formParams: {
     data: {
       birthday: "",
@@ -276,7 +278,19 @@ function sendCode() {
       type: "success",
       message: "已发送！",
     });
+    countdown();
   });
+}
+let tempInterval: any = null;
+function countdown() {
+  state.time = 60;
+  window.clearInterval(tempInterval);
+  tempInterval = setInterval(() => {
+    if (state.time == 0) {
+      window.clearInterval(tempInterval);
+    }
+    state.time--;
+  }, 1000);
 }
 //=========================exec执行块
 onMounted(() => {
@@ -372,7 +386,15 @@ onMounted(() => {
             clearable
             @change=""
           ></el-input>
-          <el-button type="primary" size="medium" @click="sendCode">发送验证码</el-button>
+          <el-button
+            type="primary"
+            v-loading="state.time > 0"
+            style="width: 100px; padding: 0 10px"
+            size="medium"
+            @click="sendCode"
+          >
+            {{ state.time > 0 ? state.time : "发送验证码" }}</el-button
+          >
         </div>
       </template>
     </Form>

@@ -3,10 +3,11 @@ import { ref, reactive } from "vue";
 import { getImgUrl } from "@/api/user/index";
 import { getGradeList, classIdList } from "@/api/dashboard/index.ts";
 import Dialog from "@/components/element/Dialog.vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
 import { useStore } from "@/store";
 const store = useStore();
+const router = useRouter();
 import {
   sysUserDetail,
   saveUser,
@@ -147,7 +148,11 @@ const state = reactive({
       submitText: "确定",
       disabled: route.query.type == "view" ? true : false,
       submitFunction: submit,
-      reset: true,
+      cancelFunction: () => {
+        router.go(-1);
+      },
+      cancel: "取消",
+      // reset: true,
     },
   },
   dialogForm: {
@@ -222,6 +227,7 @@ async function submit() {
     type: "success",
     message: "操作成功！",
   });
+  router.go(-1);
 }
 </script>
 <template>

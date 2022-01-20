@@ -9,10 +9,11 @@ import {
   add,
 } from "@/api/class/index";
 import { getGradeList } from "@/api/dashboard/index.ts";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
 import { saveFile } from "@/utils/index.ts";
 const route = useRoute();
+const router = useRouter();
 const state = reactive({
   // 表单数据对象
   formParams: {
@@ -59,6 +60,10 @@ const state = reactive({
     submit: {
       submitText: "确定",
       submitFunction: submit,
+      cancelFunction: () => {
+        router.go(-1);
+      },
+      cancel: "取消",
       // reset: false,
     },
   },
@@ -174,12 +179,11 @@ function uploadStudentList(file: any) {
 async function submit() {
   if (route.query.type == "add") {
     add(state.formParams.data).then((res) => {
-      console.log(res, "👩👩👩");
-
       ElMessage({
         type: "success",
         message: "操作成功!",
       });
+      router.go(-1);
     });
     state.formParams.data = {};
   } else {
@@ -188,6 +192,7 @@ async function submit() {
         type: "success",
         message: "操作成功!",
       });
+      router.go(-1);
     });
   }
 }

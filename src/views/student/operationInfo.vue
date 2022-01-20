@@ -167,7 +167,7 @@ const state = reactive({
       cancelFunction: () => {
         router.go(-1);
       },
-      cancel: "确定",
+      cancel: "取消",
       submitFunction: submit,
       // reset: true,
     },
@@ -234,6 +234,7 @@ async function submit() {
     type: "success",
     message: "操作成功！",
   });
+  router.go(-1);
 }
 </script>
 <template>
