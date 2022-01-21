@@ -5,7 +5,8 @@ import { sysUserListPage, roleList } from "@/api/system/index.ts";
 import Pagination from "@/components/element/Pagination.vue";
 import { export_json_to_excel } from "@/utils/Export2Excel";
 import { ElMessage, ElMessageBox } from "element-plus";
-import { format } from "path/posix";
+import { useStore } from "@/store";
+const store = useStore();
 const router = useRouter();
 const state = reactive({
   //表格参数
@@ -128,13 +129,24 @@ function jumpTo(row?: any, type?: string) {
 <template>
   <div class="page-container">
     <TopPanel :formParams="state.formParams">
-      <el-button type="primary" @click="jumpTo('')">添加</el-button>
-      <el-button type="primary" @click="exportExcel">导出</el-button>
+      <el-button :disabled="store.userInfo.roleId != 1" type="primary" @click="jumpTo('')"
+        >添加</el-button
+      >
+      <el-button :disabled="store.userInfo.roleId != 1" type="primary" @click="exportExcel"
+        >导出</el-button
+      >
     </TopPanel>
     <div class="table-panel">
       <Table :tableParams.sync="state.tableParams" ref="tableDom">
         <template #operation="{ row }">
-          <el-button type="primary" size="mini" plain @click="jumpTo(row, 'edit')">编辑</el-button>
+          <el-button
+            type="primary"
+            size="mini"
+            plain
+            @click="jumpTo(row, 'edit')"
+            :disabled="store.userInfo.roleId != 1"
+            >编辑</el-button
+          >
           <el-button type="primary" size="mini" plain @click="jumpTo(row, 'view')">
             查看
           </el-button>
