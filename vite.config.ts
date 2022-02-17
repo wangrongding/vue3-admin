@@ -11,10 +11,7 @@ import qiankun from "vite-plugin-qiankun";
 console.log("🚗🚗 http://192.168.1.126:9421");
 export default defineConfig((config) => {
   return {
-    base:
-      config.mode === "development"
-        ? "/"
-        : loadEnv(config.mode, process.cwd()).VITE_APP_SITE_ADDRESS,
+    base:loadEnv(config.mode, process.cwd()).VITE_APP_SITE_ADDRESS,
     plugins: [
       vue(),
       // 这里的 'admin' 是子应用名，主应用注册时AppName需保持一致
