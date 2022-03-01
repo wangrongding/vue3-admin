@@ -38,7 +38,7 @@ module.exports = {
   // plugins: ["vue", "@typescript-eslint"],
   rules: {
     indent: ["error", 2],
-    "linebreak-style": ["error", "unix"], //换行符风格 |unix|windows|
+    "linebreak-style": ["error", "windows"], //换行符风格 |unix|windows|
     "comma-dangle": ["error", "never"], //禁止使用拖尾逗号
     quotes: ["error", "double"], //使用双引号或单引号
     semi: ["error", "always"], //语句末尾使用分号
